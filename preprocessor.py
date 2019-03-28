@@ -56,3 +56,19 @@ for i in range(len(details_dicts)):
 # save new details
 with open("data/data.json", "w+") as file:
     file.write(dumps(details_dicts))
+
+# from json import load
+# from statistics import median, stdev
+# with open("data/data.json", "r") as file:
+#     data = load(file)
+#     counts = []
+#     no_reviews_count = 0
+#     with_reviews_count = 0
+#     for row in data:
+#         if len(row["reviews"]) == 0:
+#             no_reviews_count += 1
+#         else:
+#             with_reviews_count += 1
+#         counts.append(len(row["reviews"]))
+#         print(len(row["reviews"]))
+#     print("median: {}, stdev: {}, num w/o revs: {}, num w/ revs: {}".format(median(counts), stdev(counts), no_reviews_count, with_reviews_count))
