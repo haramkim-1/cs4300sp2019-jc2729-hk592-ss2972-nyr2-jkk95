@@ -3,18 +3,23 @@
         <link rel="stylesheet" href="/static/bootstrap.min.css">
         <link rel="stylesheet" href="/static/main.css">
     </head>
+    <style>
+    body {
+        background-color: gray;
+    }
+    </style>
     <body>
-        <div class="topcorner">
+        <div class="topcorner" style="color: white">
             <p>Project Name: {{ name }}</p>
             <p>Student Name: ({{ netid }})</p>
         </div>
         <form class="form-inline global-search">
-            <h1 style="font-size: 55px; font-family:Futura; color: #4285F4">
+            <h1 style="font-size: 55px; font-family:Futura; color: dark-gray">
                 vroom vroom
 
             </h1>
             <br>
-            <img src="{{url_for('static', filename='vroom.png')}}" height="25%"/>
+            <img src="{{url_for('static', filename='logo.gif')}}" height="25%"/>
             <br><br>
             
             <div class="form-group">
