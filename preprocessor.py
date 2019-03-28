@@ -1,6 +1,7 @@
 import pandas as pd
 from os import listdir
 from os.path import join
+from json import dumps
 
 details = pd.read_csv("data/raw/details.csv",
             usecols=["Make", "Model", "Year", "Transmission Type", "Driven_Wheels", 
@@ -8,16 +9,17 @@ details = pd.read_csv("data/raw/details.csv",
                     "city mpg", "Popularity", "MSRP"])
 
 # create reviews dataset
-# reviews_path = "data/raw/reviews"
-# review_df_list = []
-# for filename in listdir(reviews_path):
-#     df = pd.read_csv(join(reviews_path, filename), 
-#             engine="python", 
-#             usecols=["Review_Date","Author_Name","Vehicle_Title","Review_Title","Review","Rating"])
-#     review_df_list.append(df)
-# reviews = pd.concat(review_df_list, ignore_index=True)
+reviews_path = "data/raw/reviews"
+review_df_list = []
+for filename in listdir(reviews_path):
+    df = pd.read_csv(join(reviews_path, filename), 
+            engine="python", 
+            usecols=["Review_Date","Author_Name","Vehicle_Title","Review_Title","Review","Rating"])
+    review_df_list.append(df)
+reviews = pd.concat(review_df_list, ignore_index=True)
 
-# reviews.to_csv("data/reviews_cleaned.csv")
+# drop rows from reviews where Vehicle_Title is nan
+reviews.dropna(axis="index", subset=["Vehicle_Title"], inplace=True)
 
 # new column in details
 details["Year_Make_Model"] = details.apply(lambda row: str(row.Year) + " " + str(row.Make) + " " + str(row.Model), axis="columns")
@@ -42,5 +44,15 @@ for ymm in unique_ymm_list:
         # drop those indices from the dataset
         details.drop(labels=same_ymm_indices, inplace=True)
 
+# convert details df to list of dicts
+details_dicts = details.to_dict("records")
+
+# iterate over each car record and augment with review details
+for i in range(len(details_dicts)):
+    current_ymm = details_dicts[i]["Year_Make_Model"]
+    relevant_reviews = reviews[reviews["Vehicle_Title"].str.contains(current_ymm)]
+    details_dicts[i]["reviews"] = relevant_reviews.to_dict("records")
+
 # save new details
-details.to_csv("data/details_cleaned.csv")
+with open("data/data.json", "w+") as file:
+    file.write(dumps(details_dicts))
