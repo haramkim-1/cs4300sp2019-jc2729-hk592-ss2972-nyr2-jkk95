@@ -15,3 +15,17 @@ def search():
 		output_message = "Your search: " + query
 		data = range(5)
 	return render_template('search.html', name=project_name, netid=net_id, output_message=output_message, data=data)
+
+@irsystem.route('/keywords', methods=['GET'])
+def get_keywords():
+	return None
+
+@irsystem.route('/search', methods=['GET'])
+def do_search():
+	carsize_range = request.args.get("")
+	keywords = request.args.get("")
+	price_range = request.args.get("")
+	
+	# TODO: do something here
+
+	return None
