@@ -4,7 +4,7 @@ from json import load
 def filter_sizes(min_size, max_size, min_price, max_price, car_size, car_price):
     return car_size >= min_size and car_size <= max_size
 
-class searcher:
+class Searcher:
     def __init__(self):
         with open('data/unfiltered_list.json') as json_file:
             self.unfiltered_list = load(json_file)
