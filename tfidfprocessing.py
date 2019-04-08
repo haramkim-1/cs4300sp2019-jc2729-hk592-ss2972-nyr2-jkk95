@@ -8,17 +8,16 @@ import numpy as np
 from numpy import linalg as LA
 import json
 import math
-import matplotlib.pyplot as plt
 from json import dumps
 import re
 import string
 
 def tokenize(text):
 	return re.findall(r'[a-z]+', text.lower())
-	
+
 def build_vectorizer(max_features, stop_words, max_df=0.8, min_df=20, norm='l2'):
 	"""Returns a TfidfVectorizer object with the above preprocessing properties.
-	
+
 	Params: {max_features: Integer,
 			 max_df: Float,
 			 min_df: Float,
@@ -39,7 +38,7 @@ def create_sizes_list(data, size_rev_idx):
 	for car in data:
 		s = size_rev_idx[car['Vehicle Size']]
 		size_list.append((car['Year_Make_Model'], s, car['MSRP']))
-	
+
 	return size_list
 
 def build_inverted_index(msgs):
@@ -62,10 +61,10 @@ def compute_idf(inv_idx, n_docs, min_df=10, max_df_ratio=0.95):
 			frac = n_docs/(1+df)
 			idf = math.log(frac, 2)
 			idf_dict[term] = idf
-			
+
 	return idf_dict
 
-with open('data/data.json') as json_file:  
+with open('data/data.json') as json_file:
 	data = json.load(json_file)
 
 	num_cars = len(data)
@@ -79,7 +78,7 @@ with open('data/data.json') as json_file:
 
 	n_feats = 5000
 	doc_by_vocab = np.empty([len(data), n_feats])
-	
+
 	tfidf_vec = build_vectorizer(n_feats, "english")
 	doc_by_vocab = tfidf_vec.fit_transform([d['Appended Reviews'] for d in data]).toarray()
 	index_to_vocab = {i:v for i, v in enumerate(tfidf_vec.get_feature_names())}
@@ -112,4 +111,3 @@ with open('data/data.json') as json_file:
 
 	with open("data/idf_dict.json", "w+") as file:
 		file.write(dumps(idf_dict))
-
