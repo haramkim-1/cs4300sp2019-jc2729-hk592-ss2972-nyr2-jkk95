@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/main.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/JSXTransformer.js"></script>
+        <title> vroom vroom </title>
+    </head>
+    <style>
+    body {
+        background-color: gray;
+    }
+    </style>
+
+    <body>
+<!--         <div class="topcorner" style="color: white">
+            <p>Project Name: {{ name }}</p>
+            <p>Student Name: ({{ netid }})</p>
+        </div>
+        <form class="form-inline global-search">
+            <h1 style="font-size: 55px; font-family:Futura; color: dark-gray">
+                vroom vroom
+
+            </h1>
+            <br>
+            <img src="{{url_for('static', filename='logo.gif')}}" height="25%"/>
+            <br><br>
+            
+            <div class="form-group">
+                <input id="input" type="text" name="search" class="form-control" placeholder="Your Input">
+            </div>
+            <button type="submit" class="btn btn-info"> Go! </button>
+        </form>
+        <form class="form-inline global-search">
+        {% if data %}
+            <h1>{{output_message}}</h1>
+            {% for d in data %}  
+                <br>
+                <p>{{d}}</p>
+            {% endfor %}
+        {% endif %}
+        </form>
+        <div class="container">
+          <h1 style="font-size: 55px; font-family:Futura; color: dark-gray">
+                vroom vroom
+
+          </h1>
+          <br>
+          <div id="content"></div>
+        </div> -->
+        <script type="text/javascript"  data-src="bundle.js"></script>
+        
+    </body>
+    <script type="text/jsx">
+        /** @jsx React.DOM */
+        var Input = React.createClass({
+            updateLabel: function(event){
+                this.setState({value: event.target.value});
+            },
+            getInitialState: function(){
+                return {
+                    value: ''
+                }
+            },
+            componentWillMount: function(){
+                this.setState({value: this.state.value})
+            },
+            render: function(){
+                return (
+                    <div className="update-label">
+                          <input type="text" placeholder="Enter text" onChange={this.updateLabel}/>
+                        <Label value={this.state.value}/>
+                    </div>
+            )
+        }
+        });
+
+        var Label = React.createClass({
+        render: function(){
+            return (
+            <div class="my-label">
+            <h2>{this.props.value}</h2>
+            </div>
+            )
+        }
+        });
+
+        React.render(<Input/>, document.getElementById('root'));
+    </script>
+</html>
