@@ -1,72 +1,100 @@
 import Autosuggest from 'react-autosuggest';
+import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
+import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
 import React, { Component } from 'react';
+import axios from 'axios';
+import './Form.css';
 /** Tutorial: http://react-autosuggest.js.org/ **/
 
-// Janice's TODO add: 1. "add", 2. "delete from list", 3. trie keywords & sort by length, options, 4. prettify, 5. store keywords somehow
-// Imagine you have a list of languages that you'd like to autosuggest.
-const languages = [
+// Janice's TODO add: 1. "add", 2. "delete from list", 4. prettify (center), 5. store keywords somehow
+const keywords = [
   {
-    name: 'C',
-    year: 1972
+    text: 'Car 1111'
   },
   {
-    name: 'mc',
-    year: 2012
+    text: '2 car'
   }
 ];
 
-// Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
 
-  return inputLength === 0 ? [] : languages.filter(lang =>
-    lang.name.toLowerCase().slice(0, inputLength) === inputValue
-  );
+  var suggestions = inputLength === 0 ? [] : keywords.filter(kw =>
+    kw.text.toLowerCase().includes(inputValue))
+  suggestions.sort(function(a,b){
+  	return a.text.length - b.text.length;
+  });
+  return suggestions
+  
 };
 
-// When suggestion is clicked, Autosuggest needs to populate the input
-// based on the clicked suggestion. Teach Autosuggest how to calculate the
-// input value for every given suggestion.
-const getSuggestionValue = suggestion => suggestion.name;
+function getSuggestionValue(suggestion) {
+  return `${suggestion.text}`;
+}
 
-// Use your imagination to render suggestions.
-const renderSuggestion = suggestion => (
-  <div>
-    {suggestion.name}
-  </div>
-);
+function renderSuggestion(suggestion, { query }) {
+  const suggestionText = `${suggestion.text}`;
+  const matches = AutosuggestHighlightMatch(suggestionText, query);
+  const parts = AutosuggestHighlightParse(suggestionText, matches);
 
-class Form extends React.Component {
+  return (
+    <span className={'suggestion-content'}>
+      <span className="name">
+        {
+          parts.map((part, index) => {
+            const className = part.highlight ? 'highlight' : null;
+
+            return (
+              <span className={className} key={index}>{part.text}</span>
+            );
+          })
+        }
+      </span>
+    </span>
+  );
+}
+
+class Form extends Component {
   constructor() {
     super();
 
-    // Autosuggest is a controlled component.
-    // This means that you need to provide an input value
-    // and an onChange handler that updates this value (see below).
-    // Suggestions also need to be provided to the Autosuggest,
-    // and they are initially empty because the Autosuggest is closed.
     this.state = {
       value: '',
-      suggestions: []
+      suggestions: [],
+      keywords: []
     };
+
+  }
+  
+  componentDidMount() {
+    axios.get('keywords')
+	  .then(function (response) { // TODO see API and test
+	    this.setState({keywords:response})
+	  })
+	  .catch(function (error) {
+	    console.log(error);
+	  });
   }
 
-  onChange = (event, { newValue }) => {
+  onChange = (event, { newValue, method }) => {
+
     this.setState({
       value: newValue
     });
   };
 
-  // Autosuggest will call this function every time you need to update suggestions.
-  // You already implemented this logic above, so just use it.
+  onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
+  	console.log(suggestionValue)
+  	// TODO add here
+  };
+  
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
       suggestions: getSuggestions(value)
     });
   };
 
-  // Autosuggest will call this function every time you need to clear suggestions.
   onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: []
@@ -75,25 +103,23 @@ class Form extends React.Component {
 
   render() {
     const { value, suggestions } = this.state;
-
-    // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: 'Type a programming language',
+      placeholder: "Enter keywords",
       value,
       onChange: this.onChange
     };
 
-    // Finally, render it!
     return (
-      <Autosuggest
+      <Autosuggest 
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+        onSuggestionSelected={this.onSuggestionSelected}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
-        inputProps={inputProps}
-      />
+        inputProps={inputProps} />
     );
   }
 }
+
 export default Form;

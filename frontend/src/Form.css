@@ -1,3 +1,4 @@
+
 body {
   font-family: Helvetica, sans-serif;
 }
@@ -60,9 +61,8 @@ body {
   border-top: 1px solid #ddd;
 }
 
-.react-autosuggest__suggestion--focused {
-  background-color: #0C7EAF;
-  color: #fff;
+.react-autosuggest__suggestion--highlighted { /** highlights suggestion when hovered over **/
+  background-color: gray;
 }
 
 .suggestion-content {
@@ -71,29 +71,13 @@ body {
   background-repeat: no-repeat;
 }
 
-.dancounsell {
-  background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/48.jpg);
-}
-
-.ladylexy {
-  background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/48.jpg);
-}
-
-.mtnmissy {
-  background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/mtnmissy/48.jpg);
-}
-
-.steveodom {
-  background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/steveodom/48.jpg);
-}
-
 .name {
   margin-left: 68px;
-  line-height: 45px;
+  line-height: 10px; /** changes height of each suggestion box **/
 }
 
 .highlight {
-  color: #ee0000;
+  color: black;
   font-weight: bold;
 }
 
