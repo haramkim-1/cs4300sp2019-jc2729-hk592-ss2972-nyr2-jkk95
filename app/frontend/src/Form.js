@@ -67,15 +67,15 @@ class Form extends Component {
 
   }
   
-  componentDidMount() {
-    axios.get('keywords')
-	  .then(function (response) { // TODO see API and test
-	    this.setState({keywords:response})
-	  })
-	  .catch(function (error) {
-	    console.log(error);
-	  });
-  }
+  // componentDidMount() {
+  //   axios.get('keywords')
+	 //  .then(function (response) { // TODO see API and test
+	 //    this.setState({keywords:response})
+	 //  })
+	 //  .catch(function (error) {
+	 //    console.log(error);
+	 //  });
+  // }
 
   onChange = (event, { newValue, method }) => {
 
