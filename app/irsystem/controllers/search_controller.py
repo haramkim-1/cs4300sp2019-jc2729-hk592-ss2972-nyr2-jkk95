@@ -21,7 +21,7 @@ def search():
 
 @irsystem.route('/keywords', methods=['GET'])
 def get_keywords():
-	return dumps(["keyword 1", "keyword 2", "keyword 3", "keyword 4"])
+	return dumps(["keyword_1", "keyword_2", "keyword_3", "keyword_4"])
 
 @irsystem.route('/search', methods=['GET'])
 def do_search():
