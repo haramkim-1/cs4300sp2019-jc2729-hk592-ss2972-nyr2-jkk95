@@ -2,7 +2,8 @@ from . import *
 from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
 from flask import request
-from app.irsystem.models.search import handle_search
+from json import dumps
+# from app.irsystem.models.search import handle_search
 
 project_name = "Vroom Vroom"
 net_id = "Janice Chan: jc2729, Haram Kim: hk592, Stephanie Shum: ss2972, Nataly Rodriguez: nyr2, Jasmine Kitahara: jkk95"
@@ -20,7 +21,7 @@ def search():
 
 @irsystem.route('/keywords', methods=['GET'])
 def get_keywords():
-	return None
+	return dumps(["keyword 1", "keyword 2", "keyword 3", "keyword 4"])
 
 @irsystem.route('/search', methods=['GET'])
 def do_search():
