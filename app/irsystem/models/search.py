@@ -1,4 +1,5 @@
 from json import load
+import numpy as np
 
 #filter by size
 def filter_sizes(min_size, max_size, min_price, max_price, car_size, car_price):
@@ -6,8 +7,8 @@ def filter_sizes(min_size, max_size, min_price, max_price, car_size, car_price):
 #cosine similarity
 def get_sim(car, query):
     numerator = np.dot(car, query)
-    norm1 = LA.norm(car)
-    norm2 = LA.norm(query)
+    norm1 = np.linalg.norm(car)
+    norm2 = np.linalg.norm(query)
     sim = numerator/(norm1*norm2)
     return sim
 
@@ -17,7 +18,7 @@ class Searcher:
         with open('data/unfiltered_list.json') as unfiltered, open('data/idf_dict.json') as idfs, open('data/index_to_vocab.json') as itv, open('data/keywords.json') as kwords:
             self.unfiltered_list = load(unfiltered)
             self.idf_dict = load(idfs)
-            self.index_to_vocab = load(idv)
+            self.index_to_vocab = load(itv)
             self.keywords = load(kwords)
 
     def search(self, min_size, max_size, min_price, max_price, query):
