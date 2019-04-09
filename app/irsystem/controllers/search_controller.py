@@ -3,7 +3,7 @@ from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
 from flask import request
 from json import dumps
-# from app.irsystem.models.search import handle_search
+from app.irsystem.models.search import Searcher
 
 project_name = "Vroom Vroom"
 net_id = "Janice Chan: jc2729, Haram Kim: hk592, Stephanie Shum: ss2972, Nataly Rodriguez: nyr2, Jasmine Kitahara: jkk95"
