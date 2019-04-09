@@ -28,8 +28,12 @@ class Searcher:
             t_query[self.[t]] = 1
             tf_idf_query[vocab_to_index[t]] = self.idf_dict[t]
 
-        similarity_list = []
+        similarity_dict = {}
         for car in truncated_list_by_size:
             car_index = self.cars_reverse_index[car]
             sim = get_sim(doc_by_vocab[car_index] , tf_idf_query)
-            similarity_list.append((car, sim))
+            similarity_list[car] = sim
+
+        sorted_results = sorted(similarity_dict, key=lambda x:x[0], reverse = True)
+
+        return sorted_results[0:10]
