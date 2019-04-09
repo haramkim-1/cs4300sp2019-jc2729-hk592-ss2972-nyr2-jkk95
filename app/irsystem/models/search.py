@@ -21,16 +21,16 @@ class Searcher:
 
     def search(self, min_size, max_size, min_price, max_price, query):
         truncated_list_by_size = [x[0] for x in self.unfiltered_list if filter_sizes(min_size, max_size, min_price, max_price, x[1], x[2])]
-
+        cars_reverse_index = {car[0]: i for i, car[0] in enumerate(self.unfiltered_list)}
         vocab_to_index = {index_to_vocab[k]:k for k in index_to_vocab}
         tf_idf_query = np.zeros(len())
         for t in toks:
-            t_query[self.[t]] = 1
+            tf_idf_query[cars_reverse_index[t]] = 1
             tf_idf_query[vocab_to_index[t]] = self.idf_dict[t]
 
         similarity_dict = {}
         for car in truncated_list_by_size:
-            car_index = self.cars_reverse_index[car]
+            car_index = cars_reverse_index[car]
             sim = get_sim(doc_by_vocab[car_index] , tf_idf_query)
             similarity_list[car] = sim
 
