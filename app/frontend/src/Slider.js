@@ -31,18 +31,6 @@ class Slider extends Component {
             value={this.state.value2}
             onChange={value2 => this.setState({ value2 })} />
         </form>
-        <form class="slider">
-            <InputRange
-            name={"Weather"}
-            maxValue={2}
-            minValue={0}
-            formatLabel={value1 => {
-              var x = `${value1}`;
-              var temp = ['snow','snow+mild','mild'][x];
-              return ` ${temp}` }}
-            value={this.state.value1}
-            onChange={value1 => this.setState({ value1 })} />
-            </form>
             <form class="slider">
               <InputRange
                name={"Size"}
@@ -50,7 +38,7 @@ class Slider extends Component {
                 minValue={0}
                 formatLabel={value3 => {
                   var x = `${value3}`;
-                  var temp = ['small','medium','large'][x];
+                  var temp = ['compact','mid-size','large'][x];
                   return ` ${temp}` }}
                 value={this.state.value3}
                 onChange={value3 => this.setState({ value3 })} />
