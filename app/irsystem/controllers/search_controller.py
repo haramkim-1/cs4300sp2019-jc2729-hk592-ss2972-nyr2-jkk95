@@ -14,14 +14,14 @@ searcher = Searcher()
 
 @irsystem.route('/', methods=['GET'])
 def search():
-	query = request.args.get('search')
-	if not query:
-		data = []
-		output_message = ''
-	else:
-		output_message = "Your search: " + query
-		data = range(5)
-	return render_template('index.html')
+    query = request.args.get('search')
+    if not query:
+        data = []
+        output_message = ''
+    else:
+        output_message = "Your search: " + query
+        data = range(5)
+    return render_template('index.html')
 
 
 @irsystem.route('/manifest.json', methods=['GET'])
@@ -40,16 +40,17 @@ def send_static(css_js,file):
 
 @irsystem.route('/keywords', methods=['GET'])
 def get_keywords():
-	return dumps(searcher.keywords)
+    return dumps(searcher.keywords)
 
 @irsystem.route('/search', methods=['GET'])
 def do_search():
-	carsize_range = request.args.get("")
-	keywords = request.args.get("")
-	price_range = request.args.get("")
+    carsize_range = request.args.get("size")
+    keywords = request.args.get("query")
+    price_range = request.args.get("price")
 
 	# convert compact: 0, midsize: 1, large: 2
+    mapping = {"compact":0, "midsize":1, "large":2}
 	
-	# TODO: do something here
+    search_results = searcher.search(min_size=mapping[carsize_range[0]], max_size=mapping[carsize_range[1]], min_price=price_range[0], max_price=price_range[1], query=keywords)
 
-	return None
+    return dumps(search_results)
