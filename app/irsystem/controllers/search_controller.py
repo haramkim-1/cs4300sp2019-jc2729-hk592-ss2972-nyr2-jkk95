@@ -55,7 +55,7 @@ def do_search():
     size1 = mapping[size1]
     size2 = mapping[size2]
     min_size = min(size1, size2)
-    max_size = max(size1, size2 )
+    max_size = max(size1, size2)
 	
     search_results = searcher.search(min_size=mapping[min_size], max_size=mapping[max_size], min_price=min_price, max_price=max_price, query=keywords)
 
