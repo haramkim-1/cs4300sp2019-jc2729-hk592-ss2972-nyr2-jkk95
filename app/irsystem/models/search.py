@@ -27,7 +27,6 @@ class Searcher:
         vocab_to_index = {self.index_to_vocab[k]:k for k in self.index_to_vocab}
         tf_idf_query = np.zeros(len())
         for t in toks:
-            tf_idf_query[cars_reverse_index[t]] = 1
             tf_idf_query[vocab_to_index[t]] = self.idf_dict[t]
 
         similarity_dict = {}
