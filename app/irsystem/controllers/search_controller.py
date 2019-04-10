@@ -40,7 +40,7 @@ def send_static(css_js,file):
 
 @irsystem.route('/keywords', methods=['GET'])
 def get_keywords():
-    return dumps(searcher.keywords)
+    return dumps([{"text": kw} for kw in searcher.keywords])
 
 @irsystem.route('/search', methods=['GET'])
 def do_search():
