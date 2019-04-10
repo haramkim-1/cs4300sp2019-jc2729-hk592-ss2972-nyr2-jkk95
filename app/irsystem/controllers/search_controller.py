@@ -8,6 +8,9 @@ from app.irsystem.models.search import Searcher
 project_name = "Vroom Vroom"
 net_id = "Janice Chan: jc2729, Haram Kim: hk592, Stephanie Shum: ss2972, Nataly Rodriguez: nyr2, Jasmine Kitahara: jkk95"
 
+# create searcher object
+searcher = Searcher()
+
 @irsystem.route('/', methods=['GET'])
 def search():
 	query = request.args.get('search')
@@ -21,7 +24,7 @@ def search():
 
 @irsystem.route('/keywords', methods=['GET'])
 def get_keywords():
-	return dumps(["keyword_1", "keyword_2", "keyword_3", "keyword_4"])
+	return dumps(searcher.keywords)
 
 @irsystem.route('/search', methods=['GET'])
 def do_search():
