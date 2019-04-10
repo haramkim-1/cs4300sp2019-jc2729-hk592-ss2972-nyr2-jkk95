@@ -1,3 +1,7 @@
+To serve React from Flask, run `npm run build` then copy the index.html from the build into the templates folder. In irsystem/controllers/searchcontroller.py, update the routes to reflect new static content if applicable.
+
+To develop React only, just run `npm start`
+-----------
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
