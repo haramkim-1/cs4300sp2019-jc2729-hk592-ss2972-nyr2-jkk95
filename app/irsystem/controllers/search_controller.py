@@ -44,13 +44,19 @@ def get_keywords():
 
 @irsystem.route('/search', methods=['GET'])
 def do_search():
-    carsize_range = request.args.get("size")
-    keywords = request.args.get("query")
-    price_range = request.args.get("price")
+    size1 = request.args.get("size1")
+    size2 = request.args.get("size2")
+    min_price = request.args.get("minPrice")
+    max_price = request.args.get("maxPrice")
+    keywords = request.args.get("keywords")
 
 	# convert compact: 0, midsize: 1, large: 2
     mapping = {"compact":0, "midsize":1, "large":2}
+    size1 = mapping[size1]
+    size2 = mapping[size2]
+    min_size = min(size1, size2)
+    max_size = max(size1, size2 )
 	
-    search_results = searcher.search(min_size=mapping[carsize_range[0]], max_size=mapping[carsize_range[1]], min_price=price_range[0], max_price=price_range[1], query=keywords)
+    search_results = searcher.search(min_size=mapping[min_size], max_size=mapping[max_size], min_price=min_price, max_price=max_price, query=keywords)
 
     return dumps(search_results)
