@@ -4,10 +4,11 @@ import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
 import React, { Component } from 'react';
 import axios from 'axios';
 import './Form.css';
+import List from './List'
 /** Tutorial: http://react-autosuggest.js.org/ **/
 
-// Janice's TODO add: 1. "add", 2. "delete from list", 4. prettify (center), 5. store keywords somehow
-const keywords = [
+// Janice's TODO: 2. "delete from list", 4. prettify (center), 5. api calls to load keywords and send!
+const sys_keywords = [
   {
     text: 'Car 1111'
   },
@@ -16,18 +17,7 @@ const keywords = [
   }
 ];
 
-const getSuggestions = value => {
-  const inputValue = value.trim().toLowerCase();
-  const inputLength = inputValue.length;
 
-  var suggestions = inputLength === 0 ? [] : keywords.filter(kw =>
-    kw.text.toLowerCase().includes(inputValue))
-  suggestions.sort(function(a,b){
-  	return a.text.length - b.text.length;
-  });
-  return suggestions
-  
-};
 
 function getSuggestionValue(suggestion) {
   return `${suggestion.text}`;
@@ -77,6 +67,17 @@ class Form extends Component {
 	 //  });
   // }
 
+  getSuggestions = value => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+    var suggestions = inputLength === 0 ? [] : sys_keywords.filter(kw =>
+      kw.text.toLowerCase().includes(inputValue) && this.state.keywords.indexOf(kw.text) < 0)
+    suggestions.sort(function(a,b){
+      return a.text.length - b.text.length;
+    });
+    return suggestions
+    
+  };
   onChange = (event, { newValue, method }) => {
 
     this.setState({
@@ -85,13 +86,15 @@ class Form extends Component {
   };
 
   onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
-  	console.log(suggestionValue)
-  	// TODO add here
+  	this.setState({
+      keywords: [...this.state.keywords, suggestionValue],
+      value:''
+    })
   };
   
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
-      suggestions: getSuggestions(value)
+      suggestions: this.getSuggestions(value)
     });
   };
 
@@ -101,6 +104,12 @@ class Form extends Component {
     });
   };
 
+  onKeywordDelete = (keyword) => {
+    this.setState((prevState) => ({
+      keywords: prevState.keywords.filter(k => k !== keyword)
+    }));
+
+  }
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
@@ -110,6 +119,8 @@ class Form extends Component {
     };
 
     return (
+      <div>
+
       <Autosuggest 
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -118,6 +129,8 @@ class Form extends Component {
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
         inputProps={inputProps} />
+      <List items={this.state.keywords} delete={this.onKeywordDelete} />
+      </div>
     );
   }
 }
