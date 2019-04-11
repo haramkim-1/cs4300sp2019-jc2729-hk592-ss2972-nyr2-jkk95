@@ -21,18 +21,22 @@ class App extends Component {
 
   }
   sendReq = () => {
-    console.log(this.state.keywords)
-      axios.get('/search', {
-      params: {
-        size1: this.state.size1,
-        size2: this.state.size2,
-        keywords: this.state.keywords,
-        minPrice: this.state.minPrice,
-        maxPrice: this.state.maxPrice
-      }
-    })
+    // axios.get('/search', {
+    // params: {
+    //   size1: this.state.size1,
+    //   size2: this.state.size2,
+    //   keywords: this.state.keywords,
+    //   minPrice: this.state.minPrice,
+    //   maxPrice: this.state.maxPrice
+    // }})
+    // .then(function (response) {
+    //   console.log(response.data);
+    // })
+    const self = this
+    axios.get('http://localhost:5000/dummysearch')
     .then(function (response) {
       console.log(response.data);
+      self.setState({results:response.data})
     })
   };
 
@@ -48,6 +52,7 @@ class App extends Component {
         <Slider/>
     		<Form updateParentKeywords={this.updateKeywords}/>
     		<Button type="button" key='search' onClick={() => {this.sendReq()}}> Search </Button>
+        <div>{this.state.results}</div>
       </div>
 
     );

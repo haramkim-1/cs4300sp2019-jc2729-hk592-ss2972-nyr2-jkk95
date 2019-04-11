@@ -60,3 +60,8 @@ def do_search():
     search_results = searcher.search(min_size=mapping[min_size], max_size=mapping[max_size], min_price=min_price, max_price=max_price, query=keywords)
 
     return dumps(search_results)
+    
+@irsystem.route('/dummysearch', methods=['GET'])
+def do_dummysearch():
+    search_results = ['res1','res2']
+    return dumps(search_results)
