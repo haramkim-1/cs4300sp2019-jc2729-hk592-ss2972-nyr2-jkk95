@@ -5,10 +5,11 @@ body {
 
 .react-autosuggest__container {
   position: relative;
+
 }
 
 .react-autosuggest__input {
-  width: 240px;
+  width: 280px;
   height: 30px;
   padding: 10px 20px;
   font-family: Helvetica, sans-serif;
@@ -16,6 +17,8 @@ body {
   font-size: 16px;
   border: 1px solid #aaa;
   border-radius: 4px;
+  text-align:center;
+
 }
 
 .react-autosuggest__input:focus {
@@ -28,7 +31,11 @@ body {
 }
 
 .react-autosuggest__suggestions-container {
-  display: none;
+
+  display: block;
+  margin: auto;
+  margin-left: 50%;
+  transform: translate(-140px,0);
 }
 
 .react-autosuggest__container--open .react-autosuggest__suggestions-container {
@@ -50,6 +57,8 @@ body {
   margin: 0;
   padding: 0;
   list-style-type: none;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .react-autosuggest__suggestion {

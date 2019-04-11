@@ -21,8 +21,8 @@ class Slider extends Component {
   }
   render() {
     return (
-      <div class = "middle">
-      <form class="slider">
+      <div className = "middle">
+      <form className="slider">
           <InputRange
             name={"Price"}
             maxValue={1700}
@@ -31,7 +31,7 @@ class Slider extends Component {
             value={this.state.value2}
             onChange={value2 => this.setState({ value2 })} />
         </form>
-            <form class="slider">
+            <form className="slider">
               <InputRange
                name={"Size"}
                 maxValue={2}

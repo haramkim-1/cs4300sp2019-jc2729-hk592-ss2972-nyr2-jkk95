@@ -7,25 +7,65 @@ import './Form.css';
 import List from './List'
 /** Tutorial: http://react-autosuggest.js.org/ **/
 
-// Janice's TODO: 2. "delete from list", 4. prettify (center), 5. api calls to load keywords and send!
-const sys_keywords = [
-  {
-    text: 'Car 1111'
-  },
-  {
-    text: '2 car'
-  }
-];
+// should be '' if running on same server i think
+const SERVER_URL = 'http://localhost:5000'
+// Janice's TODO: 4. prettify (center), 5. api calls to  send!
+var sys_keywords = [];
+
+axios.get(SERVER_URL + '/keywords', {'headers':{'Access-Control-Allow-Origin': '*'}})
+  .then(function (response) {
+    sys_keywords = response.data
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
 
 
 
 function getSuggestionValue(suggestion) {
   return `${suggestion.text}`;
 }
+/** matching code begins here **/
+// This matching code is taken directly from https://github.com/moroshko/autosuggest-highlight/issues/5
+// which will soon be merged into the Autosuggest-Highlight library, imported in this js file
+const specialCharsRegex = /[.*+?^${}()|[\]\\]/g;
+const whitespacesRegex = /\s+/;
 
+function escapeRegexCharacters(str: any) {
+    return str.replace(specialCharsRegex, '\\$&');
+}
+const match = (text: any, query: any)  => {
+    return (
+        query
+            .trim()
+            .split(whitespacesRegex)
+            .reduce((result: any, word: any) => {
+                if (!word.length) return result;
+                const wordLen = word.length;
+                const regex = new RegExp(escapeRegexCharacters(word), 'i');
+                const { index = -1 } = text.match(regex);
+                if (index > -1) {
+                    result.push([index, index + wordLen]);
+
+                    // Replace what we just found with spaces so we don't find it again.
+                    text =
+                        text.slice(0, index) +
+                        new Array(wordLen + 1).join(' ') +
+                        text.slice(index + wordLen);
+                }
+
+                return result;
+            }, [])
+            .sort((match1: any, match2: any) => {
+                return match1[0] - match2[0];
+            })
+    );
+};
+/** matching code ends here **/
 function renderSuggestion(suggestion, { query }) {
   const suggestionText = `${suggestion.text}`;
-  const matches = AutosuggestHighlightMatch(suggestionText, query);
+  const matches = match(suggestionText, query);
   const parts = AutosuggestHighlightParse(suggestionText, matches);
 
   return (
@@ -56,16 +96,6 @@ class Form extends Component {
     };
 
   }
-  
-  // componentDidMount() {
-  //   axios.get('keywords')
-	 //  .then(function (response) { // TODO see API and test
-	 //    this.setState({keywords:response})
-	 //  })
-	 //  .catch(function (error) {
-	 //    console.log(error);
-	 //  });
-  // }
 
   getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
@@ -86,10 +116,12 @@ class Form extends Component {
   };
 
   onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
+    var new_keywords = [...this.state.keywords, suggestionValue]
   	this.setState({
-      keywords: [...this.state.keywords, suggestionValue],
+      keywords: new_keywords,
       value:''
     })
+    this.props.updateParentKeywords(new_keywords)
   };
   
   onSuggestionsFetchRequested = ({ value }) => {
@@ -105,10 +137,12 @@ class Form extends Component {
   };
 
   onKeywordDelete = (keyword) => {
-    this.setState((prevState) => ({
-      keywords: prevState.keywords.filter(k => k !== keyword)
-    }));
+    var new_keywords = this.state.keywords.filter(k => k !== keyword)
+    this.setState({
 
+      keywords: new_keywords
+    });
+    this.props.updateParentKeywords(new_keywords)
   }
   render() {
     const { value, suggestions } = this.state;
