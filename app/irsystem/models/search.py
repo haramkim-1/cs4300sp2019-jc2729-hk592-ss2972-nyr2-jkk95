@@ -1,5 +1,6 @@
 from json import load
 import numpy as np
+from os.path import join
 
 #filter by size
 def filter_sizes(min_size, max_size, min_price, max_price, car_size, car_price):
@@ -9,32 +10,34 @@ def get_sim(car, query):
     numerator = np.dot(car, query)
     norm1 = np.linalg.norm(car)
     norm2 = np.linalg.norm(query)
-    sim = numerator/(norm1*norm2)
+    sim = numerator/(1 + norm1*norm2)
     return sim
 
 class Searcher:
-    def __init__(self):
-        self.doc_by_vocab = np.load('data/doc_by_vocab.json.npy')
-        with open('data/unfiltered_list.json') as unfiltered, open('data/idf_dict.json') as idfs, open('data/index_to_vocab.json') as itv, open('data/keywords.json') as kwords:
+    def __init__(self, data_path="data"):
+        self.doc_by_vocab = np.load(join(data_path, 'doc_by_vocab.json.npy'))
+        with open(join(data_path, 'unfiltered_list.json')) as unfiltered, \
+            open(join(data_path, 'idf_dict.json')) as idfs, open(join(data_path, 'index_to_vocab.json')) as itv, \
+            open(join(data_path, 'keywords.json')) as kwords:
             self.unfiltered_list = load(unfiltered)
             self.idf_dict = load(idfs)
             self.index_to_vocab = load(itv)
             self.keywords = load(kwords)
+            self.vocab_to_index = {self.index_to_vocab[k]:int(k) for k in self.index_to_vocab}
+            self.cars_reverse_index = {car[0]: i for i, car in enumerate(self.unfiltered_list)}
 
     def search(self, min_size, max_size, min_price, max_price, query):
         truncated_list_by_size = [x[0] for x in self.unfiltered_list if filter_sizes(min_size, max_size, min_price, max_price, x[1], x[2])]
-        cars_reverse_index = {car[0]: i for i, car[0] in enumerate(self.unfiltered_list)}
-        vocab_to_index = {self.index_to_vocab[k]:k for k in self.index_to_vocab}
-        tf_idf_query = np.zeros(len())
-        for t in toks:
-            tf_idf_query[cars_reverse_index[t]] = 1
-            tf_idf_query[vocab_to_index[t]] = self.idf_dict[t]
+        
+        tf_idf_query = np.zeros(len(self.keywords))
+        for t in query:
+            tf_idf_query[self.vocab_to_index[t]] = self.idf_dict[t]
 
         similarity_dict = {}
         for car in truncated_list_by_size:
-            car_index = cars_reverse_index[car]
+            car_index = self.cars_reverse_index[car]
             sim = get_sim(self.doc_by_vocab[car_index] , tf_idf_query)
-            similarity_list[car] = sim
+            similarity_dict[car] = sim
 
         sorted_results = sorted(similarity_dict, key=lambda x:x[0], reverse = True)
 

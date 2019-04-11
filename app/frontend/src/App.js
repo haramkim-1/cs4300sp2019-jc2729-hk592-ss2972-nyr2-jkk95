@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Form from './Form';
 import logo from './logo.gif';
 import './App.css';
+import Slider from './Slider';
 
 class App extends Component {
 
@@ -11,9 +12,10 @@ class App extends Component {
       <div className="App">
         <img src={logo} className="App-logo" alt="logo" />
         <Form/>
+        <Slider/>
 
       </div>
-      
+
     );
   }
 }

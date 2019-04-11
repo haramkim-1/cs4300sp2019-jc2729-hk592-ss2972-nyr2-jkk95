@@ -6,3 +6,4 @@ vagrant/site.retry
 vagrant/a4keypair.pem
 .vscode/settings.json
 data/
+app/templates/index.html
