@@ -27,18 +27,23 @@ class Searcher:
             self.cars_reverse_index = {car[0]: i for i, car in enumerate(self.unfiltered_list)}
 
     def search(self, min_size, max_size, min_price, max_price, query):
+        # print("enter method")
         truncated_list_by_size = [x[0] for x in self.unfiltered_list if filter_sizes(min_size, max_size, min_price, max_price, x[1], x[2])]
         
+        # print("start idf_dict lookups")
         tf_idf_query = np.zeros(len(self.keywords))
         for t in query:
+            print("\t" + t)
             tf_idf_query[self.vocab_to_index[t]] = self.idf_dict[t]
 
+        # print("make similarity dict")
         similarity_dict = {}
         for car in truncated_list_by_size:
             car_index = self.cars_reverse_index[car]
             sim = get_sim(self.doc_by_vocab[car_index] , tf_idf_query)
             similarity_dict[car] = sim
 
+        # print("get sorted results")
         sorted_results = sorted(similarity_dict, key=lambda x:x[0], reverse = True)
 
         return sorted_results[0:10]
