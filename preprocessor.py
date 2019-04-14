@@ -54,7 +54,7 @@ for i in range(len(details_dicts)):
     details_dicts[i]["reviews"] = relevant_reviews.to_dict("records")
 
 # remove car objects that don't have any reviews
-details_dicts = [car for car in details if len(car["reviews"]) > 1]
+details_dicts = [car for car in details_dicts if len(car["reviews"]) > 1]
 
 # save new details
 with open("data/data.json", "w+") as file:
