@@ -13,19 +13,20 @@ import re
 import string
 
 def tokenize(text):
-	return re.findall(r'[a-z]+', text.lower())
+    tokenized_review = re.findall(r'[a-z]+', text.lower())
+    return [x for x in tokenized_review if len(x)>2]
 
-def build_vectorizer(max_features, stop_words, max_df=0.8, min_df=20, norm='l2'):
-	"""Returns a TfidfVectorizer object with the above preprocessing properties.
+def build_vectorizer(max_features, stop_words, max_df=0.65, min_df=45, norm='l2', tokenizer=tokenize):
+    """Returns a TfidfVectorizer object with the above preprocessing properties.
 
-	Params: {max_features: Integer,
-			 max_df: Float,
-			 min_df: Float,
-			 norm: String,
-			 stop_words: String}
-	Returns: TfidfVectorizer
-	"""
-	return TfidfVectorizer(max_features=max_features, min_df=min_df, max_df=max_df, stop_words=stop_words, norm=norm)
+    Params: {max_features: Integer,
+             max_df: Float,
+             min_df: Float,
+             norm: String,
+             stop_words: String}
+    Returns: TfidfVectorizer
+    """
+    return TfidfVectorizer(max_features=max_features, min_df=min_df, max_df=max_df, stop_words=stop_words, norm=norm, tokenizer=tokenize)
 
 def create_unique_cars_list(data):
 	cars_list = []
@@ -76,7 +77,7 @@ with open('data/data.json') as json_file:
 			car['Appended Reviews'] = car['Appended Reviews'] + new_review + ' '
 		car['Tokenized Reviews'] = tokenize(car['Appended Reviews'])
 
-	n_feats = 5000
+	n_feats = 4000
 	doc_by_vocab = np.empty([len(data), n_feats])
 
 	tfidf_vec = build_vectorizer(n_feats, "english")
