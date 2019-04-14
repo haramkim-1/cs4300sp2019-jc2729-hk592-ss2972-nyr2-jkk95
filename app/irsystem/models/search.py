@@ -18,7 +18,8 @@ class Searcher:
         self.doc_by_vocab = np.load(join(data_path, 'doc_by_vocab.json.npy'))
         with open(join(data_path, 'unfiltered_list.json')) as unfiltered, \
             open(join(data_path, 'idf_dict.json')) as idfs, open(join(data_path, 'index_to_vocab.json')) as itv, \
-            open(join(data_path, 'keywords.json')) as kwords:
+            open(join(data_path, 'keywords.json')) as kwords, open(join(data_path, 'data.json')) as all_data:
+            self.all_data = load(all_data)
             self.unfiltered_list = load(unfiltered)
             self.idf_dict = load(idfs)
             self.index_to_vocab = load(itv)
@@ -27,7 +28,6 @@ class Searcher:
             self.cars_reverse_index = {car[0]: i for i, car in enumerate(self.unfiltered_list)}
 
     def search(self, min_size, max_size, min_price, max_price, query):
-        print(min_price, max_price)
         # print("enter method")
         truncated_list_by_size = [x[0] for x in self.unfiltered_list if filter_sizes(min_size, max_size, min_price, max_price, x[1], x[2])]
         

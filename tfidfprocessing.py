@@ -67,7 +67,7 @@ def create_sizes_list(data, size_rev_idx):
 # 	return idf_dict
 
 with open('data/data.json') as json_file:
-	data = json.load(json_file)
+	data = json.load(json_file).values()
 
 	num_cars = len(data)
 

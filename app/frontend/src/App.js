@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Form from './Form';
 import logo from './logo.gif';
+
 import './App.css';
 import Slider from './Slider';
 import Button from 'react-bootstrap/Button';
@@ -64,6 +65,7 @@ class App extends Component {
     return (
 
       <div className="App">
+
         <img src={logo} className="App-logo" alt="logo" />
 
         <Slider
