@@ -94,9 +94,9 @@ with open('data/data.json') as json_file:
 
 	unfiltered_list = create_sizes_list(data,size_reverse_index)
 
-	inv_idx = build_inverted_index(data)
+	# inv_idx = build_inverted_index(data)
 
-	idf_dict = compute_idf(inv_idx, len(data))
+	# idf_dict = compute_idf(inv_idx, len(data))
 
     with open("data/tfidf_vec", "w+") as file:
         pickle.dump(tfidf_vec, file)
@@ -105,13 +105,13 @@ with open('data/data.json') as json_file:
 	with open("data/unfiltered_list", "w+") as file:
 		pickle.dump(unfiltered_list, file)
 
-	with open("data/keywords", "w+") as file:
-		pickle.dump(list(index_to_vocab.values()), file)
+	# with open("data/keywords", "w+") as file:
+	# 	pickle.dump(list(index_to_vocab.values()), file)
 
 	np.save("data/doc_by_vocab", doc_by_vocab)
 
 	with open("data/index_to_vocab", "w+") as file:
 		pickle.dump(index_to_vocab, file)
 
-	with open("data/idf_dict", "w+") as file:
-		pickle.dump(idf_dict, file)
+	# with open("data/idf_dict", "w+") as file:
+	# 	pickle.dump(idf_dict, file)
