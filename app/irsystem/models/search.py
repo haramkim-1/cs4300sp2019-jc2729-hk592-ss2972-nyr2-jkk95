@@ -1,6 +1,8 @@
 from json import load
+import pickle
 import numpy as np
 from os.path import join
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 #filter by size
 def filter_sizes(min_size, max_size, min_price, max_price, car_size, car_price):
@@ -15,27 +17,27 @@ def get_sim(car, query):
 
 class Searcher:
     def __init__(self, data_path="data"):
-        self.doc_by_vocab = np.load(join(data_path, 'doc_by_vocab.json.npy'))
-        with open(join(data_path, 'unfiltered_list.json')) as unfiltered, \
-            open(join(data_path, 'idf_dict.json')) as idfs, open(join(data_path, 'index_to_vocab.json')) as itv, \
-            open(join(data_path, 'keywords.json')) as kwords, open(join(data_path, 'data.json')) as all_data:
+        self.doc_by_vocab = np.load(join(data_path, 'doc_by_vocab.npy'))
+        with open(join(data_path, 'unfiltered_list.pkl'), 'rb') as unfiltered, \
+            open(join(data_path, 'index_to_vocab.pkl'), 'rb') as itv, open(join(data_path, 'tfidf_vec.pkl'), 'rb') as tf_file, \
+            open(join(data_path, 'data.json')) as all_data:
             self.all_data = load(all_data)
-            self.unfiltered_list = load(unfiltered)
-            self.idf_dict = load(idfs)
-            self.index_to_vocab = load(itv)
-            self.keywords = load(kwords)
+            self.unfiltered_list = pickle.load(unfiltered)
+            self.index_to_vocab = pickle.load(itv)
+            self.tf = pickle.load(tf_file)
             self.vocab_to_index = {self.index_to_vocab[k]:int(k) for k in self.index_to_vocab}
             self.cars_reverse_index = {car[0]: i for i, car in enumerate(self.unfiltered_list)}
 
     def search(self, min_size, max_size, min_price, max_price, query):
         # print("enter method")
         truncated_list_by_size = [x[0] for x in self.unfiltered_list if filter_sizes(min_size, max_size, min_price, max_price, x[1], x[2])]
-        
+
         # print("start idf_dict lookups")
-        tf_idf_query = np.zeros(len(self.keywords))
-        for t in query:
-            print("\t" + t)
-            tf_idf_query[self.vocab_to_index[t]] = self.idf_dict[t]
+        # tf_idf_query = np.zeros(len(self.keywords))
+        # for t in query:
+        #     print("\t" + t)
+        #     tf_idf_query[self.vocab_to_index[t]] = self.idf_dict[t]
+        tf_idf_query = self.tf.transform(query)
 
         # print("make similarity dict")
         similarity_dict = {}
