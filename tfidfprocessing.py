@@ -14,20 +14,20 @@ import string
 import pickle
 
 def tokenize(text):
-    tokenized_review = re.findall(r'[a-z]+', text.lower())
-    return [x for x in tokenized_review if len(x)>2]
+	tokenized_review = re.findall(r'[a-z]+', text.lower())
+	return [x for x in tokenized_review if len(x)>2]
 
 def build_vectorizer(max_features, stop_words, max_df=0.65, min_df=45, norm='l2', tokenizer=tokenize):
-    """Returns a TfidfVectorizer object with the above preprocessing properties.
+	"""Returns a TfidfVectorizer object with the above preprocessing properties.
 
-    Params: {max_features: Integer,
-             max_df: Float,
-             min_df: Float,
-             norm: String,
-             stop_words: String}
-    Returns: TfidfVectorizer
-    """
-    return TfidfVectorizer(max_features=max_features, min_df=min_df, max_df=max_df, stop_words=stop_words, norm=norm, tokenizer=tokenize)
+	Params: {max_features: Integer,
+			 max_df: Float,
+			 min_df: Float,
+			 norm: String,
+			 stop_words: String}
+	Returns: TfidfVectorizer
+	"""
+	return TfidfVectorizer(max_features=max_features, min_df=min_df, max_df=max_df, stop_words=stop_words, norm=norm, tokenizer=tokenize)
 
 def create_unique_cars_list(data):
 	cars_list = []
