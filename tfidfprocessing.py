@@ -66,7 +66,7 @@ def compute_idf(inv_idx, n_docs, min_df=10, max_df_ratio=0.95):
 	return idf_dict
 
 with open('data/data.json') as json_file:
-	data = json.load(json_file).values()
+	data = list(json.load(json_file).values())
 
 	num_cars = len(data)
 
@@ -105,7 +105,7 @@ with open('data/data.json') as json_file:
 	with open("data/keywords.json", "w+") as file:
 		file.write(dumps(list(index_to_vocab.values())))
 
-	np.save("data/doc_by_vocab.json",doc_by_vocab)
+	np.save("data/doc_by_vocab",doc_by_vocab)
 
 	with open("data/index_to_vocab.json", "w+") as file:
 		file.write(dumps(index_to_vocab))
