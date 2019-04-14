@@ -98,11 +98,11 @@ with open('data/data.json') as json_file:
 
 	# idf_dict = compute_idf(inv_idx, len(data))
 
-	with open("data/tfidf_vec", "wb+") as file:
+	with open("data/tfidf_vec.pkl", "wb+") as file:
 		pickle.dump(tfidf_vec, file)
 
 	# save data
-	with open("data/unfiltered_list", "wb+") as file:
+	with open("data/unfiltered_list.pkl", "wb+") as file:
 		pickle.dump(unfiltered_list, file)
 
 	# with open("data/keywords", "w+") as file:
@@ -110,7 +110,7 @@ with open('data/data.json') as json_file:
 
 	np.save("data/doc_by_vocab", doc_by_vocab)
 
-	with open("data/index_to_vocab", "wb+") as file:
+	with open("data/index_to_vocab.pkl", "wb+") as file:
 		pickle.dump(index_to_vocab, file)
 
 	# with open("data/idf_dict", "w+") as file:
