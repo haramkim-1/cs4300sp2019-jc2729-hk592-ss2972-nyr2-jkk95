@@ -43,31 +43,31 @@ def create_sizes_list(data, size_rev_idx):
 
 	return size_list
 
-# def build_inverted_index(msgs):
-# 	inverted_index = {}
-# 	for index, msg in enumerate(msgs):
-# 		tokens = msg['Tokenized Reviews']
-# 		tokens_set = set(tokens)
-# 		for token in tokens_set:
-# 			if token not in inverted_index:
-# 				inverted_index[token] = [(index, tokens.count(token))]
-# 			else:
-# 				inverted_index[token].append((index, tokens.count(token)))
-# 	return inverted_index
-#
-# def compute_idf(inv_idx, n_docs, min_df=10, max_df_ratio=0.95):
-# 	idf_dict = {}
-# 	for term, tf_list in inv_idx.items():
-# 		df = len(tf_list)
-# 		if (df >= min_df and df/n_docs <= max_df_ratio):
-# 			frac = n_docs/(1+df)
-# 			idf = math.log(frac, 2)
-# 			idf_dict[term] = idf
-#
-# 	return idf_dict
+def build_inverted_index(msgs):
+	inverted_index = {}
+	for index, msg in enumerate(msgs):
+		tokens = msg['Tokenized Reviews']
+		tokens_set = set(tokens)
+		for token in tokens_set:
+			if token not in inverted_index:
+				inverted_index[token] = [(index, tokens.count(token))]
+			else:
+				inverted_index[token].append((index, tokens.count(token)))
+	return inverted_index
+
+def compute_idf(inv_idx, n_docs, min_df=10, max_df_ratio=0.95):
+	idf_dict = {}
+	for term, tf_list in inv_idx.items():
+		df = len(tf_list)
+		if (df >= min_df and df/n_docs <= max_df_ratio):
+			frac = n_docs/(1+df)
+			idf = math.log(frac, 2)
+			idf_dict[term] = idf
+
+	return idf_dict
 
 with open('data/data.json') as json_file:
-	data = json.load(json_file).values()
+	data = list(json.load(json_file).values())
 
 	num_cars = len(data)
 
@@ -98,8 +98,8 @@ with open('data/data.json') as json_file:
 
 	# idf_dict = compute_idf(inv_idx, len(data))
 
-    with open("data/tfidf_vec", "w+") as file:
-        pickle.dump(tfidf_vec, file)
+	with open("data/tfidf_vec", "w+") as file:
+		pickle.dump(tfidf_vec, file)
 
 	# save data
 	with open("data/unfiltered_list", "w+") as file:
