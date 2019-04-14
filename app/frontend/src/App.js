@@ -11,11 +11,11 @@ class App extends Component {
     super();
 
     this.state = {
-      size1: '1', // TODO replace w nataly's code
-      size2: '2', // TODO replace w nataly's code
+      size1: 'compact', // TODO replace w nataly's code
+      size2: 'large', // TODO replace w nataly's code
       keywords: [''],
-      minPrice: 0, // TODO replace
-      maxPrice: 0, // TODO replace
+      minPrice: 2000, // TODO replace
+      maxPrice: 1700000, // TODO replace
       results: []
     };
 
@@ -43,13 +43,25 @@ class App extends Component {
   updateKeywords = (new_keywords) => {
     this.setState({keywords:new_keywords})
   }
+  updatePrices = (new_minprice,new_maxprice) => {
+    this.setState({minPrice:new_minprice});
+    this.setState({maxPrice:new_maxprice});
+  }
+  updateSizes = (new_size1,new_size2) => {
+    this.setState({size1:new_size1});
+    this.setState({size2:new_size2});
+  }
+  
   render() {
     return (
 
       <div className="App">
         <img src={logo} className="App-logo" alt="logo" />
-        
-        <Slider/>
+
+        <Slider
+          updateParentPrices={this.updatePrices}
+          updateParentSizes={this.updateSizes}
+        />
     		<Form updateParentKeywords={this.updateKeywords}/>
     		<Button type="button" key='search' onClick={() => {this.sendReq()}}> Search </Button>
         <div>{this.state.results}</div>
