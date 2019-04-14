@@ -21,24 +21,32 @@ class App extends Component {
 
   }
   sendReq = () => {
-    // axios.get('/search', {
-    // params: {
-    //   size1: this.state.size1,
-    //   size2: this.state.size2,
-    //   keywords: this.state.keywords,
-    //   minPrice: this.state.minPrice,
-    //   maxPrice: this.state.maxPrice
-    // }})
-    // .then(function (response) {
-    //   console.log(response.data);
-    // })
-    const self = this
-    axios.get('http://localhost:5000/dummysearch')
-    .then(function (response) {
-      console.log(response.data);
+      const self = this
+    console.log('req sent')
+    console.log(this.state.size1)
+    console.log(this.state.size2)
+    console.log(this.state.keywords)
+    console.log(this.state.minPrice)
+    console.log(this.state.maxPrice)
+
+  axios.get('http://localhost:5000/search', {
+    params: {
+      size1: this.state.size1,
+      size2: this.state.size2,
+      keywords: JSON.stringify(this.state.keywords),
+      minPrice: this.state.minPrice,
+      maxPrice: this.state.maxPrice
+    }})
+  .then(function (response) {
       self.setState({results:response.data})
     })
-  };
+
+    // axios.get('http://localhost:5000/dummysearch')
+    // .then(function (response) {
+    //   console.log(response.data);
+    //   self.setState({results:response.data})
+    // })
+};
 
   updateKeywords = (new_keywords) => {
     this.setState({keywords:new_keywords})
@@ -51,7 +59,7 @@ class App extends Component {
     this.setState({size1:new_size1});
     this.setState({size2:new_size2});
   }
-  
+
   render() {
     return (
 
