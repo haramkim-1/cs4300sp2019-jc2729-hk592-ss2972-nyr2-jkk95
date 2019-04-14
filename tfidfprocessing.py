@@ -11,6 +11,7 @@ import math
 from json import dumps
 import re
 import string
+import pickle
 
 def tokenize(text):
     tokenized_review = re.findall(r'[a-z]+', text.lower())
@@ -75,7 +76,7 @@ with open('data/data.json') as json_file:
 		for review in car['reviews']:
 			new_review = (re.sub('[0-9]+', '', review['Review'])).lower()
 			car['Appended Reviews'] = car['Appended Reviews'] + new_review + ' '
-		car['Tokenized Reviews'] = tokenize(car['Appended Reviews'])
+		# car['Tokenized Reviews'] = tokenize(car['Appended Reviews'])
 
 	n_feats = 4000
 	doc_by_vocab = np.empty([len(data), n_feats])
@@ -97,18 +98,20 @@ with open('data/data.json') as json_file:
 
 	idf_dict = compute_idf(inv_idx, len(data))
 
+	with open("data/tfidf_vec", "w+") as file:
+		pickle.dump(tfidf_vec, file)
 
 	# save data
-	with open("data/unfiltered_list.json", "w+") as file:
-		file.write(dumps(list(unfiltered_list)))
+	with open("data/unfiltered_list", "w+") as file:
+		pickle.dump(unfiltered_list, file)
 
-	with open("data/keywords.json", "w+") as file:
-		file.write(dumps(list(index_to_vocab.values())))
+	with open("data/keywords", "w+") as file:
+		pickle.dump(list(index_to_vocab.values()), file)
 
-	np.save("data/doc_by_vocab",doc_by_vocab)
+	np.save("data/doc_by_vocab", doc_by_vocab)
 
-	with open("data/index_to_vocab.json", "w+") as file:
-		file.write(dumps(index_to_vocab))
+	with open("data/index_to_vocab", "w+") as file:
+		pickle.dump(index_to_vocab, file)
 
-	with open("data/idf_dict.json", "w+") as file:
-		file.write(dumps(idf_dict))
+	with open("data/idf_dict", "w+") as file:
+		pickle.dump(idf_dict, file)
