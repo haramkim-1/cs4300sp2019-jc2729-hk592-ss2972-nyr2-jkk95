@@ -18,7 +18,8 @@ class Searcher:
         self.doc_by_vocab = np.load(join(data_path, 'doc_by_vocab.json.npy'))
         with open(join(data_path, 'unfiltered_list.json')) as unfiltered, \
             open(join(data_path, 'idf_dict.json')) as idfs, open(join(data_path, 'index_to_vocab.json')) as itv, \
-            open(join(data_path, 'keywords.json')) as kwords:
+            open(join(data_path, 'keywords.json')) as kwords, open(join(data_path, 'data.json')) as all_data:
+            self.all_data = load(all_data)
             self.unfiltered_list = load(unfiltered)
             self.idf_dict = load(idfs)
             self.index_to_vocab = load(itv)
