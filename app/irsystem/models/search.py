@@ -27,7 +27,6 @@ class Searcher:
             self.cars_reverse_index = {car[0]: i for i, car in enumerate(self.unfiltered_list)}
 
     def search(self, min_size, max_size, min_price, max_price, query):
-        print(min_price, max_price)
         # print("enter method")
         truncated_list_by_size = [x[0] for x in self.unfiltered_list if filter_sizes(min_size, max_size, min_price, max_price, x[1], x[2])]
         
