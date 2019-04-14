@@ -44,7 +44,7 @@ class Slider extends Component {
               this.setState({ value1 });
               var new_minprice = this.state.value1.min ;
               var new_maxprice = this.state.value1.max ;
-              this.props.updateParentPrices(new_minprice, new_maxprice);
+              this.props.updateParentPrices(new_minprice * 1000, new_maxprice * 1000);
 
           }} />
         </form>

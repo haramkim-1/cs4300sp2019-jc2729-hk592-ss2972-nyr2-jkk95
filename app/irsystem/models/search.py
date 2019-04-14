@@ -27,6 +27,7 @@ class Searcher:
             self.cars_reverse_index = {car[0]: i for i, car in enumerate(self.unfiltered_list)}
 
     def search(self, min_size, max_size, min_price, max_price, query):
+        print(min_price, max_price)
         # print("enter method")
         truncated_list_by_size = [x[0] for x in self.unfiltered_list if filter_sizes(min_size, max_size, min_price, max_price, x[1], x[2])]
         
@@ -46,4 +47,5 @@ class Searcher:
         # print("get sorted results")
         sorted_results = sorted(similarity_dict, key=lambda x:x[0], reverse = True)
 
+        # print(sorted_results[0:10])
         return sorted_results[0:10]
