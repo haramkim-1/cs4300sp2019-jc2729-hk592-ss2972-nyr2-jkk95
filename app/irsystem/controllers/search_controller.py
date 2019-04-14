@@ -3,7 +3,7 @@ from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
 from flask import send_from_directory
 from flask import request
-from json import dumps
+from json import dumps, loads
 from app.irsystem.models.search import Searcher
 
 project_name = "Vroom Vroom"
@@ -48,8 +48,7 @@ def do_search():
     size2 = request.args.get("size2")
     min_price = int(request.args.get("minPrice"))
     max_price = int(request.args.get("maxPrice"))
-    keywords = request.args.get("keywords")
-    print(size1,size2,type(min_price),type(max_price))
+    keywords = loads(request.args.get("keywords"))
 
 	# convert compact: 0, midsize: 1, large: 2
     mapping = {"compact":0, "midsize":1, "large":2}
@@ -58,7 +57,7 @@ def do_search():
     min_size = min(size1, size2)
     max_size = max(size1, size2)
 
-    search_results = searcher.search(min_size=mapping[min_size], max_size=mapping[max_size], min_price=min_price, max_price=max_price, query=keywords)
+    search_results = searcher.search(min_size=min_size, max_size=max_size, min_price=min_price, max_price=max_price, query=keywords)
 
     return dumps(search_results)
 
