@@ -53,12 +53,13 @@ for i in range(len(details_dicts)):
     relevant_reviews = reviews[reviews["Vehicle_Title"].str.contains(current_ymm)]
     details_dicts[i]["reviews"] = relevant_reviews.to_dict("records")
 
-# remove car objects that don't have any reviews
-details_dicts = [car for car in details_dicts if len(car["reviews"]) > 1]
+# make a mapping from car ymm to car data
+# at the same time, remove car objects that don't have any reviews
+car_dict = {car["Year_Make_Model"]:car for car in details_dicts if len(car["reviews"]) > 1}
 
 # save new details
 with open("data/data.json", "w+") as file:
-    file.write(dumps(details_dicts))
+    file.write(dumps(car_dict))
 
 # from json import load
 # from statistics import median, stdev
