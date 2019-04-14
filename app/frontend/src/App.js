@@ -62,6 +62,7 @@ class App extends Component {
   }
 
   render() {
+    var list_items = this.state.results.map((d) => <li style={{color:"black", listStyleType:"none"}} key={d}>{d} </li>);
     return (
 
       <div className="App">
@@ -74,7 +75,7 @@ class App extends Component {
         />
     		<Form updateParentKeywords={this.updateKeywords}/>
     		<Button type="button" key='search' onClick={() => {this.sendReq()}}> Search </Button>
-        <div>{this.state.results}</div>
+        <div style={{background:"white", opacity:"0.6", width:"300px", margin: "auto", marginTop: "10px"}}>{list_items}</div>
       </div>
 
     );
