@@ -66,7 +66,7 @@ def compute_idf(inv_idx, n_docs, min_df=10, max_df_ratio=0.95):
 	return idf_dict
 
 with open('data/data.json') as json_file:
-	data = json.load(json_file)
+	data = json.load(json_file).values()
 
 	num_cars = len(data)
 
