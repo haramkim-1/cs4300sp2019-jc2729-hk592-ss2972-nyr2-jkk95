@@ -11,13 +11,16 @@ class App extends Component {
   constructor() {
     super();
 
+	console.log(window.location);
+
     this.state = {
       size1: 'compact', // TODO replace w nataly's code
       size2: 'large', // TODO replace w nataly's code
       keywords: [''],
       minPrice: 2000, // TODO replace
       maxPrice: 1700000, // TODO replace
-      results: []
+	  results: [],
+	  baseUrl: window.location
     };
 
   }
@@ -30,7 +33,7 @@ class App extends Component {
     console.log(this.state.minPrice)
     console.log(this.state.maxPrice)
 
-  axios.get('http://localhost:5000/search', {
+  axios.get(this.state.baseUrl + 'search', {
     params: {
       size1: this.state.size1,
       size2: this.state.size2,
