@@ -51,7 +51,7 @@ def do_search():
 	keywords = loads(request.args.get("keywords"))
 
 	# convert compact: 0, midsize: 1, large: 2
-	mapping = {"compact":0, "midsize":1, "large":2}
+	mapping = {"Compact":0, "Midsize":1, "Large":2}
 	size1 = mapping[size1]
 	size2 = mapping[size2]
 	min_size = min(size1, size2)

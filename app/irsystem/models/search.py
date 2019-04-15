@@ -50,7 +50,7 @@ class Searcher:
 		# self.doc_by_vocab = np.empty([len(self.all_data), n_feats])
 
 		self.tfidf_vec = build_vectorizer(n_feats, "english")
-		
+
 		for car in self.all_data.values():
 			car['Appended Reviews'] = ""
 			for review in car['reviews']:
@@ -71,7 +71,7 @@ class Searcher:
 		#	 tf_idf_query[self.vocab_to_index[t]] = self.idf_dict[t]
 		query = " ".join(query)
 		tf_idf_query = self.tfidf_vec.transform([query]).toarray()[0]
-		
+
 
 		# print("make similarity dict")
 		similarity_dict = {}
@@ -83,7 +83,6 @@ class Searcher:
 			similarity_dict[car] = sim
 
 		# print("get sorted results")
-		sorted_results = sorted(similarity_dict, key=lambda x:x[0], reverse = True)
-
+		sorted_results = sorted(similarity_dict.keys(), key=lambda word: similarity_dict.get(word), reverse = True)
 		print('sorted results' , sorted_results[0:10])
 		return sorted_results[0:10]
