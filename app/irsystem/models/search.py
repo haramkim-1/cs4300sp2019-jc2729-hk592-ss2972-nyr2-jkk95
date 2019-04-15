@@ -24,11 +24,14 @@ def build_vectorizer(max_features, stop_words, max_df=0.65, min_df=45, norm='l2'
 def filter_sizes(min_size, max_size, min_price, max_price, car_size, car_price):
 	return car_size >= min_size and car_size <= max_size and car_price >= min_price and car_price <= max_price
 #cosine similarity
-def get_sim(car, query):
-	numerator = np.dot(car, query)
+def get_sim(car, q):
+	print(car)
+	print('******')
+	print(q)
+	numerator = np.dot(car, q)
 	norm1 = np.linalg.norm(car)
-	norm2 = np.linalg.norm(query)
-	sim = numerator/(1 + norm1*norm2)
+	norm2 = np.linalg.norm(q)
+	sim = numerator/float(1 + norm1*norm2)
 	return sim
 
 class Searcher:
@@ -44,7 +47,7 @@ class Searcher:
 			self.cars_reverse_index = {car[0]: i for i, car in enumerate(self.unfiltered_list)}
 
 		n_feats = 4000
-		self.doc_by_vocab = np.empty([len(self.all_data), n_feats])
+		# self.doc_by_vocab = np.empty([len(self.all_data), n_feats])
 
 		self.tfidf_vec = build_vectorizer(n_feats, "english")
 		
@@ -55,7 +58,7 @@ class Searcher:
 				car['Appended Reviews'] = car['Appended Reviews'] + new_review + ' '
 			self.all_data[car["Year_Make_Model"]] = car
 
-		doc_by_vocab = self.tfidf_vec.fit_transform([d['Appended Reviews'] for d in self.all_data.values()]).toarray()
+		self.doc_by_vocab = self.tfidf_vec.fit_transform([d['Appended Reviews'] for d in self.all_data.values()]).toarray()
 
 	def search(self, min_size, max_size, min_price, max_price, query):
 		# print("enter method")
@@ -67,17 +70,20 @@ class Searcher:
 		#	 print("\t" + t)
 		#	 tf_idf_query[self.vocab_to_index[t]] = self.idf_dict[t]
 		query = " ".join(query)
-		tf_idf_query = self.tfidf_vec.transform([query])
+		tf_idf_query = self.tfidf_vec.transform([query]).toarray()[0]
+		
 
 		# print("make similarity dict")
 		similarity_dict = {}
 		for car in truncated_list_by_size:
 			car_index = self.cars_reverse_index[car]
-			sim = get_sim(self.doc_by_vocab[car_index] , tf_idf_query)
+			print(self.doc_by_vocab[car_index].T.shape)
+			print('tf idf', tf_idf_query.shape)
+			sim = get_sim(self.doc_by_vocab[car_index].T, tf_idf_query)
 			similarity_dict[car] = sim
 
 		# print("get sorted results")
 		sorted_results = sorted(similarity_dict, key=lambda x:x[0], reverse = True)
 
-		# print(sorted_results[0:10])
+		print('sorted results' , sorted_results[0:10])
 		return sorted_results[0:10]
