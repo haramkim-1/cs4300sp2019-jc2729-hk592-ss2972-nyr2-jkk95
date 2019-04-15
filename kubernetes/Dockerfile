@@ -2,6 +2,7 @@
 FROM python:2.7
 RUN mkdir -p /service
 # Copy over all the files of interest
+ADD app/frontend/build /service/app/frontend/build
 ADD app /service/app
 ADD app.py /service/app.py
 ADD config.py /service/config.py
