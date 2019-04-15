@@ -56,13 +56,13 @@ class Slider extends Component {
             allowSameValues={true}
             formatLabel={value2 => {
               var x = `${value2}`;
-              var temp = ['compact','mid-size','large'][x];
+              var temp = ['Compact', 'Midsize', 'Large'][x];
               return ` ${temp}` }}
               value={this.state.value2}
               onChange={value2 => {
                 this.setState({ value2 });
-                var new_size1 = ['compact','mid-size','large'][this.state.value2.min];
-                var new_size2 = ['compact','mid-size','large'][this.state.value2.max];
+                var new_size1 = ['Compact', 'Midsize', 'Large'][this.state.value2.min];
+                var new_size2 = ['Compact', 'Midsize', 'Large'][this.state.value2.max];
                 this.props.updateParentSizes(new_size1,new_size2);
             }} />
         </form>

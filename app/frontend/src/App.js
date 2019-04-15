@@ -12,8 +12,8 @@ class App extends Component {
     super();
 
     this.state = {
-      size1: 'compact', // TODO replace w nataly's code
-      size2: 'large', // TODO replace w nataly's code
+      size1: 'Compact', // TODO replace w nataly's code
+      size2: 'Large', // TODO replace w nataly's code
       keywords: [''],
       minPrice: 2000, // TODO replace
       maxPrice: 1700000, // TODO replace
