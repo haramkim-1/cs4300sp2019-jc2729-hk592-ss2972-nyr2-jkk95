@@ -46,7 +46,7 @@ class Searcher:
 		n_feats = 4000
 		self.doc_by_vocab = np.empty([len(self.all_data), n_feats])
 
-		tfidf_vec = build_vectorizer(n_feats, "english")
+		self.tfidf_vec = build_vectorizer(n_feats, "english")
 		
 		for car in self.all_data.values():
 			car['Appended Reviews'] = ""
@@ -55,7 +55,7 @@ class Searcher:
 				car['Appended Reviews'] = car['Appended Reviews'] + new_review + ' '
 			self.all_data[car["Year_Make_Model"]] = car
 
-		doc_by_vocab = tfidf_vec.fit_transform([d['Appended Reviews'] for d in self.all_data.values()]).toarray()
+		doc_by_vocab = self.tfidf_vec.fit_transform([d['Appended Reviews'] for d in self.all_data.values()]).toarray()
 
 	def search(self, min_size, max_size, min_price, max_price, query):
 		# print("enter method")
@@ -66,7 +66,8 @@ class Searcher:
 		# for t in query:
 		#	 print("\t" + t)
 		#	 tf_idf_query[self.vocab_to_index[t]] = self.idf_dict[t]
-		tf_idf_query = self.tf.transform(query)
+		query = " ".join(query)
+		tf_idf_query = self.tfidf_vec.transform([query])
 
 		# print("make similarity dict")
 		similarity_dict = {}
