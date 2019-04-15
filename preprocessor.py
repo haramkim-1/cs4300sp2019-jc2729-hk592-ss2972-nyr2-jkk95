@@ -1,7 +1,7 @@
 import pandas as pd
 from os import listdir
 from os.path import join
-from json import dumps
+from json import dump
 
 details = pd.read_csv("data/raw/details.csv",
 			usecols=["Make", "Model", "Year", "Transmission Type", "Driven_Wheels", 
@@ -59,7 +59,7 @@ car_dict = {car["Year_Make_Model"]:car for car in details_dicts if len(car["revi
 
 # save new details
 with open("data/data.json", "w+") as file:
-	file.write(dumps(car_dict))
+	dump(car_dict, file)
 
 # from json import load
 # from statistics import median, stdev
