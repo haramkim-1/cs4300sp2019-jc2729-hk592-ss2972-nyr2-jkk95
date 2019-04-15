@@ -1,0 +1,43 @@
+/* 23c9ff-7cc6fe-ccd5ff-e7bbe3-c884a6
+c1c1c1-2c4251-d16666-b6c649-ffffff
+c1c1c1-2c4251-d17f66-49b6c6-ffffff
+Color Schemes: c1c1c1-2c4251-d16666-b6c649-ffffff */
+
+@media (min-width: 1200px) {
+.container {
+    max-width: 970px;
+}
+}
+@media (min-width:400px){
+.global-search {
+padding: 20px 0;
+text-align:center;
+}
+body {
+padding-top: 15%;
+padding-bottom: 15px;
+}
+.global-search {
+text-align:center;
+padding:10px;
+}
+.global-search .form-control {
+width:500px;
+}
+.global-search * {
+display:inline-block;
+margin-bottom:0;
+}
+}
+.topcorner{
+position:absolute;
+top:2%;
+right:2%;
+}
+.btn{
+background-color: #4285F4;
+border: none
+}
+.step-links a{
+color: #4285F4;
+}
