@@ -7,11 +7,11 @@ import List from './List'
 /** Tutorial: http://react-autosuggest.js.org/ **/
 
 // should be '' if running on same server i think
-const SERVER_URL = 'http://localhost:5000'
+const SERVER_URL = window.location
 // Janice's TODO: 4. prettify (center), 5. api calls to  send!
 var sys_keywords = [];
 
-axios.get(SERVER_URL + '/keywords', {'headers':{'Access-Control-Allow-Origin': '*'}})
+axios.get(SERVER_URL + 'keywords', {'headers':{'Access-Control-Allow-Origin': '*'}})
   .then(function (response) {
     sys_keywords = response.data
   })
