@@ -11,8 +11,6 @@ class App extends Component {
   constructor() {
     super();
 
-	console.log(window.location);
-
     this.state = {
       size1: 'Compact', // TODO replace w nataly's code
       size2: 'Large', // TODO replace w nataly's code
@@ -20,7 +18,8 @@ class App extends Component {
       minPrice: 2000, // TODO replace
       maxPrice: 1700000, // TODO replace
 	  results: [],
-	  baseUrl: window.location
+	//   baseUrl: window.location // use for deployment mode
+	  baseUrl: "http://localhost:5000/" // use for local development mod
     };
 
   }
@@ -64,14 +63,16 @@ class App extends Component {
     this.setState({size2:new_size2});
   }
 
-  displayDetails = function(ymm) {
+  displayDetails = function(event) {
 	// TODO
-	console.log(ymm);
+	console.log(event);
   }
 
   render() {
     var list_items = this.state.results.map((ymm) => 
-		<li style={{color:"black", listStyleType:"none"}} key={ymm} onClick={this.displayDetails(ymm)}> {ymm} </li>
+		<li style={{color:"black", listStyleType:"none"}} key={ymm} onClick={this.displayDetails}> 
+			{ymm} 
+		</li>
 	);
     return (
 
