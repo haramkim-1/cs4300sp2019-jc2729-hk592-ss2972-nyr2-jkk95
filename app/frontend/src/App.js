@@ -64,8 +64,15 @@ class App extends Component {
     this.setState({size2:new_size2});
   }
 
+  displayDetails = function(ymm) {
+	// TODO
+	console.log(ymm);
+  }
+
   render() {
-    var list_items = this.state.results.map((d) => <li style={{color:"black", listStyleType:"none"}} key={d}>{d} </li>);
+    var list_items = this.state.results.map((ymm) => 
+		<li style={{color:"black", listStyleType:"none"}} key={ymm} onClick={this.displayDetails(ymm)}> {ymm} </li>
+	);
     return (
 
       <div className="App">
