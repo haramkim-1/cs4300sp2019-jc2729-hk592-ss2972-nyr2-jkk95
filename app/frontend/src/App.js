@@ -11,21 +11,39 @@ class App extends Component {
   constructor() {
     super();
 
-	console.log(window.location);
-
     this.state = {
       size1: 'Compact', 
       size2: 'Large', 
       keywords: [''],
+<<<<<<< Updated upstream
       minPrice: 2000,
       maxPrice: 1700000, 
   	  results: [],
   	  baseUrl: window.location
+=======
+      minPrice: 2000, // TODO replace
+      maxPrice: 1700000, // TODO replace
+      results: []
+>>>>>>> Stashed changes
     };
   }
 
+<<<<<<< Updated upstream
   sendReq = () => {
     const self = this
+=======
+  axios.get('http://localhost:5000/search', {
+    params: {
+      size1: this.state.size1,
+      size2: this.state.size2,
+      keywords: JSON.stringify(this.state.keywords),
+      minPrice: this.state.minPrice,
+      maxPrice: this.state.maxPrice
+    }})
+  .then(function (response) {
+      self.setState({results:response.data})
+    })
+>>>>>>> Stashed changes
 
     axios.get(this.state.baseUrl + 'search', {
       params: {
