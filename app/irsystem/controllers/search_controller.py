@@ -64,3 +64,12 @@ def do_search():
 
 	# send back json of results from Searcher
 	return dumps(search_results)
+
+@irsystem.route('/cardetails', methods=['GET'])
+def get_details():
+	"""Route to provide specific car details to the frontend"""
+	# unpack year-make-model from querystring
+	ymm = request.args.get("carYMM")
+
+	# return a json of the car data
+	return dumps(searcher.all_data.get(ymm, ""))
