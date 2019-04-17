@@ -14,15 +14,8 @@ searcher = Searcher()
 
 @irsystem.route('/', methods=['GET'])
 def search():
-	query = request.args.get('search')
-	if not query:
-		data = []
-		output_message = ''
-	else:
-		output_message = "Your search: " + query
-		data = range(5)
+	"""Serve the frontend HTML file"""
 	return render_template('index.html')
-
 
 @irsystem.route('/manifest.json', methods=['GET'])
 def send_manifest():
@@ -32,7 +25,6 @@ def send_manifest():
 def send_fav():
 	return send_from_directory('frontend/build', 'favicon.ico')
 
-
 @irsystem.route('/static/<css_js>/<file>', methods=['GET'])
 def send_static(css_js,file):
 	print('sending sttic')
@@ -40,28 +32,35 @@ def send_static(css_js,file):
 
 @irsystem.route('/keywords', methods=['GET'])
 def get_keywords():
+	"""Route to provide the list of good types to the frontend"""
 	return dumps([{"text": kw} for kw in searcher.index_to_vocab.values()])
 
 @irsystem.route('/search', methods=['GET'])
 def do_search():
+	"""Route to handle search requests from frontend.
+	Querystring must contain the arguments:
+	- size1: First of two car size filter strings; unordered
+	- size2: Second of two car size filter strings; unordered
+	- minPrice: Minimum price to filter with
+	- maxPrice: Maximum price to filter with
+	- keywords: A list of strings giving the keywords to be passed to Searcher
+    """
+	# unpack variables from querystring
 	size1 = request.args.get("size1")
 	size2 = request.args.get("size2")
 	min_price = int(request.args.get("minPrice"))
 	max_price = int(request.args.get("maxPrice"))
 	keywords = loads(request.args.get("keywords"))
 
-	# convert compact: 0, midsize: 1, large: 2
+	# convert mapping words to min and max size integers
 	mapping = {"Compact":0, "Midsize":1, "Large":2}
 	size1 = mapping[size1]
 	size2 = mapping[size2]
 	min_size = min(size1, size2)
 	max_size = max(size1, size2)
 
+	# call search method
 	search_results = searcher.search(min_size=min_size, max_size=max_size, min_price=min_price, max_price=max_price, query=keywords)
 
-	return dumps(search_results)
-
-@irsystem.route('/dummysearch', methods=['GET'])
-def do_dummysearch():
-	search_results = ['res1','res2']
+	# send back json of results from Searcher
 	return dumps(search_results)
