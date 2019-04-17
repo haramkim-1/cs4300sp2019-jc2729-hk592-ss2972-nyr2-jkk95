@@ -12,38 +12,18 @@ class App extends Component {
     super();
 
     this.state = {
-      size1: 'Compact', 
-      size2: 'Large', 
+      size1: 'Compact',
+      size2: 'Large',
       keywords: [''],
-<<<<<<< Updated upstream
       minPrice: 2000,
-      maxPrice: 1700000, 
+      maxPrice: 1700000,
   	  results: [],
   	  baseUrl: window.location
-=======
-      minPrice: 2000, // TODO replace
-      maxPrice: 1700000, // TODO replace
-      results: []
->>>>>>> Stashed changes
     };
   }
 
-<<<<<<< Updated upstream
   sendReq = () => {
     const self = this
-=======
-  axios.get('http://localhost:5000/search', {
-    params: {
-      size1: this.state.size1,
-      size2: this.state.size2,
-      keywords: JSON.stringify(this.state.keywords),
-      minPrice: this.state.minPrice,
-      maxPrice: this.state.maxPrice
-    }})
-  .then(function (response) {
-      self.setState({results:response.data})
-    })
->>>>>>> Stashed changes
 
     axios.get(this.state.baseUrl + 'search', {
       params: {
@@ -69,7 +49,7 @@ class App extends Component {
     this.setState({size1:new_size1});
     this.setState({size2:new_size2});
   }
-  
+
   /** Returns sliders for filters, freeform input Form with suggested keywords, search button **/
   render() {
     var list_items = this.state.results.map((d) => <li style={{color:"black", listStyleType:"none"}} key={d}>{d} </li>);
