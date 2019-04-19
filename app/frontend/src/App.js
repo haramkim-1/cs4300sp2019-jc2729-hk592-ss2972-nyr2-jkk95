@@ -6,6 +6,9 @@ import './App.css';
 import Slider from './Slider';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root')
 
 class App extends Component {
   constructor() {
@@ -17,11 +20,12 @@ class App extends Component {
       keywords: [''],
       minPrice: 2000, // TODO replace
       maxPrice: 1700000, // TODO replace
-	  results: [],
-	//   baseUrl: window.location // use for deployment mode
-	  baseUrl: "http://localhost:5000/" // use for local development mode
+      results: [],
+      selectedCar: null,
+      modalOpen: false,
+      //baseUrl: window.location // use for deployment mode
+      baseUrl: "http://localhost:5000/" // use for local development mode
     };
-
   }
   sendReq = () => {
       const self = this
@@ -42,13 +46,7 @@ class App extends Component {
     }})
   .then(function (response) {
       self.setState({results:response.data})
-    })
-
-    // axios.get('http://localhost:5000/dummysearch')
-    // .then(function (response) {
-    //   console.log(response.data);
-    //   self.setState({results:response.data})
-    // })
+  })
 };
 
   updateKeywords = (new_keywords) => {
@@ -64,17 +62,29 @@ class App extends Component {
   }
 
   displayDetails = function(event, ymm) {
-	// TODO
-	console.log(ymm);
-  }
+    // get car details
+    axios.get(this.state.baseUrl + 'cardetails', {
+        params: { carYMM: ymm }})
+      .then(function (response) {
+        console.log(response.data);
+        this.setState({selectedCar:response.data, modalOpen:true});
+      }.bind(this))
+  }.bind(this)
+
+  closeModal = function() {
+    this.setState({modalOpen: false});
+  }.bind(this)
+
+  afterOpenModal = function() {
+    // TODO: setup ?
+  }.bind(this)
 
   render() {
     var list_items = this.state.results.map((ymm) => 
-		<li style={{color:"black", listStyleType:"none"}} key={ymm}> 
-			<Button style={{opacity:"1.0", margin: "auto", margin: "3px"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
-			
-		</li>
-	);
+        <li style={{color:"black", listStyleType:"none"}} key={ymm}> 
+            <Button style={{opacity:"1.0", margin: "auto", margin: "3px"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
+        </li>
+    );
     return (
 
       <div className="App">
@@ -85,11 +95,22 @@ class App extends Component {
           updateParentPrices={this.updatePrices}
           updateParentSizes={this.updateSizes}
         />
-    		<Form updateParentKeywords={this.updateKeywords}/>
-    		<Button type="button" key='search' onClick={() => {this.sendReq()}}> Search </Button>
+            <Form updateParentKeywords={this.updateKeywords}/>
+            <Button type="button" key='search' onClick={() => {this.sendReq()}}> Search </Button>
         <div style={{backgroundColor:"rgb(255,255,255, 0.6)", width:"300px", margin: "auto", marginTop: "10px"}}>{list_items}</div>
-      </div>
 
+        <Modal
+          isOpen={this.state.modalOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          // style={}
+          contentLabel="Example Modal"
+        >
+          <h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model : ""} </h2>
+          <button onClick={this.closeModal}>close</button>
+          
+        </Modal>
+      </div>
     );
   }
 }
