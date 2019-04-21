@@ -11,46 +11,32 @@ class App extends Component {
   constructor() {
     super();
 
-	console.log(window.location);
-
     this.state = {
-      size1: 'Compact', // TODO replace w nataly's code
-      size2: 'Large', // TODO replace w nataly's code
+      size1: 'Compact',
+      size2: 'Large',
       keywords: [''],
-      minPrice: 2000, // TODO replace
-      maxPrice: 1700000, // TODO replace
-	  results: [],
-	  baseUrl: window.location
+      minPrice: 2000,
+      maxPrice: 1700000,
+  	  results: [],
+  	  baseUrl: window.location
     };
-
   }
+
   sendReq = () => {
-      const self = this
-    console.log('req sent')
-    console.log(this.state.size1)
-    console.log(this.state.size2)
-    console.log(this.state.keywords)
-    console.log(this.state.minPrice)
-    console.log(this.state.maxPrice)
+    const self = this
 
-  axios.get(this.state.baseUrl + 'search', {
-    params: {
-      size1: this.state.size1,
-      size2: this.state.size2,
-      keywords: JSON.stringify(this.state.keywords),
-      minPrice: this.state.minPrice,
-      maxPrice: this.state.maxPrice
-    }})
-  .then(function (response) {
-      self.setState({results:response.data})
-    })
-
-    // axios.get('http://localhost:5000/dummysearch')
-    // .then(function (response) {
-    //   console.log(response.data);
-    //   self.setState({results:response.data})
-    // })
-};
+    axios.get(this.state.baseUrl + 'search', {
+      params: {
+        size1: this.state.size1,
+        size2: this.state.size2,
+        keywords: JSON.stringify(this.state.keywords),
+        minPrice: this.state.minPrice,
+        maxPrice: this.state.maxPrice
+      }})
+    .then(function (response) {
+        self.setState({results:response.data})
+      })
+  };
 
   updateKeywords = (new_keywords) => {
     this.setState({keywords:new_keywords})
@@ -64,12 +50,11 @@ class App extends Component {
     this.setState({size2:new_size2});
   }
 
+  /** Returns sliders for filters, freeform input Form with suggested keywords, search button **/
   render() {
     var list_items = this.state.results.map((d) => <li style={{color:"black", listStyleType:"none"}} key={d}>{d} </li>);
     return (
-
       <div className="App">
-
         <img src={logo} className="App-logo" alt="logo" />
 
         <Slider
