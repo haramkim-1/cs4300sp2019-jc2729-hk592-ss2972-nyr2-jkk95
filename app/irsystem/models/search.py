@@ -34,7 +34,7 @@ def build_vectorizer(max_features, stop_words, max_df=0.65, min_df=45, norm='l2'
 	"""
 	return TfidfVectorizer(max_features=max_features, min_df=min_df, max_df=max_df, stop_words=stop_words, norm=norm, tokenizer=tokenize)
 
-def filter_sizes(min_size, max_size, min_price, max_price, car_size, car_price):
+def filter_sizes(min_size, max_size, min_price, max_price, min_fuel, max_fuel, car_size, car_price, car_fuel):
 	'''Returns a filtered list of car_size
 		filter_sizes is a function that filters sizes and prices of the cars to fit
 		the query
@@ -50,7 +50,7 @@ def filter_sizes(min_size, max_size, min_price, max_price, car_size, car_price):
 
 		Returns: a list of cars (cars defined by a string: Year_Make_Model)
 	'''
-	return car_size >= min_size and car_size <= max_size and car_price >= min_price and car_price <= max_price
+	return car_size >= min_size and car_size <= max_size and car_price >= min_price and car_price <= max_price and car_fuel >= min_fuel and car_fuel <= max_fuel
 
 def get_sim(car, q):
 	"""Returns a float giving the cosine similarity of
@@ -102,7 +102,7 @@ class Searcher:
 
 		self.doc_by_vocab = self.tfidf_vec.fit_transform([d['Appended Reviews'] for d in self.all_data.values()]).toarray()
 
-	def search(self, min_size, max_size, min_price, max_price, query):
+	def search(self, min_size, max_size, min_price, max_price, min_fuel, max_fuel, query):
 		'''
 		Function that returns top 10 cars that are most relevant to the query
 
@@ -114,8 +114,7 @@ class Searcher:
 		query: list of words from the query
 		'''
 		#filter list of cars by size and price
-		print(len(self.unfiltered_list))
-		truncated_list_by_size = [x[0] for x in self.unfiltered_list if filter_sizes(min_size, max_size, min_price, max_price, x[1], x[2])]
+		truncated_list_by_size = [x[0] for x in self.unfiltered_list if filter_sizes(min_size, max_size, min_price, max_price, min_fuel, max_fuel, x[1], x[2], x[3])]
 
 		# print("start idf_dict lookups")
 		# tf_idf_query = np.zeros(len(self.keywords))
