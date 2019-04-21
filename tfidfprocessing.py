@@ -37,19 +37,23 @@ def create_unique_cars_list(data):
 		cars_list.append(car['Year_Make_Model'])
 	return cars_list
 
-def fuel_definitions(mpg):
+def fuel_definitions(mpg, h, e):
 	#gas guzzler
 	if mpg < 23:
 		return 0
-	#fuel-efficient
+	#electric
+	elif e == True:
+		return 4
+	#hybrid
+	elif h == True:
+		return 3
+	#standard
 	elif mpg < 30:
 		return 1
-	#hybrid
-	elif mpg < 70:
-		return 2
-	#electric
+	#fuel-efficient
 	else:
-		return 3
+		return 2
+
 
 
 def create_sizes_list(data, size_rev_idx):
@@ -60,7 +64,9 @@ def create_sizes_list(data, size_rev_idx):
 	for car in data:
 		s = size_rev_idx[car['Vehicle Size']]
 		combined = 0.55*int(car['city mpg']) + 0.45*int(car['highway MPG'])
-		f = fuel_definitions(combined)
+		hybrid = 'hybrid' in str(car['Market Category']).lower()
+		electric = 'electric' in str(car['Engine Fuel Type']).lower()
+		f = fuel_definitions(combined, hybrid, electric)
 		size_list.append((car['Year_Make_Model'], s, car['MSRP'], f))
 
 	return size_list
@@ -94,8 +100,6 @@ with open('data/data.json') as json_file:
 
 
 	unfiltered_list = create_sizes_list(data,size_reverse_index)
-	for u in unfiltered_list:
-		print(u)
 
 	# with open("data/tfidf_vec.pkl", "wb+") as file:
 	# 	pickle.dump(tfidf_vec, file)
