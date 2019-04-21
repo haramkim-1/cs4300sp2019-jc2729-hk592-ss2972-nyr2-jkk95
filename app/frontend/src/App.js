@@ -80,11 +80,21 @@ class App extends Component {
   }.bind(this)
 
   render() {
-    var list_items = this.state.results.map((ymm) => 
+    var listItems = this.state.results.map((ymm) => 
         <li style={{color:"black", listStyleType:"none"}} key={ymm}> 
             <Button style={{opacity:"1.0", margin: "auto", margin: "3px"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
         </li>
-    );
+	);
+	
+	// TODO: more content here
+	// TODO: highlight keywords from query
+	var modalReviewItems = this.state.selectedCar ? (this.state.selectedCar.reviews.map((review) => 
+        <li style={{color:"black", listStyleType:"none"}} key={review.Review_Date + " " + review.Author_Name}> 
+		
+            {review.Review_Title}
+        </li>
+	)) : null; 
+	
     return (
 
       <div className="App">
@@ -97,7 +107,7 @@ class App extends Component {
         />
             <Form updateParentKeywords={this.updateKeywords}/>
             <Button type="button" key='search' onClick={() => {this.sendReq()}}> Search </Button>
-        <div style={{backgroundColor:"rgb(255,255,255, 0.6)", width:"300px", margin: "auto", marginTop: "10px"}}>{list_items}</div>
+        <div style={{backgroundColor:"rgb(255,255,255, 0.6)", width:"300px", margin: "auto", marginTop: "10px"}}>{listItems}</div>
 
         <Modal
           isOpen={this.state.modalOpen}
@@ -108,7 +118,7 @@ class App extends Component {
         >
           <h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model : ""} </h2>
           <button onClick={this.closeModal}>close</button>
-          
+          <div style={{backgroundColor:"rgb(255,255,255, 0.6)", width:"300px", margin: "auto", marginTop: "10px"}}>{modalReviewItems}</div>
         </Modal>
       </div>
     );
