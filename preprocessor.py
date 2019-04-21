@@ -4,7 +4,7 @@ from os.path import join
 from json import dump
 
 details = pd.read_csv("data/raw/details.csv",
-			usecols=["Make", "Model", "Year", "Transmission Type", "Driven_Wheels", 
+			usecols=["Make", "Model", "Year", "Transmission Type", "Driven_Wheels", "Engine Fuel Type",
 					"Market Category", "Vehicle Size", "Vehicle Style", "highway MPG", 
 					"city mpg", "Popularity", "MSRP"])
 
