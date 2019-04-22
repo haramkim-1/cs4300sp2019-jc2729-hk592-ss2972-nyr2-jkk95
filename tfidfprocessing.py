@@ -4,6 +4,7 @@
 
 from __future__ import print_function
 from sklearn.feature_extraction.text import TfidfVectorizer
+from scipy.sparse.linalg import svds
 import numpy as np
 from numpy import linalg as LA
 import math
@@ -83,7 +84,7 @@ with open('data/data.pkl', "rb") as json_file:
 
 	n_feats = 4000
 	doc_by_vocab = np.empty([len(data), n_feats])
-	
+
 	# #Create a tf_idf matrix
 	tfidf_vec = build_vectorizer(n_feats, "english")
 	doc_by_vocab = tfidf_vec.fit_transform([d['Appended Reviews'] for d in data]).toarray()
