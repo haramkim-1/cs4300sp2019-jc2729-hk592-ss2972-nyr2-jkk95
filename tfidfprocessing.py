@@ -7,9 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from scipy.sparse.linalg import svds
 import numpy as np
 from numpy import linalg as LA
-import json
 import math
-from json import dumps
 import re
 import string
 import pickle
@@ -38,6 +36,25 @@ def create_unique_cars_list(data):
 		cars_list.append(car['Year_Make_Model'])
 	return cars_list
 
+def fuel_definitions(mpg, h, e):
+	#gas guzzler
+	if mpg < 23:
+		return 0
+	#electric
+	elif e == True:
+		return 4
+	#hybrid
+	elif h == True:
+		return 3
+	#standard
+	elif mpg < 30:
+		return 1
+	#fuel-efficient
+	else:
+		return 2
+
+
+
 def create_sizes_list(data, size_rev_idx):
 	"""
 	Create a list of tuples containing the car's Year_Make_Model, size, and MSRP
@@ -45,12 +62,17 @@ def create_sizes_list(data, size_rev_idx):
 	size_list = []
 	for car in data:
 		s = size_rev_idx[car['Vehicle Size']]
-		size_list.append((car['Year_Make_Model'], s, car['MSRP']))
+		combined = 0.55*int(car['city mpg']) + 0.45*int(car['highway MPG'])
+		hybrid = 'hybrid' in str(car['Market Category']).lower()
+		electric = 'electric' in str(car['Engine Fuel Type']).lower()
+		f = fuel_definitions(combined, hybrid, electric)
+		size_list.append((car['Year_Make_Model'], s, car['MSRP'], f))
 
 	return size_list
 
-with open('data/data.json') as json_file:
-	data = list(json.load(json_file).values())
+
+with open('data/data.pkl', "rb") as json_file:
+	data = list(pickle.load(json_file).values())
 
 	num_cars = len(data)
 	#Append all of the reviews for a car together, and remove numbers
@@ -63,7 +85,7 @@ with open('data/data.json') as json_file:
 	n_feats = 4000
 	doc_by_vocab = np.empty([len(data), n_feats])
 
-	#Create a tf_idf matrix
+	# #Create a tf_idf matrix
 	tfidf_vec = build_vectorizer(n_feats, "english")
 	doc_by_vocab = tfidf_vec.fit_transform([d['Appended Reviews'] for d in data]).toarray()
 	index_to_vocab = {i:v for i, v in enumerate(tfidf_vec.get_feature_names())}

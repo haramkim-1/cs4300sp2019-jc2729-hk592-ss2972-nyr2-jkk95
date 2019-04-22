@@ -6,6 +6,9 @@ import './App.css';
 import Slider from './Slider';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root')
 
 class App extends Component {
   constructor() {
@@ -15,10 +18,13 @@ class App extends Component {
       size1: 'Compact',
       size2: 'Large',
       keywords: [''],
-      minPrice: 2000,
-      maxPrice: 1700000,
-  	  results: [],
-  	  baseUrl: window.location
+      minPrice: 2000, // TODO replace
+      maxPrice: 1700000, // TODO replace
+      results: [],
+      selectedCar: null,
+      modalOpen: false,
+      //baseUrl: window.location // use for deployment mode
+      baseUrl: "http://localhost:5000/" // use for local development mode
     };
   }
 
@@ -31,7 +37,10 @@ class App extends Component {
         size2: this.state.size2,
         keywords: JSON.stringify(this.state.keywords),
         minPrice: this.state.minPrice,
-        maxPrice: this.state.maxPrice
+		maxPrice: this.state.maxPrice,
+		//TODO: get values from state
+		minFuel: 0,
+		maxFuel: 4
       }})
     .then(function (response) {
         self.setState({results:response.data})
@@ -50,9 +59,40 @@ class App extends Component {
     this.setState({size2:new_size2});
   }
 
-  /** Returns sliders for filters, freeform input Form with suggested keywords, search button **/
+  displayDetails = function(event, ymm) {
+    // get car details
+    axios.get(this.state.baseUrl + 'cardetails', {
+        params: { carYMM: ymm }})
+      .then(function (response) {
+        console.log(response.data);
+        this.setState({selectedCar:response.data, modalOpen:true});
+      }.bind(this))
+  }.bind(this)
+
+  closeModal = function() {
+    this.setState({modalOpen: false});
+  }.bind(this)
+
+  afterOpenModal = function() {
+    // TODO: setup ?
+  }.bind(this)
+
   render() {
-    var list_items = this.state.results.map((d) => <li style={{color:"black", listStyleType:"none"}} key={d}>{d} </li>);
+    var listItems = this.state.results.map((ymm) => 
+        <li style={{color:"black", listStyleType:"none"}} key={ymm}> 
+            <Button style={{opacity:"1.0", margin: "auto", margin: "3px"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
+        </li>
+	);
+	
+	// TODO: more content here
+	// TODO: highlight keywords from query
+	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) => 
+        <li style={{color:"black", listStyleType:"none"}} key={review.Review_Date + " " + review.Author_Name}> 
+		
+            {review.Review_Title}
+        </li>
+	)) : null; 
+	
     return (
       <div className="App">
         <img src={logo} className="App-logo" alt="logo" />
@@ -61,11 +101,21 @@ class App extends Component {
           updateParentPrices={this.updatePrices}
           updateParentSizes={this.updateSizes}
         />
-    		<Form updateParentKeywords={this.updateKeywords}/>
-    		<Button type="button" key='search' onClick={() => {this.sendReq()}}> Search </Button>
-        <div style={{background:"white", opacity:"0.6", width:"300px", margin: "auto", marginTop: "10px"}}>{list_items}</div>
-      </div>
+            <Form updateParentKeywords={this.updateKeywords}/>
+            <Button type="button" key='search' onClick={() => {this.sendReq()}}> Search </Button>
+        <div style={{backgroundColor:"rgb(255,255,255, 0.6)", width:"300px", margin: "auto", marginTop: "10px"}}>{listItems}</div>
 
+        <Modal
+          isOpen={this.state.modalOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          contentLabel="Details Modal"
+        >
+          <h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model : ""} </h2>
+          <button onClick={this.closeModal}>close</button>
+          <div style={{overflow:"scroll", strokeColor:"black", strokeWidth:"1", width:"500px", margin: "auto", marginTop: "10px"}}>{modalReviewItems}</div>
+        </Modal>
+      </div>
     );
   }
 }
