@@ -8,7 +8,19 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import Modal from 'react-modal';
 
-Modal.setAppElement('#root')
+Modal.setAppElement('#root');
+
+const modalStyles = {content: {
+	// top: '50%',
+	// left: '50%',
+	// width: '50%',
+	// height: '50%',
+    // right: 'auto',
+	// bottom: 'auto',
+	// marginRight: '-50%',
+    // transform: 'translate(-50%, -50%)',
+	overflowY:"visible"
+}};
 
 class App extends Component {
   constructor() {
@@ -87,10 +99,10 @@ class App extends Component {
 	// TODO: more content here
 	// TODO: highlight keywords from query
 	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) => 
-        <li style={{strokeColor:"black", strokeWidth:"2", listStyleType:"none"}} key={review.Review_Date + " " + review.Author_Name}> 
-			<h4> {review.Review_Title} </h4>
-			<p style={{"fontSize":"9px"}}> {review.Review_Author} </p>
-			<p style={{"fontSize":"9px"}}>> {review.Review} </p>
+        <li style={{backgroundColor:"lightgrey", listStyleType:"none", margin:"4px", marginLeft:"6px", marginRight:"4px"}} key={review.Review_Date + " " + review.Author_Name}> 
+			<h4 style={{"margin":"4px"}}> {"\"" + review.Review_Title + "\""} </h4>
+			<p style={{"fontSize":"14px", "margin":"4px"}}> {"by: " + review.Author_Name} </p>
+			<p style={{"fontSize":"11px", "margin":"4px"}}>> {review.Review} </p>
         </li>
 	)) : null; 
 	
@@ -110,11 +122,18 @@ class App extends Component {
           isOpen={this.state.modalOpen}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
-          contentLabel="Details Modal"
+		  contentLabel="Details Modal"
+		  style={modalStyles}
         >
-          <h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model : ""} </h2>
-          <button onClick={this.closeModal}>close</button>
-          <div style={{overflow:"scroll", strokeColor:"black", strokeWidth:"1", width:"500px", margin: "auto", marginTop: "10px"}}>{modalReviewItems}</div>
+			<h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model : ""} </h2>
+			<button onClick={this.closeModal}>close</button>
+			<div style={{overflow:"scroll", outline:"1px solid black", width:"500px", marginTop: "10px", height:"80%"}}>
+				<center><h3>Reviews</h3></center>
+				{modalReviewItems}
+			</div>
+			<div>
+
+			</div>
         </Modal>
       </div>
     );
