@@ -78,7 +78,7 @@ class Searcher:
 		'''
 		with open(join(data_path, 'unfiltered_list.pkl'), 'rb') as unfiltered, \
 			open(join(data_path, 'index_to_vocab.pkl'), 'rb') as itv, \
-			open(join(data_path, 'data.pkl')) as all_data:
+			open(join(data_path, 'data.pkl'), 'rb') as all_data:
 			self.all_data = pickle.load(all_data)
 			self.unfiltered_list = pickle.load(unfiltered)
 			self.index_to_vocab = pickle.load(itv)
