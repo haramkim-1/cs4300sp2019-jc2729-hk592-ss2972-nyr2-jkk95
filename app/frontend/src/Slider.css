@@ -2,12 +2,29 @@
   padding: 15px 35px 0;
   width: 170px;
   display: inline-block;
-  color:black;
+  color:white;
+
 }
 
 .input-range__label-container {
-  color: black;
+  color: white;
+  display :none;
+
 }
+
+ *{
+   color: white;
+ }
+
+
+/* .input-range__label--max {
+	display :none;
+}
+
+.input-range__label--min {
+	display :none;
+} */
+
 
 .input-range {
   margin-bottom: 25px;
@@ -25,3 +42,13 @@
   font-family: "Helvetica Neue", san-serif;
   font-size: 0.8rem;
 }
+
+
+
+/* .slider.price{
+  width: 350px;
+}
+
+.slider.size{
+  width: 250px;
+} */

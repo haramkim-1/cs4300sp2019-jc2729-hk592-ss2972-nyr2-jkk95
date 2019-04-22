@@ -21,6 +21,10 @@ body {
 
 }
 
+.input-range__label-container {
+  color: red;
+}
+
 .react-autosuggest__input:focus {
   outline: none;
 }

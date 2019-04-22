@@ -16,7 +16,7 @@ class App extends Component {
       size2: 'Large',
       keywords: [''],
       minPrice: 2000,
-      maxPrice: 1700000,
+      maxPrice: 200000,
   	  results: [],
   	  baseUrl: window.location
     };
