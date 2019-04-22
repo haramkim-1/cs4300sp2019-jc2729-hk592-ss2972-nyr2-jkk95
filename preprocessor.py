@@ -6,7 +6,19 @@ from json import dump
 details = pd.read_csv("data/raw/details.csv",
 			usecols=["Make", "Model", "Year", "Transmission Type", "Driven_Wheels", 
 					"Market Category", "Vehicle Size", "Vehicle Style", "highway MPG", 
-					"city mpg", "Popularity", "MSRP"])
+					"city mpg", "Popularity", "MSRP"],
+			dtype={"Make": str,
+					"Model": str,
+					"Year": int,
+					"Transmission Type": str,
+					"Driven_Wheels": str,
+					"Market Category": str,
+					"Vehicle Size": str,
+					"Vehicle Style": str,
+					"highway MPG": int,
+					"city mpg": int,
+					"Popularity": int,
+					"MSRP": int})
 
 # create reviews dataset
 reviews_path = "data/raw/reviews"
