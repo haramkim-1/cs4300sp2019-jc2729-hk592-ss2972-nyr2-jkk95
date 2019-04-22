@@ -151,7 +151,6 @@ class Searcher:
         #print(query)
         #tf_idf_query = self.tfidf_vec.transform([query]).toarray()[0]
 
-        query = query[0].split(',')
         expanded_query = []
         for term in query:
             in_cluster = False
