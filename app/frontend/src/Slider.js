@@ -36,7 +36,7 @@ class Slider extends Component {
     return (
       <div>
       <div className = "labels">
-      <div class= "title"> Price </div>
+      <div className= "title"> Price </div>
       <div> Min: {labelFormatter(this.state.value1.min)}</div>
       <div> Max: {labelFormatter(this.state.value1.max)}</div>
       </div>
