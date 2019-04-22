@@ -39,8 +39,8 @@ class App extends Component {
         minPrice: this.state.minPrice,
 		maxPrice: this.state.maxPrice,
 		//TODO: get values from state
-		minFuel: this.state.minFuel,
-		maxFuel: this.state.maxFuel
+		fuel1: this.state.fuel1,
+		fuel2: this.state.fuel2
       }})
     .then(function (response) {
         self.setState({results:response.data})
