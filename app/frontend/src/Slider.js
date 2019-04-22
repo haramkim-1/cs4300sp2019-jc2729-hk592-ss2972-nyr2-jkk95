@@ -31,6 +31,10 @@ class Slider extends Component {
       value2: {
         min: 0,
         max: 2
+      },
+      value3: {
+        min:0,
+        max:4
       }
     };
   }
@@ -44,28 +48,9 @@ class Slider extends Component {
   render() {
     return (
       <div>
-        <div className = "labels">
-        Price
-        </div>
 
-        <div className = "labels">
-        Size
-        </div>
-        <div className = "middle">
 
-        <div>
-        Min: {labelFormatter(this.state.value1.min)}
-        </div>
-        <div>
-        Max: {labelFormatter(this.state.value1.max)}
-        </div>
-        <div>
-        Min: {['Compact', 'Midsize', 'Large'][this.state.value2.min]}
-        </div>
-        <div>
-        Max: {['Compact', 'Midsize', 'Large'][this.state.value2.max]}
-        </div>
-</div>
+
       <div className = "middle">
 
           <form className="slider price" >
@@ -102,6 +87,27 @@ class Slider extends Component {
                   var new_size1 = ['Compact', 'Midsize', 'Large'][this.state.value2.min];
                   var new_size2 = ['Compact', 'Midsize', 'Large'][this.state.value2.max];
                   this.props.updateParentSizes(new_size1,new_size2);
+              }} />
+          </form>
+
+          {/** Slider for fuel.**/}
+          <form className="slider">
+            <InputRange
+              name={"Fuel Type"}
+              maxValue={4}
+              minValue={0}
+              allowSameValues={true}
+              formatLabel={value3 => {
+                var x = `${value3}`;
+                var temp = ['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][x];
+                return ` ${temp}` }}
+                value = {this.state.value3}
+                /** Maps size to approate label and passes it to parent component.**/
+                onChange={value3 => {
+                  this.setState({ value3 });
+                  var new_fuel1 = ['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][this.state.value3.min];
+                  var new_fuel2 = ['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][this.state.value3.max];
+                  this.props.updateParentFuel(new_fuel1,new_fuel2);
               }} />
           </form>
       </div>

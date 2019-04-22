@@ -84,7 +84,7 @@ class Searcher:
             open(join(data_path, 'data.pkl'), 'rb') as all_data, \
             open(join(data_path, 'word_to_index.pkl'), 'rb') as word_to_index, \
             open(join(data_path, 'words_compressed.pkl'), 'rb') as words_compressed, \
-            open(join(data_path, 'docs_compressed.pkl'), 'rb') as docs_compressed:
+            open(join(data_path, 'docs_compressed.pkl'), 'rb') as docs_compressed, \
             open(join(data_path, 'query_expansion_clusters.pkl'), 'rb') as query_expansion_file:
 
             self.all_data = pickle.load(all_data)
@@ -95,7 +95,7 @@ class Searcher:
             self.word_to_index = pickle.load(word_to_index)
             self.words_compressed = pickle.load(words_compressed)
             self.docs_compressed = pickle.load(docs_compressed)
-            self.query_expansion_clusters = pickle.load(query_expansion_file
+            self.query_expansion_clusters = pickle.load(query_expansion_file)
         n_feats = 4000
         # self.doc_by_vocab = np.empty([len(self.all_data), n_feats])
         '''
