@@ -98,8 +98,16 @@ class Searcher:
 				new_review = (re.sub('[0-9]+', '', review['Review'])).lower()
 				car['Appended Reviews'] = car['Appended Reviews'] + new_review + ' '
 			self.all_data[car["Year_Make_Model"]] = car
+		self.temp_dict = {}
+		self.temp_list = []
+		for i, d in enumerate(self.all_data.values()):
+			self.temp_dict[d['Year_Make_Model']] = i
+			self.temp_list.append(d['Appended Reviews'])
 
-		self.doc_by_vocab = self.tfidf_vec.fit_transform([d['Appended Reviews'] for d in self.all_data.values()]).toarray()
+		self.doc_by_vocab = self.tfidf_vec.fit_transform(self.temp_list).toarray()
+
+
+		# self.doc_by_vocab = self.tfidf_vec.fit_transform([d['Appended Reviews'] for d in self.all_data.values()]).toarray()
 		# np.savetxt("version2.csv", self.doc_by_vocab, delimiter=",")
 		# print("done")
 
@@ -130,7 +138,10 @@ class Searcher:
 		#for each car, find it's similarity to the query via cosine similarity
 		similarity_dict = {}
 		for car in truncated_list_by_size:
-			car_index = self.cars_reverse_index[car]
+			car_index = self.temp_dict[car]
+
+			# car_index = self.cars_reverse_index[car]
+
 			#print(self.doc_by_vocab[car_index].T.shape)
 			#print('tf idf', tf_idf_query.shape)
 			sim = get_sim(self.doc_by_vocab[car_index].T, tf_idf_query)
@@ -138,5 +149,5 @@ class Searcher:
 
 		#sort results and then take the top 10
 		sorted_results = sorted(similarity_dict.keys(), key=lambda word: similarity_dict.get(word), reverse = True)
-		#print('sorted results' , sorted_results[0:10])
+		print('sorted results' , sorted_results[0:10])
 		return sorted_results[0:10]
