@@ -95,7 +95,7 @@ class Searcher:
             self.word_to_index = pickle.load(word_to_index)
             self.words_compressed = pickle.load(words_compressed)
             self.docs_compressed = pickle.load(docs_compressed)
-            self.query_expansion_clusters = pickle.load(query_expansion_file
+            self.query_expansion_clusters = pickle.load(query_expansion_file)
         n_feats = 4000
         # self.doc_by_vocab = np.empty([len(self.all_data), n_feats])
         '''
