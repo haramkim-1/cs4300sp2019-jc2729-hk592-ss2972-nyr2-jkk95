@@ -26,7 +26,8 @@ review_df_list = []
 for filename in listdir(reviews_path):
 	df = pd.read_csv(join(reviews_path, filename), 
 			engine="python", 
-			usecols=["Review_Date","Author_Name","Vehicle_Title","Review_Title","Review","Rating"])
+			usecols=["Review_Date","Author_Name","Vehicle_Title","Review_Title","Review","Rating"],
+			converters={"Rating": lambda x: str(x) if x != "N/A" else ""})
 	review_df_list.append(df)
 reviews = pd.concat(review_df_list, ignore_index=True)
 
