@@ -4,6 +4,13 @@ import './Slider.css';
 import 'react-input-range/lib/css/index.css'
 
 /** Tutorial: https://github.com/davidchin/react-input-range **/
+function labelFormatter(value1) {
+  if (value1 < 200) {
+    return `$${value1}k`
+  } else {
+    return `$${value1}k+`
+  }
+}
 
 /** TODO Naaly: add labels (deal with padding), save input, additional inputs **/
 class Slider extends Component {
@@ -12,8 +19,8 @@ class Slider extends Component {
 
     this.state = {
       value1: {
-        min: 2,
-        max: 1700
+        min: 0,
+        max: 200
       },
       value2: {
         min: 0,
@@ -29,24 +36,31 @@ class Slider extends Component {
     return (
       <div>
       <div className = "labels">
-      Price
+      <div class= "title"> Price </div>
+      <div> Min: {labelFormatter(this.state.value1.min)}</div>
+      <div> Max: {labelFormatter(this.state.value1.max)}</div>
       </div>
       <div className = "labels">
-      Size
+      <div class= "title"> Size</div>
+      <div> Min: {['Compact', 'Midsize', 'Large'][this.state.value2.min]}</div>
+      <div> Max: {['Compact', 'Midsize', 'Large'][this.state.value2.max]}</div>
       </div>
       <div className = "labels">
-      Fuel Efficiency
+      <div class= "title"> Fuel Efficiency</div>
+      <div> Min: {['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][this.state.value3.min]}</div>
+      <div> Max: {['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][this.state.value3.max]}</div>
       </div>
       <div className = "middle">
       {/** Slider for pricing.**/}
         <form className="slider">
           <InputRange
             name={"Price"}
-            maxValue={1700}
-            minValue={2}
+            maxValue={200}
+            minValue={0}
             allowSameValues={true}
-            formatLabel={value1 => `$ ${value1}k`}
+            formatLabel={value1 => labelFormatter(value1)}
             value={this.state.value1}
+            step={10}
             /** Maps prices to 1000s and passes it to parent component. **/
             onChange={value1 => {
               this.setState({ value1 });
