@@ -80,16 +80,17 @@ class App extends Component {
   render() {
     var listItems = this.state.results.map((ymm) => 
         <li style={{color:"black", listStyleType:"none"}} key={ymm}> 
-            <Button style={{opacity:"1.0", margin: "auto", margin: "3px"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
+            <Button style={{opacity:"1.0", margin: "3px"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
         </li>
 	);
 	
 	// TODO: more content here
 	// TODO: highlight keywords from query
 	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) => 
-        <li style={{color:"black", listStyleType:"none"}} key={review.Review_Date + " " + review.Author_Name}> 
-		
-            {review.Review_Title}
+        <li style={{strokeColor:"black", strokeWidth:"2", listStyleType:"none"}} key={review.Review_Date + " " + review.Author_Name}> 
+			<h4> {review.Review_Title} </h4>
+			<p style={{"fontSize":"9px"}}> {review.Review_Author} </p>
+			<p style={{"fontSize":"9px"}}>> {review.Review} </p>
         </li>
 	)) : null; 
 	
