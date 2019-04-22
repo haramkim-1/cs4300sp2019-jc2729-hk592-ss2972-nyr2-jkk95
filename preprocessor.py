@@ -1,12 +1,24 @@
 import pandas as pd
 from os import listdir
 from os.path import join
-from json import dump
+from pickle import dump
 
 details = pd.read_csv("data/raw/details.csv",
-			usecols=["Make", "Model", "Year", "Transmission Type", "Driven_Wheels", 
+			usecols=["Make", "Model", "Year", "Transmission Type", "Driven_Wheels", "Engine Fuel Type",
 					"Market Category", "Vehicle Size", "Vehicle Style", "highway MPG", 
-					"city mpg", "Popularity", "MSRP"])
+					"city mpg", "Popularity", "MSRP"],
+			dtype={"Make": str,
+					"Model": str,
+					"Year": int,
+					"Transmission Type": str,
+					"Driven_Wheels": str,
+					"Market Category": str,
+					"Vehicle Size": str,
+					"Vehicle Style": str,
+					"highway MPG": int,
+					"city mpg": int,
+					"Popularity": int,
+					"MSRP": int})
 
 # create reviews dataset
 reviews_path = "data/raw/reviews"
@@ -58,7 +70,7 @@ for i in range(len(details_dicts)):
 car_dict = {car["Year_Make_Model"]:car for car in details_dicts if len(car["reviews"]) > 1}
 
 # save new details
-with open("data/data.json", "w+") as file:
+with open("data/data.pkl", "wb+") as file:
 	dump(car_dict, file)
 
 # from json import load

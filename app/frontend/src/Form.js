@@ -6,8 +6,10 @@ import './Form.css';
 import List from './List'
 /** Tutorial: http://react-autosuggest.js.org/ **/
 
-/** This creates a freeform input box with autosuggest **/
-const SERVER_URL = window.location
+// const SERVER_URL = window.location // use for deployment mode
+const SERVER_URL = "http://localhost:5000/" // use for local development mod
+
+// Janice's TODO: 4. prettify (center), 5. api calls to  send!
 var sys_keywords = [];
 
 axios.get(SERVER_URL + 'keywords', {'headers':{'Access-Control-Allow-Origin': '*'}})
