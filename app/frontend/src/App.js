@@ -36,7 +36,8 @@ class App extends Component {
       fuel2: 'Electric',
       results: [],
       selectedCar: null,
-      modalOpen: false,
+	  modalOpen: false,
+	  expandedQuery: [],
       //baseUrl: window.location // use for deployment mode
       baseUrl: "http://localhost:5000/" // use for local development mode
     };
@@ -57,7 +58,8 @@ class App extends Component {
 		fuel2: this.state.fuel2
       }})
     .then(function (response) {
-        self.setState({results:response.data})
+		self.setState({results:response.data.results})
+		self.setState({expandedQuery:response.data.query})
       })
   };
 
