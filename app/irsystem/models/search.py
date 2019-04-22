@@ -85,6 +85,8 @@ class Searcher:
             open(join(data_path, 'word_to_index.pkl'), 'rb') as word_to_index, \
             open(join(data_path, 'words_compressed.pkl'), 'rb') as words_compressed, \
             open(join(data_path, 'docs_compressed.pkl'), 'rb') as docs_compressed:
+            open(join(data_path, 'query_expansion_clusters.pkl'), 'rb') as query_expansion_file:
+
             self.all_data = pickle.load(all_data)
             self.unfiltered_list = pickle.load(unfiltered)
             self.index_to_vocab = pickle.load(itv)
@@ -93,6 +95,7 @@ class Searcher:
             self.word_to_index = pickle.load(word_to_index)
             self.words_compressed = pickle.load(words_compressed)
             self.docs_compressed = pickle.load(docs_compressed)
+            self.query_expansion_clusters = pickle.load(query_expansion_file
         n_feats = 4000
         # self.doc_by_vocab = np.empty([len(self.all_data), n_feats])
         '''
@@ -147,13 +150,27 @@ class Searcher:
         #query = " ".join(query)
         #print(query)
         #tf_idf_query = self.tfidf_vec.transform([query]).toarray()[0]
+
+        query = query[0].split(',')
+        expanded_query = []
+        for term in query:
+            in_cluster = False
+            for cluster in self.query_expansion_clusters:
+                if term in cluster:
+                    expanded_query.extend(cluster)
+                    in_cluster = True
+            if not in_cluster:
+                expanded_query.append(term)
+        print(expanded_query)
+
         svd_query = np.zeros(800)
         count = 0
-        for word in query:
+        for word in expanded_query:
             if word in self.word_to_index:
                 svd_query = svd_query + self.words_compressed[self.word_to_index[word]]
                 count += 1
         svd_query = svd_query / count
+
 
 
         #for each car, find it's similarity to the query via cosine similarity
