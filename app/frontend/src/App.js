@@ -134,23 +134,6 @@ class App extends Component {
 		  contentLabel="Details Modal"
 		  style={modalStyles}
         >
-			<h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model:""} </h2>
-			<button onClick={this.closeModal}>close</button>
-
-			<div>
-				<p>{this.state.selectedCar ? this.state.selectedCar["Engine Fuel Type"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["Driven_Wheels"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["MSRP"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["Transmission Type"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["Vehicle Style"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["Vehicle Size"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["city mpg"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["highway MPG"]:""}</p>
-			</div>
-			<div style={{overflow:"scroll", outline:"1px solid black", width:"500px", marginTop: "10px", height:"80%"}}>
-				<center><h3>Reviews</h3></center>
-				{modalReviewItems}
-			</div>
 			<div>
 				<h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model:""} </h2>
 				<button onClick={this.closeModal}>close</button>
