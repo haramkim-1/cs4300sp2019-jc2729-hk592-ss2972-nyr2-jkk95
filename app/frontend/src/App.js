@@ -98,16 +98,16 @@ class App extends Component {
   }.bind(this)
 
   render() {
-    var listItems = this.state.results.map((ymm) => 
-        <li style={{color:"black", listStyleType:"none"}} key={ymm}> 
+    var listItems = this.state.results.map((ymm) =>
+        <li style={{color:"black", listStyleType:"none"}} key={ymm}>
             <Button style={{opacity:"1.0", margin: "3px"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
         </li>
 	);
 
 	// TODO: more content here
 	// TODO: highlight keywords from query
-	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) => 
-        <li style={{backgroundColor:"lightgrey", listStyleType:"none", margin:"4px", marginLeft:"6px", marginRight:"4px"}} key={review.Review_Date + " " + review.Author_Name}> 
+	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) =>
+        <li style={{backgroundColor:"lightgrey", listStyleType:"none", margin:"4px", marginLeft:"6px", marginRight:"4px"}} key={review.Review_Date + " " + review.Author_Name}>
 			<h4 style={{"margin":"4px"}}> {"\"" + review.Review_Title + "\""} </h4>
 			<p style={{"fontSize":"14px", "margin":"4px"}}> {"by: " + review.Author_Name} </p>
 			<p style={{"fontSize":"11px", "margin":"4px"}}>> {review.Review} </p>
@@ -125,7 +125,7 @@ class App extends Component {
         />
             <Form updateParentKeywords={this.updateKeywords}/>
             <Button type="button" key='search' onClick={() => {this.sendReq()}}> Search </Button>
-        <div style={{backgroundColor:"rgb(255,255,255, 0.6)", width:"300px", margin: "auto", marginTop: "10px"}}>{listItems}</div>
+        <div style={{backgroundColor:"rgb(255,255,255, 0.6)", width:"300px", margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
 
         <Modal
           isOpen={this.state.modalOpen}
@@ -134,6 +134,23 @@ class App extends Component {
 		  contentLabel="Details Modal"
 		  style={modalStyles}
         >
+			<h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model:""} </h2>
+			<button onClick={this.closeModal}>close</button>
+
+			<div>
+				<p>{this.state.selectedCar ? this.state.selectedCar["Engine Fuel Type"]:""}</p>
+				<p>{this.state.selectedCar ? this.state.selectedCar["Driven_Wheels"]:""}</p>
+				<p>{this.state.selectedCar ? this.state.selectedCar["MSRP"]:""}</p>
+				<p>{this.state.selectedCar ? this.state.selectedCar["Transmission Type"]:""}</p>
+				<p>{this.state.selectedCar ? this.state.selectedCar["Vehicle Style"]:""}</p>
+				<p>{this.state.selectedCar ? this.state.selectedCar["Vehicle Size"]:""}</p>
+				<p>{this.state.selectedCar ? this.state.selectedCar["city mpg"]:""}</p>
+				<p>{this.state.selectedCar ? this.state.selectedCar["highway MPG"]:""}</p>
+			</div>
+			<div style={{overflow:"scroll", outline:"1px solid black", width:"500px", marginTop: "10px", height:"80%"}}>
+				<center><h3>Reviews</h3></center>
+				{modalReviewItems}
+			</div>
 			<div>
 				<h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model:""} </h2>
 				<button onClick={this.closeModal}>close</button>

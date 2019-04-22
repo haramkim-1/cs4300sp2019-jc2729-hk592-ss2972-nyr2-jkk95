@@ -24,6 +24,10 @@ for i in range(NUM_CLUSTERS):
         cluster.add(index_to_vocab_dict[ind])
     print
     relevant_keywords.append(cluster)
+    print(cluster)
+
+
+
 
 # output [ sets(keywords) ] to go to a pre-mapped list in search.py
 with open("data/query_expansion_clusters.pkl", "wb+") as file:

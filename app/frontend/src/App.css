@@ -4,8 +4,6 @@
 
 .App-logo {
   height: 20vmin;
+  transform: translateX(35px);
   pointer-events: none;
 }
-
-
-
