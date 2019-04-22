@@ -49,7 +49,6 @@ class Searcher:
 		# self.doc_by_vocab = np.empty([len(self.all_data), n_feats])
 
 		self.tfidf_vec = build_vectorizer(n_feats, "english")
-
 		for car in self.all_data.values():
 			car['Appended Reviews'] = ""
 			for review in car['reviews']:
@@ -58,7 +57,7 @@ class Searcher:
 			self.all_data[car["Year_Make_Model"]] = car
 
 		self.doc_by_vocab = self.tfidf_vec.fit_transform([d['Appended Reviews'] for d in self.all_data.values()]).toarray()
-
+		print('doc by vocab matrix', self.doc_by_vocab)
 	def search(self, min_size, max_size, min_price, max_price, query):
 		# print("enter method")
 		truncated_list_by_size = [x[0] for x in self.unfiltered_list if filter_sizes(min_size, max_size, min_price, max_price, x[1], x[2])]
@@ -71,7 +70,6 @@ class Searcher:
 
 		# query expansion
 		query = query[0].split(',')
-		
 		expanded_query = []
 		for term in query:
 			in_cluster = False
@@ -85,16 +83,18 @@ class Searcher:
 
 		expanded_query = " ".join(expanded_query)
 		tf_idf_query = self.tfidf_vec.transform([expanded_query]).toarray()[0]
-
-
 		# print("make similarity dict")
 		similarity_dict = {}
 		for car in truncated_list_by_size:
 			car_index = self.cars_reverse_index[car]
+			print(self.doc_by_vocab[car_index].T)
 			sim = get_sim(self.doc_by_vocab[car_index].T, tf_idf_query)
+			# print(sim)
 			similarity_dict[car] = sim
 
+
+
 		# print("get sorted results")
-		sorted_results = sorted(similarity_dict.keys(), key=lambda word: similarity_dict.get(word), reverse = True)
+		sorted_results = sorted(similarity_dict.keys(), key=lambda word: (similarity_dict.get(word), word), reverse = True)
 		print('sorted results' , sorted_results[0:10])
 		return sorted_results[0:10]
