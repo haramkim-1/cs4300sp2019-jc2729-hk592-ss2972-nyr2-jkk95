@@ -82,14 +82,20 @@ class Searcher:
         with open(join(data_path, 'unfiltered_list.pkl'), 'rb') as unfiltered, \
             open(join(data_path, 'index_to_vocab.pkl'), 'rb') as itv, \
             open(join(data_path, 'data.pkl'), 'rb') as all_data, \
+            open(join(data_path, 'word_to_index.pkl'), 'rb') as word_to_index, \
+            open(join(data_path, 'words_compressed.pkl'), 'rb') as words_compressed, \
+            open(join(data_path, 'docs_compressed.pkl'), 'rb') as docs_compressed:
             open(join(data_path, 'query_expansion_clusters.pkl'), 'rb') as query_expansion_file:
+
             self.all_data = pickle.load(all_data)
             self.unfiltered_list = pickle.load(unfiltered)
             self.index_to_vocab = pickle.load(itv)
             self.vocab_to_index = {self.index_to_vocab[k]:int(k) for k in self.index_to_vocab}
             self.cars_reverse_index = {car[0]: i for i, car in enumerate(self.unfiltered_list)}
-            self.query_expansion_clusters = pickle.load(query_expansion_file)
-
+            self.word_to_index = pickle.load(word_to_index)
+            self.words_compressed = pickle.load(words_compressed)
+            self.docs_compressed = pickle.load(docs_compressed)
+            self.query_expansion_clusters = pickle.load(query_expansion_file
         n_feats = 4000
         # self.doc_by_vocab = np.empty([len(self.all_data), n_feats])
         '''
@@ -110,12 +116,12 @@ class Searcher:
             self.temp_list.append(d['Appended Reviews'])
 
         self.doc_by_vocab = self.tfidf_vec.fit_transform(self.temp_list).toarray()
-        self.vocab_by_doc = self.doc_by_vocab.transpose()
-        self.words_compressed, _, self.docs_compressed = svds(self.vocab_by_doc, k=800) #(3646, 800),_,(800,1532)
-        self.docs_compressed = self.docs_compressed.transpose() #(1532, 800)
-        self.docs_compressed = normalize(self.docs_compressed, axis = 1)
-        self.word_to_index = self.tfidf_vec.vocabulary_
-        self.index_to_word = {i:t for t,i in self.word_to_index.items()}
+        # self.vocab_by_doc = self.doc_by_vocab.transpose()
+        # self.words_compressed, _, self.docs_compressed = svds(self.vocab_by_doc, k=800) #(3646, 800),_,(800,1532)
+        # self.docs_compressed = self.docs_compressed.transpose() #(1532, 800)
+        # self.docs_compressed = normalize(self.docs_compressed, axis = 1)
+        # self.word_to_index = self.tfidf_vec.vocabulary_
+        # self.index_to_word = {i:t for t,i in self.word_to_index.items()}
         # np.savetxt("version2.csv", self.doc_by_vocab, delimiter=",")
         # print("done")
 
