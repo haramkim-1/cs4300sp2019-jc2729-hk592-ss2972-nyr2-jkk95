@@ -67,7 +67,7 @@ class App extends Component {
         params: { carYMM: ymm }})
       .then(function (response) {
         console.log(response.data);
-        this.setState({selectedCar:response.data, modalOpen:true});
+        this.setState({selectedCar:JSON.parse(response.data), modalOpen:true});
       }.bind(this))
   }.bind(this)
 
@@ -88,7 +88,7 @@ class App extends Component {
 	
 	// TODO: more content here
 	// TODO: highlight keywords from query
-	var modalReviewItems = this.state.selectedCar ? (this.state.selectedCar.reviews.map((review) => 
+	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) => 
         <li style={{color:"black", listStyleType:"none"}} key={review.Review_Date + " " + review.Author_Name}> 
 		
             {review.Review_Title}
@@ -113,12 +113,11 @@ class App extends Component {
           isOpen={this.state.modalOpen}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
-          // style={}
-          contentLabel="Example Modal"
+          contentLabel="Details Modal"
         >
           <h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model : ""} </h2>
           <button onClick={this.closeModal}>close</button>
-          <div style={{backgroundColor:"rgb(255,255,255, 0.6)", width:"300px", margin: "auto", marginTop: "10px"}}>{modalReviewItems}</div>
+          <div style={{overflow:"scroll", strokeColor:"black", strokeWidth:"1", width:"500px", margin: "auto", marginTop: "10px"}}>{modalReviewItems}</div>
         </Modal>
       </div>
     );
