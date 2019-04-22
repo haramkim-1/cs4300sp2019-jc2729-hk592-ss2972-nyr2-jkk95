@@ -26,5 +26,5 @@ for i in range(NUM_CLUSTERS):
     relevant_keywords.append(cluster)
 
 # output [ sets(keywords) ] to go to a pre-mapped list in search.py
-with open("data/query_expansion_words.pkl", "wb+") as file:
+with open("data/query_expansion_clusters.pkl", "wb+") as file:
 		pickle.dump(relevant_keywords, file)
