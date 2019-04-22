@@ -36,10 +36,10 @@ class Slider extends Component {
             name={"Price"}
             maxValue={1700}
             minValue={2}
-            // step={Math.ceil(Math.log(1700))}
             allowSameValues={true}
             formatLabel={value1 => `$ ${value1}k`}
             value={this.state.value1}
+            /** Maps prices to 1000s and passes it to parent component. **/
             onChange={value1 => {
               this.setState({ value1 });
               var new_minprice = this.state.value1.min ;
@@ -59,6 +59,7 @@ class Slider extends Component {
               var temp = ['Compact', 'Midsize', 'Large'][x];
               return ` ${temp}` }}
               value={this.state.value2}
+              /** Maps size to approate label and passes it to parent component.**/
               onChange={value2 => {
                 this.setState({ value2 });
                 var new_size1 = ['Compact', 'Midsize', 'Large'][this.state.value2.min];
