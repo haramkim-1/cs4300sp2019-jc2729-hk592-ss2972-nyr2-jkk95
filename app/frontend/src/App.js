@@ -11,14 +11,14 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root');
 
 const modalStyles = {content: {
-	// top: '50%',
-	// left: '50%',
-	// width: '50%',
-	// height: '50%',
+	top: '50%',
+	left: '50%',
+	width: '60%',
+	height: '80%',
     // right: 'auto',
 	// bottom: 'auto',
 	// marginRight: '-50%',
-    // transform: 'translate(-50%, -50%)',
+    transform: 'translate(-50%, -50%)',
 	overflowY:"visible"
 }};
 
@@ -132,26 +132,46 @@ class App extends Component {
 		  contentLabel="Details Modal"
 		  style={modalStyles}
         >
-			<h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model:""} </h2>
-			<button onClick={this.closeModal}>close</button>
+			<div>
+				<h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model:""} </h2>
+				<button onClick={this.closeModal}>close</button>
+			</div>
 			
-			<div>
-				<p>{this.state.selectedCar ? this.state.selectedCar["Engine Fuel Type"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["Driven_Wheels"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["MSRP"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["Transmission Type"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["Vehicle Style"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["Vehicle Size"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["city mpg"]:""}</p>
-				<p>{this.state.selectedCar ? this.state.selectedCar["highway MPG"]:""}</p>
-			</div>
-			<div style={{overflow:"scroll", outline:"1px solid black", width:"500px", marginTop: "10px", height:"80%"}}>
-				<center><h3>Reviews</h3></center>
-				{modalReviewItems}
-			</div>
-			<div>
-
-			</div>
+			<center style={{verticalAlign:"middle", whiteSpace:"nowrap", height:"90%", width:"100%", margin:"auto"}}>
+				<div style={{display:"inline-block", verticalAlign:"middle", outline:"1px solid black", width:"500px", marginTop: "10px", transform: "translate(-4%, 0)"}}>
+					<center><h3>Vehicle Details</h3></center>
+					<p style={{margin:"1px"}}>
+						Engine Fuel Type: {this.state.selectedCar ? this.state.selectedCar["Engine Fuel Type"]:""}
+					</p>
+					<p style={{margin:"1px"}}>
+						Drive Type: {this.state.selectedCar ? this.state.selectedCar["Driven_Wheels"]:""}
+					</p>
+					<p style={{margin:"1px"}}>
+						MSRP: {this.state.selectedCar ? this.state.selectedCar["MSRP"]:""}
+					</p>
+					<p style={{margin:"1px"}}>
+						Transmission Type: {this.state.selectedCar ? this.state.selectedCar["Transmission Type"]:""}
+					</p>
+					<p style={{margin:"1px"}}>
+						Vehicle Style: {this.state.selectedCar ? this.state.selectedCar["Vehicle Style"]:""}
+					</p>
+					<p style={{margin:"1px"}}>
+						Vehicle Size: {this.state.selectedCar ? this.state.selectedCar["Vehicle Size"]:""}
+					</p>
+					<p style={{margin:"1px"}}>
+						City MPG: {this.state.selectedCar ? this.state.selectedCar["city mpg"]:""}
+					</p>
+					<p style={{margin:"1px"}}>
+						Highway MPG: {this.state.selectedCar ? this.state.selectedCar["highway MPG"]:""}
+					</p>
+				</div>
+				<div style={{display:"inline-block", verticalAlign:"middle", whiteSpace:"normal", outline:"1px solid black", width:"500px", marginTop: "10px", height:"95%", margin:"auto", transform: "translate(4%, 0)"}}>
+					<center><h3>Reviews</h3></center>
+					<div style={{overflow:"scroll", height:"100%"}}>
+						{modalReviewItems}
+					</div>
+				</div>
+			</center>
         </Modal>
       </div>
     );
