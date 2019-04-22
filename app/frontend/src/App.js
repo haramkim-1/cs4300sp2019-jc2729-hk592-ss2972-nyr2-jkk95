@@ -39,8 +39,8 @@ class App extends Component {
         minPrice: this.state.minPrice,
 		maxPrice: this.state.maxPrice,
 		//TODO: get values from state
-		minFuel: 0,
-		maxFuel: 4
+		minFuel: this.state.minFuel,
+		maxFuel: this.state.maxFuel
       }})
     .then(function (response) {
         self.setState({results:response.data})
@@ -57,6 +57,10 @@ class App extends Component {
   updateSizes = (new_size1,new_size2) => {
     this.setState({size1:new_size1});
     this.setState({size2:new_size2});
+  }
+  updateFuel = (new_fuel1, new_fuel2) => {
+    this.setState({fuel1:new_fuel1});
+    this.setState({fuel2:new_fuel2});
   }
 
   displayDetails = function(event, ymm) {
@@ -78,21 +82,21 @@ class App extends Component {
   }.bind(this)
 
   render() {
-    var listItems = this.state.results.map((ymm) => 
-        <li style={{color:"black", listStyleType:"none"}} key={ymm}> 
+    var listItems = this.state.results.map((ymm) =>
+        <li style={{color:"black", listStyleType:"none"}} key={ymm}>
             <Button style={{opacity:"1.0", margin: "auto", margin: "3px"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
         </li>
 	);
-	
+
 	// TODO: more content here
 	// TODO: highlight keywords from query
-	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) => 
-        <li style={{color:"black", listStyleType:"none"}} key={review.Review_Date + " " + review.Author_Name}> 
-		
+	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) =>
+        <li style={{color:"black", listStyleType:"none"}} key={review.Review_Date + " " + review.Author_Name}>
+
             {review.Review_Title}
         </li>
-	)) : null; 
-	
+	)) : null;
+
     return (
       <div className="App">
         <img src={logo} className="App-logo" alt="logo" />
@@ -100,6 +104,7 @@ class App extends Component {
         <Slider
           updateParentPrices={this.updatePrices}
           updateParentSizes={this.updateSizes}
+          updateParentFuel={this.updateFuel}
         />
             <Form updateParentKeywords={this.updateKeywords}/>
             <Button type="button" key='search' onClick={() => {this.sendReq()}}> Search </Button>

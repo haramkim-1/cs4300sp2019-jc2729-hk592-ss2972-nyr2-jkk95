@@ -18,6 +18,10 @@ class Slider extends Component {
       value2: {
         min: 0,
         max: 2
+      },
+      value3: {
+        min:0,
+        max:4
       }
     };
   }
@@ -30,8 +34,11 @@ class Slider extends Component {
       <div className = "labels">
       Size
       </div>
+      <div className = "labels">
+      Fuel Efficiency
+      </div>
       <div className = "middle">
-      /** Slider for pricing.**/
+      {/** Slider for pricing.**/}
         <form className="slider">
           <InputRange
             name={"Price"}
@@ -49,7 +56,7 @@ class Slider extends Component {
 
           }} />
         </form>
-        /** Slider for size.**/
+        {/** Slider for size.**/}
         <form className="slider">
           <InputRange
             name={"Size"}
@@ -67,6 +74,26 @@ class Slider extends Component {
                 var new_size1 = ['Compact', 'Midsize', 'Large'][this.state.value2.min];
                 var new_size2 = ['Compact', 'Midsize', 'Large'][this.state.value2.max];
                 this.props.updateParentSizes(new_size1,new_size2);
+            }} />
+        </form>
+        {/** Slider for fuel.**/}
+        <form className="slider">
+          <InputRange
+            name={"Fuel Type"}
+            maxValue={4}
+            minValue={0}
+            allowSameValues={true}
+            formatLabel={value3 => {
+              var x = `${value3}`;
+              var temp = ['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][x];
+              return ` ${temp}` }}
+              value = {this.state.value3}
+              /** Maps size to approate label and passes it to parent component.**/
+              onChange={value3 => {
+                this.setState({ value3 });
+                var new_fuel1 = ['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][this.state.value3.min];
+                var new_fuel2 = ['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][this.state.value3.max];
+                this.props.updateParentFuel(new_fuel1,new_fuel2);
             }} />
         </form>
         </div>
