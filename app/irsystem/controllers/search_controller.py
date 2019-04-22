@@ -62,7 +62,6 @@ def do_search():
 	max_size = max(size1, size2)
 
 	fuel_mapping = {"Gas-Guzzler":0, "Standard":1, "Fuel-Efficient":2, "Hybrid":3, "Electric":4}
-	print(fuel1)
 	fuel1 = fuel_mapping[fuel1]
 	fuel2 = fuel_mapping[fuel2]
 	min_fuel = min(fuel1, fuel2)

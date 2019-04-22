@@ -20,6 +20,8 @@ class App extends Component {
       keywords: [''],
       minPrice: 2000, // TODO replace
       maxPrice: 1700000, // TODO replace
+      fuel1: 'Gas-Guzzler',
+      fuel2: 'Electric',
       results: [],
       selectedCar: null,
       modalOpen: false,
