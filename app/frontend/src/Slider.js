@@ -36,17 +36,17 @@ class Slider extends Component {
     return (
       <div>
       <div className = "labels">
-      <div className= "title"> Price </div>
+      <div className= "title"> PRICE </div>
       <div> Min: {labelFormatter(this.state.value1.min)}</div>
       <div> Max: {labelFormatter(this.state.value1.max)}</div>
       </div>
       <div className = "labels">
-      <div class= "title"> Size</div>
+      <div class= "title"> SIZE</div>
       <div> Min: {['Compact', 'Midsize', 'Large'][this.state.value2.min]}</div>
       <div> Max: {['Compact', 'Midsize', 'Large'][this.state.value2.max]}</div>
       </div>
       <div className = "labels">
-      <div class= "title"> Fuel Efficiency</div>
+      <div class= "title"> EFFICIENCY</div>
       <div> Min: {['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][this.state.value3.min]}</div>
       <div> Max: {['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][this.state.value3.max]}</div>
       </div>
