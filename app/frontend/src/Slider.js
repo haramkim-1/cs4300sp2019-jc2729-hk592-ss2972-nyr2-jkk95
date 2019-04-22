@@ -7,9 +7,9 @@ import 'react-input-range/lib/css/index.css';
 // Tutorial: https://github.com/davidchin/react-input-range
 function labelFormatter(value1) {
   if (value1 < 200) {
-    return `$${value1}`
+    return `$${value1}k`
   } else {
-    return `$${value1}+`
+    return `$${value1}k+`
   }
 }
 
@@ -49,7 +49,25 @@ class Slider extends Component {
     return (
       <div>
 
+      <div className = "labels">
+      <div class= "title"> Price </div>
+      <div> Min: {labelFormatter(this.state.value1.min)}</div>
+      <div> Max: {labelFormatter(this.state.value1.max)}</div>
 
+      </div>
+
+      <div className = "labels">
+      <div class= "title"> Size</div>
+      <div> Min: {['Compact', 'Midsize', 'Large'][this.state.value2.min]}</div>
+      <div> Max: {['Compact', 'Midsize', 'Large'][this.state.value2.max]}</div>
+      </div>
+
+      <div className = "labels">
+      <div class= "title"> Fuel Efficiency</div>
+      <div> Min: {['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][this.state.value3.min]}</div>
+      <div> Max: {['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][this.state.value3.max]}</div>
+
+      </div>
 
       <div className = "middle">
 
