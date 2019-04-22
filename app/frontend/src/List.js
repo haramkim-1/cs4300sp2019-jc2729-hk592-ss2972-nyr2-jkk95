@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import './List.css'
+/** Displays selected keywords and allows user to delete keyword **/
 const List = props => (
 
   <ul>

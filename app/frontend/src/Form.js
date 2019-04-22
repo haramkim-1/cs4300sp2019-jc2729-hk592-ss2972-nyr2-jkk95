@@ -22,11 +22,10 @@ axios.get(SERVER_URL + 'keywords', {'headers':{'Access-Control-Allow-Origin': '*
   })
 
 
-
 function getSuggestionValue(suggestion) {
   return `${suggestion.text}`;
 }
-/** matching code begins here **/
+/** Matching code begins here, for letters in user input matching with keywords **/
 // This matching code is taken directly from https://github.com/moroshko/autosuggest-highlight/issues/5
 // which will soon be merged into the Autosuggest-Highlight library, imported in this js file
 const specialCharsRegex = /[.*+?^${}()|[\]\\]/g;
@@ -62,7 +61,9 @@ const match = (text: any, query: any)  => {
             })
     );
 };
-/** matching code ends here **/
+/** Matching code ends here **/
+
+/** Renders a single suggested keyword, with matches with the user input highlighted **/
 function renderSuggestion(suggestion, { query }) {
   const suggestionText = `${suggestion.text}`;
   const matches = match(suggestionText, query);
@@ -97,6 +98,7 @@ class Form extends Component {
 
   }
 
+  /** Returns ranked list of suggested keywords, from shorted to longest */
   getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
@@ -108,8 +110,8 @@ class Form extends Component {
     return suggestions
     
   };
-  onChange = (event, { newValue, method }) => {
 
+  onChange = (event, { newValue, method }) => {
     this.setState({
       value: newValue
     });
@@ -136,6 +138,7 @@ class Form extends Component {
     });
   };
 
+  /** User clicked delete on keyword **/
   onKeywordDelete = (keyword) => {
     var new_keywords = this.state.keywords.filter(k => k !== keyword)
     this.setState({
@@ -144,6 +147,7 @@ class Form extends Component {
     });
     this.props.updateParentKeywords(new_keywords)
   }
+
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
@@ -154,7 +158,6 @@ class Form extends Component {
 
     return (
       <div>
-
       <Autosuggest 
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}

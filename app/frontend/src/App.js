@@ -15,8 +15,8 @@ class App extends Component {
     super();
 
     this.state = {
-      size1: 'Compact', // TODO replace w nataly's code
-      size2: 'Large', // TODO replace w nataly's code
+      size1: 'Compact',
+      size2: 'Large',
       keywords: [''],
       minPrice: 2000, // TODO replace
       maxPrice: 1700000, // TODO replace
@@ -27,27 +27,22 @@ class App extends Component {
       baseUrl: "http://localhost:5000/" // use for local development mode
     };
   }
-  sendReq = () => {
-      const self = this
-    console.log('req sent')
-    console.log(this.state.size1)
-    console.log(this.state.size2)
-    console.log(this.state.keywords)
-    console.log(this.state.minPrice)
-    console.log(this.state.maxPrice)
 
-  axios.get(this.state.baseUrl + 'search', {
-    params: {
-      size1: this.state.size1,
-      size2: this.state.size2,
-      keywords: JSON.stringify(this.state.keywords),
-      minPrice: this.state.minPrice,
-      maxPrice: this.state.maxPrice
-    }})
-  .then(function (response) {
-      self.setState({results:response.data})
-  })
-};
+  sendReq = () => {
+    const self = this
+
+    axios.get(this.state.baseUrl + 'search', {
+      params: {
+        size1: this.state.size1,
+        size2: this.state.size2,
+        keywords: JSON.stringify(this.state.keywords),
+        minPrice: this.state.minPrice,
+        maxPrice: this.state.maxPrice
+      }})
+    .then(function (response) {
+        self.setState({results:response.data})
+      })
+  };
 
   updateKeywords = (new_keywords) => {
     this.setState({keywords:new_keywords})
@@ -96,9 +91,7 @@ class App extends Component {
 	)) : null; 
 	
     return (
-
       <div className="App">
-
         <img src={logo} className="App-logo" alt="logo" />
 
         <Slider
