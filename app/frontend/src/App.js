@@ -19,7 +19,7 @@ class App extends Component {
       size2: 'Large',
       keywords: [''],
       minPrice: 2000, // TODO replace
-      maxPrice: 1700000, // TODO replace
+      maxPrice: 2700000, // TODO replace
       fuel1: 'Gas-Guzzler',
       fuel2: 'Electric',
       results: [],
