@@ -37,7 +37,10 @@ class App extends Component {
         size2: this.state.size2,
         keywords: JSON.stringify(this.state.keywords),
         minPrice: this.state.minPrice,
-        maxPrice: this.state.maxPrice
+		maxPrice: this.state.maxPrice,
+		//TODO: get values from state
+		minFuel: 0,
+		maxFuel: 4
       }})
     .then(function (response) {
         self.setState({results:response.data})
@@ -62,7 +65,7 @@ class App extends Component {
         params: { carYMM: ymm }})
       .then(function (response) {
         console.log(response.data);
-        this.setState({selectedCar:JSON.parse(response.data), modalOpen:true});
+        this.setState({selectedCar:response.data, modalOpen:true});
       }.bind(this))
   }.bind(this)
 

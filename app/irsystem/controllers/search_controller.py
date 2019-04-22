@@ -50,6 +50,8 @@ def do_search():
 	size2 = request.args.get("size2")
 	min_price = int(request.args.get("minPrice"))
 	max_price = int(request.args.get("maxPrice"))
+	min_fuel = int(request.args.get("minFuel"))
+	max_fuel = int(request.args.get("maxFuel"))
 	keywords = loads(request.args.get("keywords"))
 
 	# convert mapping words to min and max size integers
@@ -60,7 +62,8 @@ def do_search():
 	max_size = max(size1, size2)
 
 	# call search method
-	search_results = searcher.search(min_size=min_size, max_size=max_size, min_price=min_price, max_price=max_price, query=keywords)
+	search_results = searcher.search(min_size=min_size, max_size=max_size, min_price=min_price, 
+		max_price=max_price, min_fuel=min_fuel, max_fuel=max_fuel, query=keywords)
 
 	# send back json of results from Searcher
 	return dumps(search_results)
