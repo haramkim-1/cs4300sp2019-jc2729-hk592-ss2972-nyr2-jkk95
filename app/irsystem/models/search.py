@@ -1,4 +1,3 @@
-from json import load
 import pickle
 import numpy as np
 from os.path import join
@@ -79,8 +78,8 @@ class Searcher:
 		'''
 		with open(join(data_path, 'unfiltered_list.pkl'), 'rb') as unfiltered, \
 			open(join(data_path, 'index_to_vocab.pkl'), 'rb') as itv, \
-			open(join(data_path, 'data.json')) as all_data:
-			self.all_data = load(all_data)
+			open(join(data_path, 'data.pkl')) as all_data:
+			self.all_data = pickle.load(all_data)
 			self.unfiltered_list = pickle.load(unfiltered)
 			self.index_to_vocab = pickle.load(itv)
 			self.vocab_to_index = {self.index_to_vocab[k]:int(k) for k in self.index_to_vocab}
@@ -101,6 +100,8 @@ class Searcher:
 			self.all_data[car["Year_Make_Model"]] = car
 
 		self.doc_by_vocab = self.tfidf_vec.fit_transform([d['Appended Reviews'] for d in self.all_data.values()]).toarray()
+		# np.savetxt("version2.csv", self.doc_by_vocab, delimiter=",")
+		# print("done")
 
 	def search(self, min_size, max_size, min_price, max_price, min_fuel, max_fuel, query):
 		'''

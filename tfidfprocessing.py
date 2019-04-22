@@ -6,9 +6,7 @@ from __future__ import print_function
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
 from numpy import linalg as LA
-import json
 import math
-from json import dumps
 import re
 import string
 import pickle
@@ -72,8 +70,8 @@ def create_sizes_list(data, size_rev_idx):
 	return size_list
 
 
-with open('data/data.json') as json_file:
-	data = list(json.load(json_file).values())
+with open('data/data.pkl', "rb") as json_file:
+	data = list(pickle.load(json_file).values())
 
 	num_cars = len(data)
 	#Append all of the reviews for a car together, and remove numbers

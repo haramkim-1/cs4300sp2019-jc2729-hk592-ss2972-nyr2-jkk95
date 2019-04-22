@@ -1,7 +1,7 @@
 import pandas as pd
 from os import listdir
 from os.path import join
-from json import dump
+from pickle import dump
 
 details = pd.read_csv("data/raw/details.csv",
 			usecols=["Make", "Model", "Year", "Transmission Type", "Driven_Wheels", "Engine Fuel Type",
@@ -58,7 +58,7 @@ for i in range(len(details_dicts)):
 car_dict = {car["Year_Make_Model"]:car for car in details_dicts if len(car["reviews"]) > 1}
 
 # save new details
-with open("data/data.json", "w+") as file:
+with open("data/data.pkl", "wb+") as file:
 	dump(car_dict, file)
 
 # from json import load
