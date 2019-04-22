@@ -31,7 +31,6 @@ class Slider extends Component {
       Size
       </div>
       <div className = "middle">
-      /** Slider for pricing.**/
         <form className="slider">
           <InputRange
             name={"Price"}
@@ -49,7 +48,6 @@ class Slider extends Component {
 
           }} />
         </form>
-        /** Slider for size.**/
         <form className="slider">
           <InputRange
             name={"Size"}
