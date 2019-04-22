@@ -12,13 +12,13 @@ details = pd.read_csv("data/raw/details.csv",
 					"Year": int,
 					"Transmission Type": str,
 					"Driven_Wheels": str,
-					"Market Category": str,
 					"Vehicle Size": str,
 					"Vehicle Style": str,
 					"highway MPG": int,
 					"city mpg": int,
 					"Popularity": int,
-					"MSRP": int})
+					"MSRP": int},
+			converters={"Market Category": lambda x: str(x) if x != "N/A" else ""})
 
 # create reviews dataset
 reviews_path = "data/raw/reviews"
