@@ -75,4 +75,4 @@ def get_details():
 	ymm = request.args.get("carYMM")
 
 	# return a json of the car data
-	return dumps(searcher.all_data.get(ymm, ""))
+	return dumps(searcher.all_data.get(ymm, ""), allow_nan=False)
