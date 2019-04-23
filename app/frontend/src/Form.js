@@ -9,6 +9,8 @@ import List from './List'
 const SERVER_URL = window.location // use for deployment mode
 // const SERVER_URL = "http://localhost:5000/" // use for local development mode
 
+console.log("server url (form.js): " + SERVER_URL);
+
 // Janice's TODO: 4. prettify (center), 5. api calls to  send!
 var sys_keywords = [];
 

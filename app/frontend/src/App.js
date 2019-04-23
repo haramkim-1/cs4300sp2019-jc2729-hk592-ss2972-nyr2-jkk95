@@ -40,7 +40,9 @@ class App extends Component {
 	  expandedQuery: [],
       baseUrl: window.location // use for deployment mode
     //   baseUrl: "http://localhost:5000/" // use for local development mode
-    };
+	};
+	
+	console.log("baseUrl (app.js): " + this.state.baseUrl);
   }
 
   sendReq = () => {

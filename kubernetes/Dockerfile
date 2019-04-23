@@ -12,4 +12,5 @@ ADD requirements.txt /service/requirements.txt
 WORKDIR /service/
 RUN pip install -r requirements.txt
 ENV APP_SETTINGS config.DevelopmentConfig
+EXPOSE 5000
 CMD python -u app.py config.DevelopmentConfig 
