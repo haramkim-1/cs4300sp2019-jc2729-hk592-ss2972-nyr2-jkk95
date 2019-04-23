@@ -182,4 +182,4 @@ class Searcher:
         #sort results and then take the top 10
         sorted_results = sorted(similarity_dict.keys(), key=lambda word: similarity_dict.get(word), reverse = True)
         print('sorted results' , sorted_results[0:10])
-        return sorted_results[0:10]
+        return {"results": sorted_results[0:10], "query":expanded_query}

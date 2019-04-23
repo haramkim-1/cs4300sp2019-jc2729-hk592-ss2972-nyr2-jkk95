@@ -1,7 +1,6 @@
 flask:
-    image: ifilonenko/flask-template:v3
+    image: haramkim/vroom-vroom-4300:v1
     ports:
       - "5000:5000"
     environment:
     - APP_SETTINGS=config.ProductionConfig
-    - DATABASE_URL=postgresql://localhost/my_app_db
