@@ -52,7 +52,11 @@ def do_search():
 	max_price = int(request.args.get("maxPrice"))
 	fuel1 = request.args.get("fuel1")
 	fuel2 = request.args.get("fuel2")
-	keywords = loads(request.args.get("keywords"))
+	keywords_and_priorities = loads(request.args.get("keywords"))
+
+	# TODO: do something with priorities
+	print(keywords_and_priorities)
+	keywords = [item["word"] for item in keywords_and_priorities]
 
 	# convert mapping words to min and max size integers
 	mapping = {"Compact":0, "Midsize":1, "Large":2}

@@ -6,8 +6,8 @@ import './Form.css';
 import List from './List'
 /** Tutorial: http://react-autosuggest.js.org/ **/
 
-const SERVER_URL = window.location // use for deployment mode
-// const SERVER_URL = "http://localhost:5000/" // use for local development mode
+// const SERVER_URL = window.location // use for deployment mode
+const SERVER_URL = "http://localhost:5000/" // use for local development mode
 
 console.log("server url (form.js): " + SERVER_URL);
 
@@ -120,7 +120,7 @@ class Form extends Component {
   };
 
   onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
-    var new_keywords = [...this.state.keywords, suggestionValue]
+    var new_keywords = [...this.state.keywords, {word: suggestionValue, priority:1}]
   	this.setState({
       keywords: new_keywords,
       value:''
@@ -144,7 +144,6 @@ class Form extends Component {
   onKeywordDelete = (keyword) => {
     var new_keywords = this.state.keywords.filter(k => k !== keyword)
     this.setState({
-
       keywords: new_keywords
     });
     this.props.updateParentKeywords(new_keywords)

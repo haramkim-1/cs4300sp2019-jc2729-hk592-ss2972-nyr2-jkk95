@@ -2,11 +2,33 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import './List.css'
 /** Displays selected keywords and allows user to delete keyword **/
+
+const priorityMap = {
+	1: "green",
+	2: "#fad201",
+	3: "red"
+};
+
 const List = props => (
 
   <ul>
     {
-      props.items.map((item, index) => <Button className="keybutton" type="button" style={{margin:'10px 5px',background:"#fad201", color:"black", border:"solid", font:"bold"}} key={index} onClick={() => {props.delete(item)}}>{item} <span className="close">x</span></Button>)
+      props.items.map((item, index) => 
+		<Button className="keybutton" type="button" style={{margin:'10px 5px',background:"green", color:"black", border:"solid", font:"bold"}} 
+			key={index} onClick={(evt) => {
+				// increase priority or wrap around back to 1
+				if(item.priority === 3) {
+					item.priority = 1;	
+				} else {
+					item.priority += 1;
+				}
+
+				// TODO: maybe find a way to do this by setting a state somewhere
+				evt.target.style.background = priorityMap[item.priority];
+				console.log(item);
+			}}>
+			{item.word} <span className="close" onClick={() => {props.delete(item)}}>x</span>
+		</Button>)
     }
   </ul>
 );

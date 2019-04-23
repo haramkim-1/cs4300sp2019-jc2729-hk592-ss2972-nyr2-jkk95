@@ -41,12 +41,12 @@ class Slider extends Component {
       <div> Max: {labelFormatter(this.state.value1.max)}</div>
       </div>
       <div className = "labels">
-      <div class= "title"> SIZE</div>
+      <div className = "title"> SIZE</div>
       <div> Min: {['Compact', 'Midsize', 'Large'][this.state.value2.min]}</div>
       <div> Max: {['Compact', 'Midsize', 'Large'][this.state.value2.max]}</div>
       </div>
       <div className = "labels">
-      <div class= "title"> EFFICIENCY</div>
+      <div className = "title"> EFFICIENCY</div>
       <div> Min: {['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][this.state.value3.min]}</div>
       <div> Max: {['Gas-Guzzler', 'Standard', 'Fuel-Efficient', 'Hybrid', 'Electric'][this.state.value3.max]}</div>
       </div>
@@ -66,7 +66,7 @@ class Slider extends Component {
               this.setState({ value1 });
               var new_minprice = this.state.value1.min ;
               var new_maxprice = this.state.value1.max ;
-              if (new_maxprice == 200) {
+              if (new_maxprice === 200) {
                 new_maxprice = 2000000
               }
               this.props.updateParentPrices(new_minprice * 1000, new_maxprice * 1000);
