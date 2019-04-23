@@ -7,3 +7,17 @@
   transform: translateX(35px);
   pointer-events: none;
 }
+
+#circle {
+      width: 75px;
+      height: 75px;
+      background: green;
+      border-radius: 50%;
+      border-color: white;
+      /* border-width: 2px; */
+      font-weight: bold;
+    }
+
+#circle:hover {
+      background: darkgreen;
+    }

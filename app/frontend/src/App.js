@@ -122,8 +122,8 @@ class App extends Component {
           updateParentFuel={this.updateFuel}
         />
             <Form updateParentKeywords={this.updateKeywords}/>
-            <Button type="button" key='search' onClick={() => {this.sendReq()}}> Search </Button>
-        <div style={{backgroundColor:"rgb(255,255,255, 0.6)", width:"300px", margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
+            <Button id="circle" type="button" key='search' onClick={() => {this.sendReq()}}> GO </Button>
+        <div style={{width:"300px", margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
 
         <Modal
           isOpen={this.state.modalOpen}
