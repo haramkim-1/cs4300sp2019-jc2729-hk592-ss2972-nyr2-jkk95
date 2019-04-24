@@ -157,19 +157,45 @@ class Form extends Component {
       onChange: this.onChange
     };
 
-    return (
-      <div>
-      <Autosuggest 
-        suggestions={suggestions}
-        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-        onSuggestionSelected={this.onSuggestionSelected}
-        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        getSuggestionValue={getSuggestionValue}
-        renderSuggestion={renderSuggestion}
-        inputProps={inputProps} />
-      <List items={this.state.keywords} delete={this.onKeywordDelete} />
-      </div>
-    );
+    if (suggestions.length == 0 && inputProps.value != '') {
+      return (
+        <div>
+        <Autosuggest 
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionSelected={this.onSuggestionSelected}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestion={renderSuggestion}
+          inputProps={inputProps} />
+        <p style={{color:"white"}}> No matching keywords found </p>
+
+
+
+        <List items={this.state.keywords} delete={this.onKeywordDelete} />
+        </div>
+      );
+    
+    }
+    else {
+      return (
+        <div>
+
+        <Autosuggest 
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionSelected={this.onSuggestionSelected}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestion={renderSuggestion}
+          inputProps={inputProps} />
+
+
+
+        <List items={this.state.keywords} delete={this.onKeywordDelete} />
+        </div>
+      );
+    }
   }
 }
 
