@@ -125,7 +125,7 @@ class App extends Component {
         </li>
 	);
 
-	// TODO: highlight keywords from query
+	// display reviews
 	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) =>
       <li style={{backgroundColor:"lightgrey", listStyleType:"none", margin:"4px", marginLeft:"6px", marginRight:"4px"}} 
           key={review.Review_Date + " " + review.Author_Name}>
