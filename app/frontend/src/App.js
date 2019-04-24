@@ -10,6 +10,19 @@ import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
+const textStyles = StyleSheet.create({ 
+  priority1: {
+    color: "green"
+  },
+  priority2: {
+    color: "#fad201"
+  },
+  priority3: {
+    color: "red"
+  }
+ 
+});
+
 const modalStyles = {content: {
 	top: '50%',
 	left: '50%',
@@ -100,6 +113,42 @@ class App extends Component {
     // TODO: setup ?
   }.bind(this)
 
+  generateReviewText = function(reviewText, keywords) {
+    let priority1Words = [];
+    let priority2Words = [];
+    let priority3Words = [];
+
+    keywords.forEach(word => {
+      if(word.priority === 1)
+        priority1Words.append(word.word);
+      else if (word.priority === 2)
+        priority2Words.append(word.word);
+      else if (word.priority === 3)
+        priority3Words.append(word.word);
+    });
+
+    let re1 = new RegExp(priority1Words.join("|"), "i");
+    let re2 = new RegExp(priority2Words.join("|"), "i");
+    let re3 = new RegExp(priority3Words.join("|"), "i");
+
+    console.log(re1, "expression");
+    
+    return (
+      <ParsedText
+        style={styles.text}
+        parse={
+          [
+          {pattern: re1,              style: styles.priority1},
+          {pattern: re2, style: styles.priority2},
+          {pattern: re3,                     style: styles.priority3}
+          ]
+        }
+        childrenProps={{allowFontScaling: false}}>
+          {reviewText}
+      </ParsedText>
+    );
+  }
+
   render() {
     var listItems = this.state.results.map((ymm) =>
         <li style={{color:"black", listStyleType:"none"}} key={ymm}>
@@ -107,7 +156,6 @@ class App extends Component {
         </li>
 	);
 
-	// TODO: more content here
 	// TODO: highlight keywords from query
 	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) =>
         <li style={{backgroundColor:"lightgrey", listStyleType:"none", margin:"4px", marginLeft:"6px", marginRight:"4px"}} key={review.Review_Date + " " + review.Author_Name}>
