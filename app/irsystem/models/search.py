@@ -151,8 +151,11 @@ class Searcher:
         #print(query)
         #tf_idf_query = self.tfidf_vec.transform([query]).toarray()[0]
 
+		# TODO: actually use priorities
+        query_terms = [item["word"] for item in query]
+
         expanded_query = []
-        for term in query:
+        for term in query_terms:
             in_cluster = False
             for cluster in self.query_expansion_clusters:
                 if term in cluster:
@@ -179,7 +182,10 @@ class Searcher:
             sim = get_sim(self.docs_compressed[car_index].T, svd_query)
             similarity_dict[car] = sim
 
+        # TODO: remove dummy priority setup
+        exp_query_with_priorities = [{"word": w, "priority": 2} for w in expanded_query]
+
         #sort results and then take the top 10
         sorted_results = sorted(similarity_dict.keys(), key=lambda word: similarity_dict.get(word), reverse = True)
         print('sorted results' , sorted_results[0:10])
-        return {"results": sorted_results[0:10], "query":expanded_query}
+        return {"results": sorted_results[0:10], "query":exp_query_with_priorities}

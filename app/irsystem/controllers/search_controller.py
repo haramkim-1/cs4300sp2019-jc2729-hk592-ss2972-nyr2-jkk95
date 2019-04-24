@@ -54,9 +54,8 @@ def do_search():
 	fuel2 = request.args.get("fuel2")
 	keywords_and_priorities = loads(request.args.get("keywords"))
 
-	# TODO: do something with priorities
+	# TODO: remove this line
 	print(keywords_and_priorities)
-	keywords = [item["word"] for item in keywords_and_priorities]
 
 	# convert mapping words to min and max size integers
 	mapping = {"Compact":0, "Midsize":1, "Large":2}
@@ -74,7 +73,7 @@ def do_search():
 
 	# call search method
 	search_results = searcher.search(min_size=min_size, max_size=max_size, min_price=min_price,
-		max_price=max_price, min_fuel=min_fuel, max_fuel=max_fuel, query=keywords)
+		max_price=max_price, min_fuel=min_fuel, max_fuel=max_fuel, query=keywords_and_priorities)
 
 	# send back json of results from Searcher
 	return dumps(search_results)

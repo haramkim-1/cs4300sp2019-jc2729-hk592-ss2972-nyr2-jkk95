@@ -61,6 +61,7 @@ class App extends Component {
       }})
     .then(function (response) {
 		self.setState({results:response.data.results})
+		console.log(response.data.query);
 		self.setState({expandedQuery:response.data.query})
       })
   };
