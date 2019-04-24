@@ -8,6 +8,18 @@
   pointer-events: none;
 }
 
+.word.priority.one {
+  background-color: green
+}
+
+.word.priority.two {
+  background-color: #fad201
+}
+
+.word.priority.three {
+  background-color: red
+}
+
 #circle {
       width: 75px;
       height: 75px;

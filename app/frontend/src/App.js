@@ -7,21 +7,9 @@ import Slider from './Slider';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import Modal from 'react-modal';
+import Highlighter from "react-highlight-words";
 
 Modal.setAppElement('#root');
-
-const textStyles = StyleSheet.create({ 
-  priority1: {
-    color: "green"
-  },
-  priority2: {
-    color: "#fad201"
-  },
-  priority3: {
-    color: "red"
-  }
- 
-});
 
 const modalStyles = {content: {
 	top: '50%',
@@ -49,8 +37,10 @@ class App extends Component {
       fuel2: 'Electric',
       results: [],
       selectedCar: null,
-	  modalOpen: false,
-	  expandedQuery: [],
+      modalOpen: false,
+      expandedQuery: [],
+      queryWords: [],
+      queryColorMapping: [],
     //   baseUrl: window.location // use for deployment mode
       baseUrl: "http://localhost:5000/" // use for local development mode
 	};
@@ -67,15 +57,29 @@ class App extends Component {
         size2: this.state.size2,
         keywords: JSON.stringify(this.state.keywords),
         minPrice: this.state.minPrice,
-		maxPrice: this.state.maxPrice,
-		//TODO: get values from state
-		fuel1: this.state.fuel1,
-		fuel2: this.state.fuel2
-      }})
-    .then(function (response) {
-		self.setState({results:response.data.results})
-		console.log(response.data.query);
-		self.setState({expandedQuery:response.data.query})
+        maxPrice: this.state.maxPrice,
+        //TODO: get values from state
+        fuel1: this.state.fuel1,
+        fuel2: this.state.fuel2
+      }}).then(function (response) {
+        console.log(response.data.query);
+    
+        // generate mapping for highlighting
+        let words = [];
+        let mapping = {};
+
+        response.data.query.forEach(element => {
+          words.push(element.word)
+          if(element.priority === 1)
+            mapping[element.word] = "word priority one"
+          else if (element.priority === 2)
+            mapping[element.word] = "word priority two"
+          else if (element.priority === 3)
+            mapping[element.word] = "word priority three"
+        });
+
+        // set all state components at once
+        self.setState({results:response.data.results, expandedQuery:response.data.query, queryWords: words, queryColorMapping: mapping})
       })
   };
 
@@ -113,42 +117,6 @@ class App extends Component {
     // TODO: setup ?
   }.bind(this)
 
-  generateReviewText = function(reviewText, keywords) {
-    let priority1Words = [];
-    let priority2Words = [];
-    let priority3Words = [];
-
-    keywords.forEach(word => {
-      if(word.priority === 1)
-        priority1Words.append(word.word);
-      else if (word.priority === 2)
-        priority2Words.append(word.word);
-      else if (word.priority === 3)
-        priority3Words.append(word.word);
-    });
-
-    let re1 = new RegExp(priority1Words.join("|"), "i");
-    let re2 = new RegExp(priority2Words.join("|"), "i");
-    let re3 = new RegExp(priority3Words.join("|"), "i");
-
-    console.log(re1, "expression");
-    
-    return (
-      <ParsedText
-        style={styles.text}
-        parse={
-          [
-          {pattern: re1,              style: styles.priority1},
-          {pattern: re2, style: styles.priority2},
-          {pattern: re3,                     style: styles.priority3}
-          ]
-        }
-        childrenProps={{allowFontScaling: false}}>
-          {reviewText}
-      </ParsedText>
-    );
-  }
-
   render() {
     var listItems = this.state.results.map((ymm) =>
         <li style={{color:"black", listStyleType:"none"}} key={ymm}>
@@ -158,11 +126,18 @@ class App extends Component {
 
 	// TODO: highlight keywords from query
 	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) =>
-        <li style={{backgroundColor:"lightgrey", listStyleType:"none", margin:"4px", marginLeft:"6px", marginRight:"4px"}} key={review.Review_Date + " " + review.Author_Name}>
-			<h4 style={{"margin":"4px"}}> {"\"" + review.Review_Title + "\""} </h4>
-			<p style={{"fontSize":"14px", "margin":"4px"}}> {"by: " + review.Author_Name} </p>
-			<p style={{"fontSize":"11px", "margin":"4px"}}>> {review.Review} </p>
-        </li>
+      <li style={{backgroundColor:"lightgrey", listStyleType:"none", margin:"4px", marginLeft:"6px", marginRight:"4px"}} 
+          key={review.Review_Date + " " + review.Author_Name}>
+        <h4 style={{"margin":"4px"}}> {"\"" + review.Review_Title + "\""} </h4>
+        <p style={{"fontSize":"14px", "margin":"4px"}}> {"by: " + review.Author_Name} </p>
+        <p style={{"fontSize":"11px", "margin":"4px"}}>
+          <Highlighter
+            searchWords={this.state.queryWords}
+            textToHighlight={review.Review}
+            highlightClassName={this.state.queryColorMapping}
+          />
+        </p>
+      </li>
 	)) : null;
 
     return (
