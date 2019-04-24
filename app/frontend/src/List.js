@@ -25,7 +25,7 @@ const List = props => (
 
 				// TODO: maybe find a way to do this by setting a state somewhere
 				evt.target.style.background = priorityMap[item.priority];
-				console.log(item);
+				// console.log(item);
 			}}>
 			{item.word} <span className="close" onClick={() => {props.delete(item)}}>x</span>
 		</Button>)
