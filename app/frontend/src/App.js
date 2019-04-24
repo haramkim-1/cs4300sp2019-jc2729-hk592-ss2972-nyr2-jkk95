@@ -175,7 +175,7 @@ class App extends Component {
 						Drive Type: {this.state.selectedCar ? this.state.selectedCar["Driven_Wheels"]:""}
 					</p>
 					<p style={{margin:"1px"}}>
-						MSRP: {this.state.selectedCar ? this.state.selectedCar["MSRP"]:""}
+						MSRP: ${this.state.selectedCar ? this.state.selectedCar["MSRP"]:""}
 					</p>
 					<p style={{margin:"1px"}}>
 						Transmission Type: {this.state.selectedCar ? this.state.selectedCar["Transmission Type"]:""}
