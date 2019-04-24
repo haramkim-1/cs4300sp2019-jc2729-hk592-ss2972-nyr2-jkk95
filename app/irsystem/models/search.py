@@ -183,7 +183,7 @@ class Searcher:
             similarity_dict[car] = sim
 
         # TODO: remove dummy priority setup
-        exp_query_with_priorities = [{"word": w, "priority": 2} for w in expanded_query]
+        exp_query_with_priorities = [{"word": w, "priority": 1 if w in query_terms else 2} for w in expanded_query]
 
         #sort results and then take the top 10
         sorted_results = sorted(similarity_dict.keys(), key=lambda word: similarity_dict.get(word), reverse = True)
