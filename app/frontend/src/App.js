@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Form from './Form';
 import logo from './logo.gif';
-import carImage from './vroom.png'
 
 import './App.css';
 import Slider from './Slider';
