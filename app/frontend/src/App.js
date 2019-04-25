@@ -8,8 +8,19 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import Modal from 'react-modal';
 import Highlighter from "react-highlight-words";
+import StarRatings from 'react-star-ratings';
 
 Modal.setAppElement('#root');
+
+const carSVGPath = `M175 240 c-51 -41 -66 -49 -122 -70 -28 -10 -33 -18 -33 -44 0 -18
+	-5 -37 -11 -43 -17 -17 -1 -33 33 -33 18 0 42 -10 60 -25 37 -31 43 -31 74 0
+	21 21 35 25 80 25 45 0 59 -4 73 -21 22 -28 69 -28 90 -1 9 11 27 22 41 24 24
+	3 25 6 25 72 l0 70 -63 43 c-59 40 -68 43 -130 43 -63 0 -70 -2 -117 -40z
+	m105 -20 l0 -40 -70 0 c-38 0 -70 2 -70 5 0 13 96 75 116 75 21 0 24 -5 24
+	-40z m110 18 c52 -35 49 -48 -9 -49 -28 -1 -57 -2 -63 -3 -8 -1 -14 14 -16 37
+	-3 35 -2 37 26 37 16 0 44 -10 62 -22z m-227 -172 c7 -19 -18 -40 -38 -32 -15
+	6 -20 28 -8 39 12 12 41 7 46 -7z m232 -11 c0 -30 -39 -27 -43 3 -3 20 0 23
+	20 20 15 -2 23 -10 23 -23z`
 
 const modalStyles = {content: {
 	top: '50%',
@@ -30,7 +41,7 @@ class App extends Component {
     this.state = {
       size1: 'Compact',
       size2: 'Large',
-      keywords: [''],
+      keywords: [],
       minPrice: 2000, // TODO replace
       maxPrice: 2700000, // TODO replace
       fuel1: 'Gas-Guzzler',
@@ -130,6 +141,14 @@ class App extends Component {
           key={review.Review_Date + " " + review.Author_Name}>
         <h4 style={{"margin":"4px"}}> {"\"" + review.Review_Title + "\""} </h4>
         <p style={{"fontSize":"14px", "margin":"4px"}}> {"by: " + review.Author_Name} </p>
+
+		{/* <StarRatings
+			rating={review.rating}
+			name={review.Review_Date + " " + review.Author_Name}
+			starRatedColor="red"
+			// svgIconPath={carSVGPath}
+        /> */}
+
         <p style={{"fontSize":"11px", "margin":"4px"}}>
           <Highlighter
             searchWords={this.state.queryWords}
