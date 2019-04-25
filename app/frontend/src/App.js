@@ -31,7 +31,7 @@ const modalStyles = {content: {
 	// bottom: 'auto',
 	// marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-	overflowY:"visible"
+	overflow:"hidden"
 }};
 
 class App extends Component {
@@ -51,7 +51,7 @@ class App extends Component {
       modalOpen: false,
       expandedQuery: [],
       queryWords: [],
-      queryColorMapping: [],
+	  queryColorMapping: [],
     //   baseUrl: window.location // use for deployment mode
       baseUrl: "http://localhost:5000/" // use for local development mode
 	};
@@ -69,7 +69,6 @@ class App extends Component {
         keywords: JSON.stringify(this.state.keywords),
         minPrice: this.state.minPrice,
         maxPrice: this.state.maxPrice,
-        //TODO: get values from state
         fuel1: this.state.fuel1,
         fuel2: this.state.fuel2
       }}).then(function (response) {
@@ -219,9 +218,9 @@ class App extends Component {
 					</p>
 				</div>
 				<div style={{display:"inline-block", verticalAlign:"middle", whiteSpace:"normal", outline:"1px solid black", 
-						width:"55%", marginTop: "10px", height:"80%", margin:"auto", transform: "translate(4%, 0)"}}>
+						width:"55%", marginTop: "10px", height:"90%", margin:"auto", transform: "translate(4%, 0)"}}>
 					<center><h3>Reviews</h3></center>
-					<div style={{overflow:"scroll", height:"100%"}}>
+					<div style={{overflowY:"auto", overflowX:"visible", height:"90%"}}>
 						{modalReviewItems}
 					</div>
 				</div>
