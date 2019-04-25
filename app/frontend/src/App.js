@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Form from './Form';
 import logo from './logo.gif';
-
+import stoplight from './stoplight.png';
 import './App.css';
 import Slider from './Slider';
 import Button from 'react-bootstrap/Button';
@@ -143,7 +143,10 @@ class App extends Component {
     return (
       <div className="App">
         <img src={logo} className="App-logo" alt="logo" />
-
+        <br/>
+        <div style={{display:"inline-block"}}>
+        <img src={stoplight} className="stoplight" alt="stoplight"/>
+        <div style={{marginTop:"-150px"}}>
         <Slider
           updateParentPrices={this.updatePrices}
           updateParentSizes={this.updateSizes}
@@ -152,6 +155,8 @@ class App extends Component {
             <Form updateParentKeywords={this.updateKeywords}/>
             <Button id="circle" type="button" key='search' onClick={() => {this.sendReq()}}> GO </Button>
         <div style={{width:"300px", margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
+        </div>
+        </div>
 
         <Modal
           isOpen={this.state.modalOpen}
