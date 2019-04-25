@@ -141,6 +141,7 @@ class App extends Component {
 	);
 
 	// display reviews
+	// TODO: handle cases where the rating is N/A
 	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) =>
       <li style={{backgroundColor:"lightgrey", listStyleType:"none", margin:"4px", marginLeft:"6px", marginRight:"4px"}} 
           key={review.Review_Date + " " + review.Author_Name}>
@@ -148,9 +149,10 @@ class App extends Component {
         <p style={{"fontSize":"14px", "margin":"4px"}}> {"by: " + review.Author_Name} </p>
 
 		<StarRatings
-			rating={review.rating}
+			rating={Number(review.Rating)}
 			name={review.Review_Date + " " + review.Author_Name}
 			starRatedColor="red"
+			starEmptyColor="black"
 			// svgIconPath={carSVGPath}
         />
 
@@ -200,7 +202,7 @@ class App extends Component {
 					<center><h3>Vehicle Details</h3></center>
           	
 			<div style={{paddingBottom:"0px"}}>
-				<Tooltip content="I AM TOOLTIP"  style={{margin:"1px"}}>
+				<Tooltip content="I AM TOOLTIP">
 					<p style={{margin:"1px", borderBottom: "0.05em dotted" }}>
           				Engine Fuel Type 
           			</p>
@@ -209,7 +211,7 @@ class App extends Component {
           	</div>
 
 			<div>
-				<Tooltip content="I AM TOOLTIP"  style={{margin:"1px"}}>
+				<Tooltip content="I AM TOOLTIP">
 					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
 						Drive Type
 					</p>
@@ -218,7 +220,7 @@ class App extends Component {
 			</div>
 
 			<div>
-				<Tooltip content="I AM TOOLTIP" style={{margin:"1px"}}>
+				<Tooltip content="I AM TOOLTIP">
 					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
 						MSRP
 					</p>
@@ -227,7 +229,7 @@ class App extends Component {
 			</div>
 
 			<div>
-			<Tooltip content="I AM TOOLTIP" style={{margin:"1px"}}>
+			<Tooltip content="I AM TOOLTIP">
 						<p style={{margin:"1px", borderBottom: "0.05em dotted" }}>
 							Transmission Type
 						</p>
@@ -236,7 +238,7 @@ class App extends Component {
 			</div>
 
 			<div>
-			<Tooltip content="I AM TOOLTIP" style={{margin:"1px"}}>
+			<Tooltip content="I AM TOOLTIP">
 						<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
 							Vehicle Style
 						</p>
@@ -246,7 +248,7 @@ class App extends Component {
 
 
 			<div>
-			<Tooltip content="I AM TOOLTIP" style={{margin:"1px"}}>
+			<Tooltip content="I AM TOOLTIP">
 						<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
 							Vehicle Size
 						</p>
@@ -255,7 +257,7 @@ class App extends Component {
 			</div>
 
 			<div>
-			<Tooltip content="I AM TOOLTIP" style={{margin:"1px"}}>
+			<Tooltip content="I AM TOOLTIP">
 						<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
 							City MPG
 						</p>
@@ -264,7 +266,7 @@ class App extends Component {
 			</div>
 
 			<div>
-				<Tooltip content="I AM TOOLTIP" style={{margin:"1px"}}>
+				<Tooltip content="I AM TOOLTIP">
 					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
 						Highway MPG
 					</p>

@@ -17,7 +17,7 @@ const List = props => (
   <ul>
     {
       props.items.map((item, index) => 
-      	<Tooltip content="Click to change priority" radius="5">
+      	<Tooltip key={index} content="Click to change priority">
 		<Button className="keybutton" type="button" style={{margin:'10px 5px',background:"green", color:"black", border:"solid", font:"bold"}} 
 			key={index} onClick={(evt) => {
 				// increase priority or wrap around back to 1
