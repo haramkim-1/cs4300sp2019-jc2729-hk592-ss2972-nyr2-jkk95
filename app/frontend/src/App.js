@@ -25,8 +25,8 @@ const carSVGPath = `M175 240 c-51 -41 -66 -49 -122 -70 -28 -10 -33 -18 -33 -44 0
 const modalStyles = {content: {
 	top: '50%',
 	left: '50%',
-	width: '60%',
-	height: '80%',
+	width: '50%',
+	height: '70%',
     // right: 'auto',
 	// bottom: 'auto',
 	// marginRight: '-50%',
@@ -142,12 +142,12 @@ class App extends Component {
         <h4 style={{"margin":"4px"}}> {"\"" + review.Review_Title + "\""} </h4>
         <p style={{"fontSize":"14px", "margin":"4px"}}> {"by: " + review.Author_Name} </p>
 
-		{/* <StarRatings
+		<StarRatings
 			rating={review.rating}
 			name={review.Review_Date + " " + review.Author_Name}
 			starRatedColor="red"
 			// svgIconPath={carSVGPath}
-        /> */}
+        />
 
         <p style={{"fontSize":"11px", "margin":"4px"}}>
           <Highlighter
@@ -189,8 +189,9 @@ class App extends Component {
 				<button onClick={this.closeModal}>close</button>
 			</div>
 			
-			<center style={{verticalAlign:"middle", whiteSpace:"nowrap", height:"90%", width:"100%", margin:"auto"}}>
-				<div style={{display:"inline-block", verticalAlign:"middle", outline:"1px solid black", width:"500px", marginTop: "10px", transform: "translate(-4%, 0)"}}>
+			<center style={{verticalAlign:"middle", whiteSpace:"nowrap", height:"95%", width:"100%", margin:"auto"}}>
+				<div style={{display:"inline-block", whiteSpace:"normal", verticalAlign:"middle", outline:"1px solid black", 
+						width:"35%", marginTop: "10px", transform: "translate(-4%, 0)"}}>
 					<center><h3>Vehicle Details</h3></center>
 					<p style={{margin:"1px"}}>
 						Engine Fuel Type: {this.state.selectedCar ? this.state.selectedCar["Engine Fuel Type"]:""}
@@ -217,7 +218,8 @@ class App extends Component {
 						Highway MPG: {this.state.selectedCar ? this.state.selectedCar["highway MPG"]:""}
 					</p>
 				</div>
-				<div style={{display:"inline-block", verticalAlign:"middle", whiteSpace:"normal", outline:"1px solid black", width:"500px", marginTop: "10px", height:"95%", margin:"auto", transform: "translate(4%, 0)"}}>
+				<div style={{display:"inline-block", verticalAlign:"middle", whiteSpace:"normal", outline:"1px solid black", 
+						width:"55%", marginTop: "10px", height:"80%", margin:"auto", transform: "translate(4%, 0)"}}>
 					<center><h3>Reviews</h3></center>
 					<div style={{overflow:"scroll", height:"100%"}}>
 						{modalReviewItems}
