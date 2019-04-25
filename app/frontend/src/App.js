@@ -9,6 +9,8 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import Highlighter from "react-highlight-words";
 import StarRatings from 'react-star-ratings';
+import Tooltip from "react-simple-tooltip"
+
 
 Modal.setAppElement('#root');
 
@@ -192,30 +194,78 @@ class App extends Component {
 			<center style={{verticalAlign:"middle", whiteSpace:"nowrap", height:"90%", width:"100%", margin:"auto"}}>
 				<div style={{display:"inline-block", verticalAlign:"middle", outline:"1px solid black", width:"500px", marginTop: "10px", transform: "translate(-4%, 0)"}}>
 					<center><h3>Vehicle Details</h3></center>
-					<p style={{margin:"1px"}}>
-						Engine Fuel Type: {this.state.selectedCar ? this.state.selectedCar["Engine Fuel Type"]:""}
+          <div style={{paddingBottom:"0px"}}>
+					<Tooltip content="I AM TOOLTIP"><p style={{margin:"1px", borderBottom: "0.05em dotted" }}>
+          Engine Fuel Type 
+          </p>
+          </Tooltip>
+          <p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["Engine Fuel Type"]:""} </p>
+          </div>
+
+          <div>
+          <Tooltip content="I AM TOOLTIP">
+					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+						Drive Type
 					</p>
-					<p style={{margin:"1px"}}>
-						Drive Type: {this.state.selectedCar ? this.state.selectedCar["Driven_Wheels"]:""}
+          </Tooltip>
+          <p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["Driven_Wheels"]:""}</p>
+          </div>
+
+          <div>
+          <Tooltip content="I AM TOOLTIP">
+					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+						MSRP
 					</p>
-					<p style={{margin:"1px"}}>
-						MSRP: ${this.state.selectedCar ? this.state.selectedCar["MSRP"]:""}
+          </Tooltip>
+          <p style={{display:"inline-block"}}> : ${this.state.selectedCar ? this.state.selectedCar["MSRP"]:""}</p>
+          </div>
+
+          <div>
+          <Tooltip content="I AM TOOLTIP">
+					<p style={{margin:"1px", borderBottom: "0.05em dotted" }}>
+						Transmission Type
 					</p>
-					<p style={{margin:"1px"}}>
-						Transmission Type: {this.state.selectedCar ? this.state.selectedCar["Transmission Type"]:""}
+          </Tooltip>
+          <p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["Transmission Type"]:""}</p>
+          </div>
+
+          <div>
+          <Tooltip content="I AM TOOLTIP">
+					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+						Vehicle Style
 					</p>
-					<p style={{margin:"1px"}}>
-						Vehicle Style: {this.state.selectedCar ? this.state.selectedCar["Vehicle Style"]:""}
+          </Tooltip>
+          <p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["Vehicle Style"]:""}</p>
+          </div>
+
+
+          <div>
+          <Tooltip content="I AM TOOLTIP">
+					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+						Vehicle Size
 					</p>
-					<p style={{margin:"1px"}}>
-						Vehicle Size: {this.state.selectedCar ? this.state.selectedCar["Vehicle Size"]:""}
+          </Tooltip>
+          <p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["Vehicle Size"]:""}</p>
+          </div>
+
+          <div>
+          <Tooltip content="I AM TOOLTIP">
+					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+						City MPG
 					</p>
-					<p style={{margin:"1px"}}>
-						City MPG: {this.state.selectedCar ? this.state.selectedCar["city mpg"]:""}
+          </Tooltip>
+          <p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["city mpg"]:""}</p>
+          </div>
+
+          <div>
+          <Tooltip content="I AM TOOLTIP">
+					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+						Highway MPG
 					</p>
-					<p style={{margin:"1px"}}>
-						Highway MPG: {this.state.selectedCar ? this.state.selectedCar["highway MPG"]:""}
-					</p>
+          </Tooltip>
+          <p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["highway MPG"]:""}</p>
+          </div>
+
 				</div>
 				<div style={{display:"inline-block", verticalAlign:"middle", whiteSpace:"normal", outline:"1px solid black", width:"500px", marginTop: "10px", height:"95%", margin:"auto", transform: "translate(4%, 0)"}}>
 					<center><h3>Reviews</h3></center>
