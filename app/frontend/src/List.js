@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import './List.css'
+import Tooltip from 'react-simple-tooltip';
 /** Displays selected keywords and allows user to delete keyword **/
 
 const priorityMap = {
@@ -11,9 +12,12 @@ const priorityMap = {
 
 const List = props => (
 
+
+
   <ul>
     {
       props.items.map((item, index) => 
+      	<Tooltip content="Click to change priority" radius="5">
 		<Button className="keybutton" type="button" style={{margin:'10px 5px',background:"green", color:"black", border:"solid", font:"bold"}} 
 			key={index} onClick={(evt) => {
 				// increase priority or wrap around back to 1
@@ -28,7 +32,8 @@ const List = props => (
 				// console.log(item);
 			}}>
 			{item.word} <span className="close" onClick={() => {props.delete(item)}}>x</span>
-		</Button>)
+		</Button>
+		</Tooltip>)
     }
   </ul>
 );

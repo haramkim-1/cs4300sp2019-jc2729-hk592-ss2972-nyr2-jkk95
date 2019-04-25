@@ -39,3 +39,63 @@
   transform: translateX(-400px);
   /*float:left;*/
 }
+
+.tooltip-toggle {
+  cursor: pointer;
+  position: relative;
+
+  svg {
+    height: 18px;
+    width: 18px;
+  }
+  
+  /*Tooltip text container*/
+  svg::before {
+    position: absolute;
+    top: -80px;
+    left: -80px;
+    background-color: #2B222A;
+    border-radius: 5px;
+    color: #fff;
+    content: attr(aria-label); /*This pulls in the text from the element with the tooltip*/
+    padding: 1rem;
+    text-transform: none;
+    transition: all 0.5s ease;
+    width: 160px;
+  }
+
+  /*Tooltip arrow*/
+  svg::after {
+    position: absolute;
+    top: -12px;
+    left: 9px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #2B222A;
+    content: " ";
+    font-size: 0;
+    line-height: 0;
+    margin-left: -5px;
+    width: 0;
+  }
+  
+  /*Setting up the transition*/
+  svg::before,
+  svg::after {
+    color: #efefef;
+    font-family: monospace;
+    font-size: 16px;
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+  }
+  
+  /*Triggering the transition*/
+  svg:focus::before,
+  svg:focus::after,
+  svg:hover::before,
+  svg:hover::after {
+    opacity: 1;
+    transition: all 0.75s ease;
+  }
+}
