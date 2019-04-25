@@ -33,3 +33,9 @@
 #circle:hover {
       background: darkgreen;
     }
+
+.stoplight{
+  width:200px;
+  transform: translateX(-400px);
+  /*float:left;*/
+}
