@@ -52,7 +52,7 @@ class App extends Component {
       selectedCar: null,
       modalOpen: false,
       expandedQuery: [],
-      queryWords: [],
+      queryRegex: null,
       queryColorMapping: [],
     //   baseUrl: window.location // use for deployment mode
       baseUrl: "http://localhost:5000/" // use for local development mode
@@ -82,17 +82,21 @@ class App extends Component {
         let mapping = {};
 
         response.data.query.forEach(element => {
-          words.push(element.word)
+          words.push("\\b" + element.word + "\\b");
           if(element.priority === 1)
-            mapping[element.word] = "word priority one"
+            mapping[element.word] = "word priority one";
           else if (element.priority === 2)
-            mapping[element.word] = "word priority two"
+            mapping[element.word] = "word priority two";
           else if (element.priority === 3)
-            mapping[element.word] = "word priority three"
-        });
+            mapping[element.word] = "word priority three";
+		});
+		
+		// create regex
+		let regex = new RegExp(words.join("|"));
+		console.log(regex);
 
         // set all state components at once
-        self.setState({results:response.data.results, expandedQuery:response.data.query, queryWords: words, queryColorMapping: mapping})
+        self.setState({results:response.data.results, expandedQuery:response.data.query, queryRegex: regex, queryColorMapping: mapping})
       })
   };
 
@@ -153,7 +157,7 @@ class App extends Component {
 
         <p style={{"fontSize":"11px", "margin":"4px"}}>
           <Highlighter
-            searchWords={this.state.queryWords}
+            searchWords={[this.state.queryRegex]}
             textToHighlight={review.Review}
             highlightClassName={this.state.queryColorMapping}
           />
@@ -194,13 +198,14 @@ class App extends Component {
 			<center style={{verticalAlign:"middle", whiteSpace:"nowrap", height:"90%", width:"100%", margin:"auto"}}>
 				<div style={{display:"inline-block", verticalAlign:"middle", outline:"1px solid black", width:"500px", marginTop: "10px", transform: "translate(-4%, 0)"}}>
 					<center><h3>Vehicle Details</h3></center>
-          <div style={{paddingBottom:"0px"}}>
-					<Tooltip content="I AM TOOLTIP"><p style={{margin:"1px", borderBottom: "0.05em dotted" }}>
-          Engine Fuel Type 
-          </p>
-          </Tooltip>
-          <p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["Engine Fuel Type"]:""} </p>
-          </div>
+          	<div style={{paddingBottom:"0px"}}>
+				<Tooltip content="I AM TOOLTIP">
+					<p style={{margin:"1px", borderBottom: "0.05em dotted" }}>
+          				Engine Fuel Type 
+          			</p>
+          		</Tooltip>
+          		<p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["Engine Fuel Type"]:""} </p>
+          	</div>
 
           <div>
           <Tooltip content="I AM TOOLTIP">
