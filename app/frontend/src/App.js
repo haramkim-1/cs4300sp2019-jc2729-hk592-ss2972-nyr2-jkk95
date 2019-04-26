@@ -124,9 +124,6 @@ class App extends Component {
 			<div style={{fontSize:"16px"}}> Your query did not match any cars
 			</div>
 		</div>
-		// <li style={{color:"black", listStyleType:"none"}}>
-		// 		<Button style={{opacity:"1.0", margin: "3px", backgroundColor:'grey', borderColor:"white"}}  > No result </Button>
-		// </li>
 		:
 		this.state.results.map((ymm) =>
         <li style={{color:"black", listStyleType:"none"}} key={ymm}>
