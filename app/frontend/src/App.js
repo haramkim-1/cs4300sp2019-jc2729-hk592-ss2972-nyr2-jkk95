@@ -44,7 +44,7 @@ class App extends Component {
     //   baseUrl: window.location // use for deployment mode
       baseUrl: "http://localhost:5000/" // use for local development mode
 	};
-	
+
 	console.log("baseUrl (app.js): " + this.state.baseUrl);
   }
 
@@ -63,7 +63,7 @@ class App extends Component {
         fuel2: this.state.fuel2
       }}).then(function (response) {
         console.log(response.data.query);
-    
+
         // generate mapping for highlighting
         let words = [];
         let mapping = {};
@@ -118,7 +118,17 @@ class App extends Component {
   }.bind(this)
 
   render() {
-    var listItems = this.state.results.map((ymm) =>
+    var listItems =
+		(this.state.results==='None') ?
+		<div style={{fontSize:"20px", fontColor:"black"}}> No results found :(
+			<div style={{fontSize:"16px"}}> Your query did not match any cars
+			</div>
+		</div>
+		// <li style={{color:"black", listStyleType:"none"}}>
+		// 		<Button style={{opacity:"1.0", margin: "3px", backgroundColor:'grey', borderColor:"white"}}  > No result </Button>
+		// </li>
+		:
+		this.state.results.map((ymm) =>
         <li style={{color:"black", listStyleType:"none"}} key={ymm}>
             <Button style={{opacity:"1.0", margin: "3px"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
         </li>
@@ -126,7 +136,7 @@ class App extends Component {
 
 	// TODO: highlight keywords from query
 	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) =>
-      <li style={{backgroundColor:"lightgrey", listStyleType:"none", margin:"4px", marginLeft:"6px", marginRight:"4px"}} 
+      <li style={{backgroundColor:"lightgrey", listStyleType:"none", margin:"4px", marginLeft:"6px", marginRight:"4px"}}
           key={review.Review_Date + " " + review.Author_Name}>
         <h4 style={{"margin":"4px"}}> {"\"" + review.Review_Title + "\""} </h4>
         <p style={{"fontSize":"14px", "margin":"4px"}}> {"by: " + review.Author_Name} </p>
@@ -164,7 +174,7 @@ class App extends Component {
 				<h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model:""} </h2>
 				<button onClick={this.closeModal}>close</button>
 			</div>
-			
+
 			<center style={{verticalAlign:"middle", whiteSpace:"nowrap", height:"90%", width:"100%", margin:"auto"}}>
 				<div style={{display:"inline-block", verticalAlign:"middle", outline:"1px solid black", width:"500px", marginTop: "10px", transform: "translate(-4%, 0)"}}>
 					<center><h3>Vehicle Details</h3></center>
