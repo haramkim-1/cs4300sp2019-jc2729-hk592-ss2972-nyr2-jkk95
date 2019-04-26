@@ -15,6 +15,7 @@
     "react-modal": "^3.8.1",
     "react-scripts": "2.1.8",
     "react-simple-tooltip": "^2.5.0",
+    "react-sound": "^1.2.0",
     "react-star-ratings": "^2.3.0"
   },
   "scripts": {

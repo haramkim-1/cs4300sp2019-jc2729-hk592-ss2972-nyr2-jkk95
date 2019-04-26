@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Form from './Form';
 import logo from './logo.gif';
 import stoplight from './stoplight.png';
+import vroomSound from './vroom.mp3';
 import './App.css';
 import Slider from './Slider';
 import Button from 'react-bootstrap/Button';
@@ -10,7 +11,7 @@ import Modal from 'react-modal';
 import Highlighter from "react-highlight-words";
 import StarRatings from 'react-star-ratings';
 import Tooltip from "react-simple-tooltip"
-
+import Sound from "react-sound"
 
 Modal.setAppElement('#root');
 
@@ -45,6 +46,7 @@ class App extends Component {
       expandedQuery: [],
       queryRegex: null,
       queryColorMapping: [],
+      soundStatus: Sound.status.STOPPED,
     //   baseUrl: window.location // use for deployment mode
       baseUrl: "http://localhost:5000/" // use for local development mode
 	};
@@ -79,13 +81,13 @@ class App extends Component {
             mapping[element.word] = "word priority two";
           else if (element.priority === 3)
             mapping[element.word] = "word priority three";
-		});
+		    });
 		
-		// create regex
-		let regex = new RegExp(words.join("|"));
+        // create regex
+        let regex = new RegExp(words.join("|"));
 
         // set all state components at once
-        self.setState({results:response.data.results, expandedQuery:response.data.query, queryRegex: regex, queryColorMapping: mapping})
+        self.setState({soundStatus: Sound.status.PLAYING, results:response.data.results, expandedQuery:response.data.query, queryRegex: regex, queryColorMapping: mapping})
       })
   };
 
@@ -168,6 +170,13 @@ class App extends Component {
 
     return (
       <div className="App">
+        <Sound
+          url={vroomSound}
+          autoLoad={true}
+          playStatus={this.state.soundStatus}
+          onFinishedPlaying={() => this.setState({ soundStatus: Sound.status.STOPPED })}
+        />
+
         <img src={logo} className="App-logo" alt="logo" />
         <br/>
         <div style={{display:"inline-block"}}>
