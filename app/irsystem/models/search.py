@@ -153,6 +153,7 @@ class Searcher:
 
 		# TODO: actually use priorities
         query_terms = [item["word"] for item in query]
+        query_priorities = [item["priority"] for item in query]
 
         expanded_query = []
         for term in query_terms:
@@ -165,11 +166,24 @@ class Searcher:
                 expanded_query.append(term)
         print(expanded_query)
 
+        k_means_words = list(set(expanded_query) - set(query_terms))
+
+        # generate expanded query for frontend
+        qwords_to_priorities = {elem["word"]:elem["priority"] for elem in query}
+        exp_query_with_priorities = [{"word": w, "priority": qwords_to_priorities[w] if w in query_terms else 2} for w in expanded_query]
+
+
+
+
         svd_query = np.zeros(800)
         count = 0
-        for word in expanded_query:
+        for item in exp_query_with_priorities:
+            word = item['word']
+            priority = item['priority']
+
             if word in self.word_to_index:
-                svd_query = svd_query + self.words_compressed[self.word_to_index[word]]
+                # print(svd_query)
+                svd_query = svd_query + (self.words_compressed[self.word_to_index[word]])*(1/priority)
                 count += 1
         svd_query = svd_query / count
 
@@ -182,9 +196,22 @@ class Searcher:
             sim = get_sim(self.docs_compressed[car_index].T, svd_query)
             similarity_dict[car] = sim
 
-        # generate expanded query for frontend
-        qwords_to_priorities = {elem["word"]:elem["priority"] for elem in query}
-        exp_query_with_priorities = [{"word": w, "priority": qwords_to_priorities[w] if w in query_terms else 2} for w in expanded_query]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         #sort results and then take the top 10
         sorted_results = sorted(similarity_dict.keys(), key=lambda word: similarity_dict.get(word), reverse = True)
