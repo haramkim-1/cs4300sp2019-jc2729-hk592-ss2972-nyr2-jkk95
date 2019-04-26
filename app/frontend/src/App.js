@@ -133,6 +133,22 @@ class App extends Component {
     // TODO: setup ?
   }.bind(this)
 
+  generateStarRatings = function(review) {
+	let rating = Number(review.Rating);
+	if(!isNaN(rating)) {
+		return (<StarRatings
+				rating={rating}
+				name={review.Review_Date + " " + review.Author_Name}
+				starRatedColor="red"
+				starEmptyColor="black"
+				starDimension="15px"
+				// svgIconPath={carSVGPath}
+			/>);
+	} else {
+		return (null);
+	}
+  }
+
   render() {
     var listItems = this.state.results.map((ymm) =>
         <li style={{color:"black", listStyleType:"none"}} key={ymm}>
@@ -148,13 +164,7 @@ class App extends Component {
         <h4 style={{"margin":"4px"}}> {"\"" + review.Review_Title + "\""} </h4>
         <p style={{"fontSize":"14px", "margin":"4px"}}> {"by: " + review.Author_Name} </p>
 
-		<StarRatings
-			rating={Number(review.Rating)}
-			name={review.Review_Date + " " + review.Author_Name}
-			starRatedColor="red"
-			starEmptyColor="black"
-			// svgIconPath={carSVGPath}
-        />
+		{this.generateStarRatings(review)}
 
         <p style={{"fontSize":"11px", "margin":"4px"}}>
           <Highlighter
