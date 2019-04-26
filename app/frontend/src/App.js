@@ -23,7 +23,8 @@ const modalStyles = {content: {
 	// bottom: 'auto',
 	// marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-	overflow:"hidden"
+	overflow:"hidden",
+	fontFamily:"Helvetica Neue"
 }};
 
 class App extends Component {
@@ -142,7 +143,7 @@ class App extends Component {
   render() {
     var listItems = this.state.results.map((ymm) =>
         <li style={{color:"black", listStyleType:"none"}} key={ymm}>
-            <Button style={{opacity:"1.0", margin: "3px"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
+            <Button style={{opacity:"1.0", margin: "3px", fontFamily:"Helvetica Neue"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
         </li>
 	);
 
