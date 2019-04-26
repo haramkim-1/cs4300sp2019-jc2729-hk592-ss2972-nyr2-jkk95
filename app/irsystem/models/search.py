@@ -164,7 +164,7 @@ class Searcher:
 
         # generate expanded query for frontend
         qwords_to_priorities = {elem["word"]:elem["priority"] for elem in query}
-        exp_query_with_priorities = [{"word": w, "priority": qwords_to_priorities[w] if w in query_terms else 2} for w in expanded_query]
+        exp_query_with_priorities = [{"word": w, "priority": qwords_to_priorities[w] if w in query_terms else 3} for w in expanded_query]
 
 
 
