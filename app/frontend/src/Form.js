@@ -159,7 +159,7 @@ class Form extends Component {
 
     if (suggestions.length == 0 && inputProps.value != '') {
       return (
-        <div>
+        <div style={{textAlign:"center"}}>
         <Autosuggest 
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -168,7 +168,7 @@ class Form extends Component {
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps} />
-        <p style={{color:"white"}}> No matching keywords found </p>
+        <p style={{color:"black", backgroundColor:"white", width:"60%", display:"inline-block"}}> No matching keywords found </p>
 
 
 
