@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
 import Form from './Form';
 import logo from './logo.gif';
-
+import stoplight from './stoplight.png';
+import vroomSound from './vroom.mp3';
 import './App.css';
 import Slider from './Slider';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import Modal from 'react-modal';
 import Highlighter from "react-highlight-words";
+import StarRatings from 'react-star-ratings';
+import Tooltip from "react-simple-tooltip"
+import Sound from "react-sound"
 
 Modal.setAppElement('#root');
 
 const modalStyles = {content: {
 	top: '50%',
 	left: '50%',
-	width: '60%',
-	height: '80%',
+	width: '80%',
+	height: '85%',
     // right: 'auto',
 	// bottom: 'auto',
 	// marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-	overflowY:"visible"
+	overflow:"hidden",
+	fontFamily:"Helvetica Neue"
 }};
 
 class App extends Component {
@@ -30,7 +35,7 @@ class App extends Component {
     this.state = {
       size1: 'Compact',
       size2: 'Large',
-      keywords: [''],
+      keywords: [],
       minPrice: 2000, // TODO replace
       maxPrice: 2700000, // TODO replace
       fuel1: 'Gas-Guzzler',
@@ -39,8 +44,9 @@ class App extends Component {
       selectedCar: null,
       modalOpen: false,
       expandedQuery: [],
-      queryWords: [],
+      queryRegex: null,
       queryColorMapping: [],
+      soundStatus: Sound.status.STOPPED,
     //   baseUrl: window.location // use for deployment mode
       baseUrl: "http://localhost:5000/" // use for local development mode
 	};
@@ -58,7 +64,6 @@ class App extends Component {
         keywords: JSON.stringify(this.state.keywords),
         minPrice: this.state.minPrice,
         maxPrice: this.state.maxPrice,
-        //TODO: get values from state
         fuel1: this.state.fuel1,
         fuel2: this.state.fuel2
       }}).then(function (response) {
@@ -69,17 +74,20 @@ class App extends Component {
         let mapping = {};
 
         response.data.query.forEach(element => {
-          words.push(element.word)
+          words.push("\\b" + element.word + "\\b");
           if(element.priority === 1)
-            mapping[element.word] = "word priority one"
+            mapping[element.word] = "word priority one";
           else if (element.priority === 2)
-            mapping[element.word] = "word priority two"
+            mapping[element.word] = "word priority two";
           else if (element.priority === 3)
-            mapping[element.word] = "word priority three"
-        });
+            mapping[element.word] = "word priority three";
+		    });
+
+        // create regex
+        let regex = new RegExp(words.join("|"));
 
         // set all state components at once
-        self.setState({results:response.data.results, expandedQuery:response.data.query, queryWords: words, queryColorMapping: mapping})
+        self.setState({soundStatus: Sound.status.PLAYING, results:response.data.results, expandedQuery:response.data.query, queryRegex: regex, queryColorMapping: mapping})
       })
   };
 
@@ -104,6 +112,7 @@ class App extends Component {
     axios.get(this.state.baseUrl + 'cardetails', {
         params: { carYMM: ymm }})
       .then(function (response) {
+		// TODO: remove this line
 		console.log(response.data);
         this.setState({selectedCar:response.data, modalOpen:true});
       }.bind(this))
@@ -117,6 +126,22 @@ class App extends Component {
     // TODO: setup ?
   }.bind(this)
 
+  generateStarRatings = function(strRating, name) {
+	let rating = Number(strRating);
+	if(!isNaN(rating)) {
+		return (<StarRatings
+				rating={rating}
+				name={name}
+				starRatedColor="red"
+				starEmptyColor="black"
+				starDimension="15px"
+				padding="50%"
+			/>);
+	} else {
+		return (null);
+	}
+  }
+
   render() {
     var listItems =
 		(this.state.results==='None') ?
@@ -127,19 +152,22 @@ class App extends Component {
 		:
 		this.state.results.map((ymm) =>
         <li style={{color:"black", listStyleType:"none"}} key={ymm}>
-            <Button style={{opacity:"1.0", margin: "3px"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
+            <Button style={{opacity:"1.0", margin: "3px", fontFamily:"Helvetica Neue"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
         </li>
 	);
 
-	// TODO: highlight keywords from query
+	// display reviews
 	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) =>
       <li style={{backgroundColor:"lightgrey", listStyleType:"none", margin:"4px", marginLeft:"6px", marginRight:"4px"}}
           key={review.Review_Date + " " + review.Author_Name}>
         <h4 style={{"margin":"4px"}}> {"\"" + review.Review_Title + "\""} </h4>
         <p style={{"fontSize":"14px", "margin":"4px"}}> {"by: " + review.Author_Name} </p>
+
+		{this.generateStarRatings(review.Rating, review.Review_Date + " " + review.Author_Name)}
+
         <p style={{"fontSize":"11px", "margin":"4px"}}>
           <Highlighter
-            searchWords={this.state.queryWords}
+            searchWords={[this.state.queryRegex]}
             textToHighlight={review.Review}
             highlightClassName={this.state.queryColorMapping}
           />
@@ -149,8 +177,18 @@ class App extends Component {
 
     return (
       <div className="App">
-        <img src={logo} className="App-logo" alt="logo" />
+        <Sound
+          url={vroomSound}
+          autoLoad={true}
+          playStatus={this.state.soundStatus}
+          onFinishedPlaying={() => this.setState({ soundStatus: Sound.status.STOPPED })}
+        />
 
+        <img src={logo} className="App-logo" alt="logo" />
+        <br/>
+        <div style={{display:"inline-block"}}>
+        <img src={stoplight} className="stoplight" alt="stoplight"/>
+        <div style={{marginTop:"-150px"}}>
         <Slider
           updateParentPrices={this.updatePrices}
           updateParentSizes={this.updateSizes}
@@ -159,6 +197,8 @@ class App extends Component {
             <Form updateParentKeywords={this.updateKeywords}/>
             <Button id="circle" type="button" key='search' onClick={() => {this.sendReq()}}> GO </Button>
         <div style={{width:"300px", margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
+        </div>
+        </div>
 
         <Modal
           isOpen={this.state.modalOpen}
@@ -172,37 +212,96 @@ class App extends Component {
 				<button onClick={this.closeModal}>close</button>
 			</div>
 
-			<center style={{verticalAlign:"middle", whiteSpace:"nowrap", height:"90%", width:"100%", margin:"auto"}}>
-				<div style={{display:"inline-block", verticalAlign:"middle", outline:"1px solid black", width:"500px", marginTop: "10px", transform: "translate(-4%, 0)"}}>
+			<center style={{verticalAlign:"middle", whiteSpace:"nowrap", height:"95%", width:"100%", margin:"auto"}}>
+				<div style={{display:"inline-block", whiteSpace:"normal", verticalAlign:"middle", outline:"1px solid black",
+						width:"35%", marginTop: "10px", transform: "translate(-4%, 0)"}}>
 					<center><h3>Vehicle Details</h3></center>
-					<p style={{margin:"1px"}}>
-						Engine Fuel Type: {this.state.selectedCar ? this.state.selectedCar["Engine Fuel Type"]:""}
+
+			<div style={{paddingBottom:"0px"}}>
+          		<p style={{display:"inline-block"}}>
+				  	Average Rating: {this.state.selectedCar ? this.generateStarRatings(this.state.selectedCar.avg_rating):""}
+				</p>
+          	</div>
+
+
+			<div style={{paddingBottom:"0px"}}>
+				<Tooltip content="I AM TOOLTIP">
+					<p style={{margin:"1px", borderBottom: "0.05em dotted" }}>
+          				Engine Fuel Type
+          			</p>
+          		</Tooltip>
+          		<p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["Engine Fuel Type"]:""} </p>
+          	</div>
+
+			<div>
+				<Tooltip content="I AM TOOLTIP">
+					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+						Drive Type
 					</p>
-					<p style={{margin:"1px"}}>
-						Drive Type: {this.state.selectedCar ? this.state.selectedCar["Driven_Wheels"]:""}
+				</Tooltip>
+				<p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["Driven_Wheels"]:""}</p>
+			</div>
+
+			<div>
+				<Tooltip content="I AM TOOLTIP">
+					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+						MSRP
 					</p>
-					<p style={{margin:"1px"}}>
-						MSRP: {this.state.selectedCar ? this.state.selectedCar["MSRP"]:""}
+				</Tooltip>
+			<p style={{display:"inline-block"}}> : ${this.state.selectedCar ? this.state.selectedCar["MSRP"]:""}</p>
+			</div>
+
+			<div>
+			<Tooltip content="I AM TOOLTIP">
+						<p style={{margin:"1px", borderBottom: "0.05em dotted" }}>
+							Transmission Type
+						</p>
+			</Tooltip>
+			<p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["Transmission Type"]:""}</p>
+			</div>
+
+			<div>
+			<Tooltip content="I AM TOOLTIP">
+						<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+							Vehicle Style
+						</p>
+			</Tooltip>
+			<p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["Vehicle Style"]:""}</p>
+			</div>
+
+
+			<div>
+			<Tooltip content="I AM TOOLTIP">
+						<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+							Vehicle Size
+						</p>
+			</Tooltip>
+			<p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["Vehicle Size"]:""}</p>
+			</div>
+
+			<div>
+			<Tooltip content="I AM TOOLTIP">
+						<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+							City MPG
+						</p>
+			</Tooltip>
+			<p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["city mpg"]:""}</p>
+			</div>
+
+			<div>
+				<Tooltip content="I AM TOOLTIP">
+					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+						Highway MPG
 					</p>
-					<p style={{margin:"1px"}}>
-						Transmission Type: {this.state.selectedCar ? this.state.selectedCar["Transmission Type"]:""}
-					</p>
-					<p style={{margin:"1px"}}>
-						Vehicle Style: {this.state.selectedCar ? this.state.selectedCar["Vehicle Style"]:""}
-					</p>
-					<p style={{margin:"1px"}}>
-						Vehicle Size: {this.state.selectedCar ? this.state.selectedCar["Vehicle Size"]:""}
-					</p>
-					<p style={{margin:"1px"}}>
-						City MPG: {this.state.selectedCar ? this.state.selectedCar["city mpg"]:""}
-					</p>
-					<p style={{margin:"1px"}}>
-						Highway MPG: {this.state.selectedCar ? this.state.selectedCar["highway MPG"]:""}
-					</p>
+				</Tooltip>
+				<p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["highway MPG"]:""}</p>
+			</div>
+
 				</div>
-				<div style={{display:"inline-block", verticalAlign:"middle", whiteSpace:"normal", outline:"1px solid black", width:"500px", marginTop: "10px", height:"95%", margin:"auto", transform: "translate(4%, 0)"}}>
+				<div style={{display:"inline-block", verticalAlign:"middle", whiteSpace:"normal", outline:"1px solid black",
+						width:"55%", marginTop: "10px", height:"90%", margin:"auto", transform: "translate(4%, 0)"}}>
 					<center><h3>Reviews</h3></center>
-					<div style={{overflow:"scroll", height:"100%"}}>
+					<div style={{overflowY:"auto", overflowX:"visible", height:"90%"}}>
 						{modalReviewItems}
 					</div>
 				</div>

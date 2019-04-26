@@ -168,8 +168,6 @@ class Searcher:
         if count!=0:
             svd_query = svd_query / count
 
-
-
         #for each car, find it's similarity to the query via cosine similarity
         similarity_dict = {}
         for car in truncated_list_by_size:
@@ -177,8 +175,9 @@ class Searcher:
             sim = get_sim(self.docs_compressed[car_index].T, svd_query)
             similarity_dict[car] = sim
 
-        # TODO: remove dummy priority setup
-        exp_query_with_priorities = [{"word": w, "priority": 1 if w in query_terms else 2} for w in expanded_query]
+        # generate expanded query for frontend
+        qwords_to_priorities = {elem["word"]:elem["priority"] for elem in query}
+        exp_query_with_priorities = [{"word": w, "priority": qwords_to_priorities[w] if w in query_terms else 3} for w in expanded_query]
 
         #sort results and then take the top 10
         sorted_results = sorted(similarity_dict.keys(), key=lambda word: similarity_dict.get(word), reverse = True)
