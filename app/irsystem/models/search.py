@@ -116,12 +116,6 @@ class Searcher:
             self.temp_list.append(d['Appended Reviews'])
 
         self.doc_by_vocab = self.tfidf_vec.fit_transform(self.temp_list).toarray()
-        # self.vocab_by_doc = self.doc_by_vocab.transpose()
-        # self.words_compressed, _, self.docs_compressed = svds(self.vocab_by_doc, k=800) #(3646, 800),_,(800,1532)
-        # self.docs_compressed = self.docs_compressed.transpose() #(1532, 800)
-        # self.docs_compressed = normalize(self.docs_compressed, axis = 1)
-        # self.word_to_index = self.tfidf_vec.vocabulary_
-        # self.index_to_word = {i:t for t,i in self.word_to_index.items()}
         # np.savetxt("version2.csv", self.doc_by_vocab, delimiter=",")
         # print("done")
 
@@ -171,7 +165,8 @@ class Searcher:
             if word in self.word_to_index:
                 svd_query = svd_query + self.words_compressed[self.word_to_index[word]]
                 count += 1
-        svd_query = svd_query / count
+        if count!=0:
+            svd_query = svd_query / count
 
 
 
@@ -188,4 +183,6 @@ class Searcher:
         #sort results and then take the top 10
         sorted_results = sorted(similarity_dict.keys(), key=lambda word: similarity_dict.get(word), reverse = True)
         print('sorted results' , sorted_results[0:10])
+        if sorted_results==[]:
+            return {"results": 'None', "query":exp_query_with_priorities}
         return {"results": sorted_results[0:10], "query":exp_query_with_priorities}
