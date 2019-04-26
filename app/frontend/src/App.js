@@ -145,8 +145,8 @@ class App extends Component {
   render() {
     var listItems =
 		(this.state.results==='None') ?
-		<div style={{fontSize:"20px", fontColor:"black"}}> No results found :(
-			<div style={{fontSize:"16px"}}> Your query did not match any cars
+		<div style={{fontSize:"20px", color:"white"}}> No results found :(
+			<div style={{fontSize:"16px"}}> Your query did not match any cars. Try changing the price, size, effeciency or keywords.
 			</div>
 		</div>
 		:
@@ -196,7 +196,7 @@ class App extends Component {
         />
             <Form updateParentKeywords={this.updateKeywords}/>
             <Button id="circle" type="button" key='search' onClick={() => {this.sendReq()}}> GO </Button>
-        <div style={{width:"300px", margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
+        <div style={{width:"380px", margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
         </div>
         </div>
 
