@@ -5,6 +5,7 @@ from flask import send_from_directory
 from flask import request
 from json import dumps, loads
 from app.irsystem.models.search import Searcher
+from statistics import mean
 
 project_name = "Vroom Vroom"
 net_id = "Janice Chan: jc2729, Haram Kim: hk592, Stephanie Shum: ss2972, Nataly Rodriguez: nyr2, Jasmine Kitahara: jkk95"
@@ -44,7 +45,7 @@ def do_search():
 	- minPrice: Minimum price to filter with
 	- maxPrice: Maximum price to filter with
 	- keywords: A list of strings giving the keywords to be passed to Searcher
-    """
+	"""
 	# unpack variables from querystring
 	size1 = request.args.get("size1")
 	size2 = request.args.get("size2")
@@ -84,5 +85,10 @@ def get_details():
 	# unpack year-make-model from querystring
 	ymm = request.args.get("carYMM")
 
+	# add average star rating to car
+	car = searcher.all_data.get(ymm, {})
+	ratings = [float(review["Rating"]) for review in car["reviews"] if review["Rating"].replace('.','',1).isnumeric()]
+	car["avg_rating"] = mean(ratings)
+
 	# return a json of the car data
-	return dumps(searcher.all_data.get(ymm, ""), allow_nan=False)
+	return dumps(car, allow_nan=False)
