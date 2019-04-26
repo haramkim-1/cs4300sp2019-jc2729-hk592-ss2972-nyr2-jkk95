@@ -173,8 +173,6 @@ class Searcher:
                 count += 1
         svd_query = svd_query / count
 
-
-
         #for each car, find it's similarity to the query via cosine similarity
         similarity_dict = {}
         for car in truncated_list_by_size:
