@@ -168,7 +168,7 @@ class Form extends Component {
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps} />
-        <p style={{color:"black", backgroundColor:"white", width:"60%", display:"inline-block"}}> No matching keywords found </p>
+        <p style={{color:"black", backgroundColor:"white", width:"278px", display:"inline-block", "borderBottomLeftRadius": "5px", "borderBottomRightRadius": "5px"}}> No matching keywords found </p>
 
 
 
