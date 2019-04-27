@@ -225,10 +225,8 @@ class App extends Component {
 						width:"35%", marginTop: "10px", transform: "translate(-4%, 0)"}}>
 					<center><h3>Vehicle Details</h3></center>
 
-			<div style={{paddingBottom:"0px"}}>
-          		<p style={{display:"inline-block"}}>
-				  	Average Rating: {this.state.selectedCar ? this.generateStarRatings(this.state.selectedCar.avg_rating):""}
-				</p>
+			<div style={{paddingBottom:"0px", display:"inline-block"}}>
+				Average Rating: {this.state.selectedCar ? this.generateStarRatings(this.state.selectedCar.avg_rating):""}
           	</div>
 
 
