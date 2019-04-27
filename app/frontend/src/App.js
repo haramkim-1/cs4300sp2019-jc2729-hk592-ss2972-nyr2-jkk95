@@ -225,9 +225,8 @@ class App extends Component {
 
       <button onClick={this.closeModal} style={{"backgroundColor":"Transparent", "border":"none", "float": "right", "transform": "translateY(-10px)"}}>
       <svg viewBox="0 0 75 75" width="25px">
-        <path d="m5,22 18,-18 28,0 18,18 0,28 -18,18, -28,0 -18,-18z" stroke="red" stroke-width="2" fill="red" />
-          <text x="50%" y="40%" stroke="white" stroke-width="5px" dy=".1em" font-size="60" text-anchor="middle" alignment-baseline="middle"> &times; </text>
-
+        <path d="m5,22 18,-18 28,0 18,18 0,28 -18,18, -28,0 -18,-18z" stroke="red" strokeWidth="2" fill="red" />
+          <text x="50%" y="40%" stroke="white" strokeWidth="5px" dy=".1em" fontSize="60" textAnchor="middle" alignmentBaseline="middle" dominantBaseline="central"> &times; </text>
       </svg>
       </button>
       </h2>
@@ -240,9 +239,9 @@ class App extends Component {
             borderRadius:"5px"}}>
 			<center><h3>Vehicle Details</h3></center>
 
-			<p style={{ borderBottom:"0.05em", display:"inline-block"}}>
+			<div style={{ borderBottom:"0.05em", display:"inline-block"}}>
 				Average Rating: {this.state.selectedCar ? this.generateStarRatings(this.state.selectedCar.avg_rating):""}
-      </p>
+      		</div>
 
 
 			<div>

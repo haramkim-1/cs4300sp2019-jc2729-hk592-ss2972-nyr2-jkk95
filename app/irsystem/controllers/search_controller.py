@@ -96,8 +96,11 @@ def get_details():
 	make_model = car["Make"] + " " + car["Model"]
 	make_model = make_model.replace("/", "")
 
-	# get image
-	car["img"] = image_searcher.image_search(make_model).decode('utf-8')
+	# get image; fail silently
+	try:
+		car["img"] = image_searcher.image_search(make_model).decode('utf-8')
+	except:
+		pass
 
 	# return a json of the car data
 	return dumps(car, allow_nan=False)
