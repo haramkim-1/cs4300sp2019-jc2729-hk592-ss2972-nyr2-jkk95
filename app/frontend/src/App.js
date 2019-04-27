@@ -144,7 +144,10 @@ class App extends Component {
   }
 
   generateImage = function(imageStr){
-	return <img style={{objectFit:"contain", height:"400px", width:"400px"}} src={"data:image/jpeg;base64," + imageStr} />
+	if(imageStr)
+		return (<img style={{objectFit:"contain", height:"400px", width:"400px"}} src={"data:image/jpeg;base64," + imageStr} />);
+	else
+		return (<h3>Vehicle Details</h3>);
   }
 
   render() {
