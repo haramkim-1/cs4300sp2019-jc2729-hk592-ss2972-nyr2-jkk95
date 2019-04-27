@@ -68,7 +68,7 @@ class App extends Component {
         fuel1: this.state.fuel1,
         fuel2: this.state.fuel2
       }}).then(function (response) {
-        console.log(response.data.query);
+        // console.log(response.data.query);
 
         // generate mapping for highlighting
         let words = [];
@@ -114,7 +114,7 @@ class App extends Component {
         params: { carYMM: ymm }})
       .then(function (response) {
 		// TODO: remove this line
-		console.log(response.data);
+		// console.log(response.data);
         this.setState({selectedCar:response.data, modalOpen:true});
       }.bind(this))
   }.bind(this)
@@ -147,7 +147,7 @@ class App extends Component {
 	if(imageStr)
 		return (<img style={{objectFit:"contain", width:"90%", maxHeight:"215px"}} src={"data:image/jpeg;base64," + imageStr} />);
 	else
-		return (<h3>Vehicle Details</h3>);
+		return (<h3>No Image Available</h3>);
   }
 
   render() {
