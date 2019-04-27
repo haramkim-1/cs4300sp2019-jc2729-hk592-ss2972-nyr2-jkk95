@@ -47,6 +47,7 @@ class App extends Component {
       queryRegex: null,
       queryColorMapping: [],
       soundStatus: Sound.status.STOPPED,
+      soundVolume:100,
     //   baseUrl: window.location // use for deployment mode
       baseUrl: "http://localhost:5000/" // use for local development mode
 	};
@@ -128,18 +129,18 @@ class App extends Component {
 
   generateStarRatings = function(strRating, name) {
 	let rating = Number(strRating);
-	if(!isNaN(rating)) {
-		return (<StarRatings
-				rating={rating}
-				name={name}
-				starRatedColor="red"
-				starEmptyColor="black"
-				starDimension="15px"
-				padding="50%"
-			/>);
-	} else {
-		return (null);
-	}
+    if(!isNaN(rating)) {
+      return (<StarRatings
+          rating={rating}
+          name={name}
+          starRatedColor="red"
+          starEmptyColor="black"
+          starDimension="15px"
+          padding="50%"
+        />);
+    } else {
+      return (null);
+    }
   }
 
   render() {
@@ -182,7 +183,14 @@ class App extends Component {
           autoLoad={true}
           playStatus={this.state.soundStatus}
           onFinishedPlaying={() => this.setState({ soundStatus: Sound.status.STOPPED })}
+          volume={this.state.soundVolume}
         />
+
+        <Button id="soundToggle" style={{"position":"absolute", "top":"0px", "right":"0px", 
+            "backgroundColor":"white", "borderColor":"white", width:"50px", height:"50px", "fontSize":"25px"}} 
+          type="button" key='sound' onClick={() => {this.setState({soundVolume: Math.abs(this.state.soundVolume - 100)})}}> 
+            {this.state.soundVolume == 100 ? "\uD83D\uDD0A":"\uD83D\uDD07"}
+          </Button>
 
         <img src={logo} className="App-logo" alt="logo" />
         <br/>
