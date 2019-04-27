@@ -86,9 +86,17 @@ def get_details():
 	ymm = request.args.get("carYMM")
 
 	# add average star rating to car
-	car = searcher.all_data.get(ymm, {})
+	car = searcher.all_data.get(ymm)
 	ratings = [float(review["Rating"]) for review in car["reviews"] if review["Rating"].replace('.','',1).isnumeric()]
 	car["avg_rating"] = mean(ratings)
+
+	# get car make-model string
+	make_model = car["Make"] + " " + car["Model"]
+	make_model = make_model.replace("/", "")
+
+	# TODO: generate image string from file
+	image_encoded = None
+	car["img"] = image_encoded
 
 	# return a json of the car data
 	return dumps(car, allow_nan=False)
