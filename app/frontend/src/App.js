@@ -145,7 +145,7 @@ class App extends Component {
 
   generateImage = function(imageStr){
 	if(imageStr)
-		return (<img style={{objectFit:"contain", height:"400px", width:"400px"}} src={"data:image/jpeg;base64," + imageStr} />);
+		return (<img style={{objectFit:"contain", width:"400px"}} src={"data:image/jpeg;base64," + imageStr} />);
 	else
 		return (<h3>Vehicle Details</h3>);
   }
@@ -237,21 +237,19 @@ class App extends Component {
       </svg>
       </button>
       </h2>
-			
-      
 
-			<center style={{verticalAlign:"middle", whiteSpace:"nowrap", height:"95%", width:"100%", margin:"auto"}}>
-				<div style={{display:"inline-block", whiteSpace:"normal", verticalAlign:"middle", border:"1px solid black",
+		<center style={{verticalAlign:"middle", whiteSpace:"nowrap", height:"95%", width:"100%", margin:"auto"}}>
+			<div style={{display:"inline-block", whiteSpace:"normal", verticalAlign:"middle", border:"1px solid black",
 						width:"35%", marginTop: "5px", transform: "translate(-4%, 0)", paddingTop:"1px", paddingBottom:"1px",
             		borderRadius:"5px"}}>
+			<br></br>
 			<center>
 				{this.state.selectedCar ? this.generateImage(this.state.selectedCar.img):""}
 			</center>
 
 			<div style={{ borderBottom:"0.05em", display:"inline-block"}}>
-				Average Rating: {this.state.selectedCar ? this.generateStarRatings(this.state.selectedCar.avg_rating):""}
+				{this.state.selectedCar ? this.generateStarRatings(this.state.selectedCar.avg_rating):"No Ratings Available"}
       		</div>
-
 
 			<div>
 				<Tooltip content="Motor fuel or energy source the manufacturer recommends for the vehicle" style={{"lineHeight": "15px", fontSize:"15px"}}>
@@ -334,7 +332,7 @@ class App extends Component {
 						{modalReviewItems}
 					</div>
 				</div>
-			</center>
+		</center>
         </Modal>
       </div>
     );
