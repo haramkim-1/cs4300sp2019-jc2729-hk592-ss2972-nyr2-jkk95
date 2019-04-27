@@ -143,6 +143,10 @@ class App extends Component {
     }
   }
 
+  generateImage = function(imageStr){
+	return <img style={{objectFit:"contain", height:"400px", width:"400px"}} src={"data:image/jpeg;base64," + imageStr} />
+  }
+
   render() {
     var listItems =
 		(this.state.results==='None') ?
@@ -235,9 +239,11 @@ class App extends Component {
 
 			<center style={{verticalAlign:"middle", whiteSpace:"nowrap", height:"95%", width:"100%", margin:"auto"}}>
 				<div style={{display:"inline-block", whiteSpace:"normal", verticalAlign:"middle", border:"1px solid black",
-						width:"35%", marginTop: "10px", transform: "translate(-4%, 0)", paddingTop:"10px", paddingBottom:"10px",
-            borderRadius:"5px"}}>
-			<center><h3>Vehicle Details</h3></center>
+						width:"35%", marginTop: "5px", transform: "translate(-4%, 0)", paddingTop:"1px", paddingBottom:"1px",
+            		borderRadius:"5px"}}>
+			<center>
+				{this.state.selectedCar ? this.generateImage(this.state.selectedCar.img):""}
+			</center>
 
 			<div style={{ borderBottom:"0.05em", display:"inline-block"}}>
 				Average Rating: {this.state.selectedCar ? this.generateStarRatings(this.state.selectedCar.avg_rating):""}
