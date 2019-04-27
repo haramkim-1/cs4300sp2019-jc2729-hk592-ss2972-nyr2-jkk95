@@ -225,15 +225,13 @@ class App extends Component {
 						width:"35%", marginTop: "10px", transform: "translate(-4%, 0)"}}>
 					<center><h3>Vehicle Details</h3></center>
 
-			<div style={{paddingBottom:"0px"}}>
-          		<p style={{display:"inline-block"}}>
-				  	Average Rating: {this.state.selectedCar ? this.generateStarRatings(this.state.selectedCar.avg_rating):""}
-				</p>
+			<div style={{paddingBottom:"0px", display:"inline-block"}}>
+				Average Rating: {this.state.selectedCar ? this.generateStarRatings(this.state.selectedCar.avg_rating):""}
           	</div>
 
 
 			<div style={{paddingBottom:"0px"}}>
-				<Tooltip content="I AM TOOLTIP">
+				<Tooltip content="Motor fuel or energy source the manufacturer recommends for the vehicle">
 					<p style={{margin:"1px", borderBottom: "0.05em dotted" }}>
           				Engine Fuel Type
           			</p>
@@ -242,7 +240,7 @@ class App extends Component {
           	</div>
 
 			<div>
-				<Tooltip content="I AM TOOLTIP">
+				<Tooltip content="Vehicle's drivetrain">
 					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
 						Drive Type
 					</p>
@@ -251,7 +249,7 @@ class App extends Component {
 			</div>
 
 			<div>
-				<Tooltip content="I AM TOOLTIP">
+				<Tooltip content="Manufacturer's Suggested Retail Price (adjusted for older cars)">
 					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
 						MSRP
 					</p>
@@ -260,7 +258,7 @@ class App extends Component {
 			</div>
 
 			<div>
-			<Tooltip content="I AM TOOLTIP">
+			<Tooltip content="Type of gear shift equipped by the vehicle">
 						<p style={{margin:"1px", borderBottom: "0.05em dotted" }}>
 							Transmission Type
 						</p>
@@ -269,7 +267,7 @@ class App extends Component {
 			</div>
 
 			<div>
-			<Tooltip content="I AM TOOLTIP">
+			<Tooltip content="General design style of the vehicle">
 						<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
 							Vehicle Style
 						</p>
@@ -279,7 +277,7 @@ class App extends Component {
 
 
 			<div>
-			<Tooltip content="I AM TOOLTIP">
+			<Tooltip content="Car size category">
 						<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
 							Vehicle Size
 						</p>
@@ -288,7 +286,7 @@ class App extends Component {
 			</div>
 
 			<div>
-			<Tooltip content="I AM TOOLTIP">
+			<Tooltip content="Miles per gallon a car gets traveling in a city or town (more stop & go)">
 						<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
 							City MPG
 						</p>
@@ -297,7 +295,7 @@ class App extends Component {
 			</div>
 
 			<div>
-				<Tooltip content="I AM TOOLTIP">
+				<Tooltip content="Miles per gallon a car gets traveling on a highway (higher speed, fewer stops)">
 					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
 						Highway MPG
 					</p>

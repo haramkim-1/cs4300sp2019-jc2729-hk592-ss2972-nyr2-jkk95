@@ -83,16 +83,21 @@ def do_search():
 
 @irsystem.route('/cardetails', methods=['GET'])
 def get_details():
-    """Route to provide specific car details to the frontend"""
-    # unpack year-make-model from querystring
-    ymm = request.args.get("carYMM")
+	"""Route to provide specific car details to the frontend"""
+	# unpack year-make-model from querystring
+	ymm = request.args.get("carYMM")
 
-    # add average star rating to car
-    car = searcher.all_data.get(ymm, {})
-    ratings = [float(review["Rating"]) for review in car["reviews"] if review["Rating"].replace('.','',1).isnumeric()]
-    car["avg_rating"] = mean(ratings)
-    
-    # base64 encoded
-    car["img"] = image_searcher.image_search("Suburban", "GMC").decode('utf-8')
-    # return a json of the car data
-    return dumps(car, allow_nan=False)
+	# add average star rating to car
+	car = searcher.all_data.get(ymm)
+	ratings = [float(review["Rating"]) for review in car["reviews"] if review["Rating"].replace('.','',1).isnumeric()]
+	car["avg_rating"] = mean(ratings)
+
+	# get car make-model string
+	make_model = car["Make"] + " " + car["Model"]
+	make_model = make_model.replace("/", "")
+
+	# get image
+	car["img"] = image_searcher.image_search(make_model).decode('utf-8')
+
+	# return a json of the car data
+	return dumps(car, allow_nan=False)
