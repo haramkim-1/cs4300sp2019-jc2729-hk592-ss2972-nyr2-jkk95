@@ -4,13 +4,13 @@ import pickle
 # https://stackoverflow.com/questions/27889873/clustering-text-documents-using-scikit-learn-kmeans-in-python
 
 # fine-tuning number of clusters: 5, then 4 and 6
-NUM_CLUSTERS = 5
+NUM_CLUSTERS = 8
 
 with open('data/index_to_vocab.pkl', 'rb') as index_vocab_pkl:
 	index_to_vocab_dict = pickle.load(index_vocab_pkl)
 doc_by_vocab_mat = np.load("data/doc_by_vocab.npy") 
 
-model = KMeans(n_clusters=NUM_CLUSTERS, init='k-means++', max_iter=100, n_init=1)
+model = KMeans(n_clusters=NUM_CLUSTERS, random_state=9965130, init='k-means++', max_iter=1000, n_init=10)
 model.fit(doc_by_vocab_mat)
 
 # print("Top terms per cluster:")
@@ -25,9 +25,6 @@ for i in range(NUM_CLUSTERS):
     print
     relevant_keywords.append(cluster)
     print(cluster)
-
-
-
 
 # output [ sets(keywords) ] to go to a pre-mapped list in search.py
 with open("data/query_expansion_clusters.pkl", "wb+") as file:
