@@ -159,7 +159,7 @@ class App extends Component {
 
 	// display reviews
 	var modalReviewItems = this.state.selectedCar && this.state.selectedCar.reviews ? (this.state.selectedCar.reviews.map((review) =>
-      <li style={{backgroundColor:"lightgrey", listStyleType:"none", margin:"4px", marginLeft:"6px", marginRight:"4px"}}
+      <li style={{backgroundColor:"white", listStyleType:"none", margin:"4px", marginLeft:"6px", marginRight:"4px"}}
           key={review.Review_Date + " " + review.Author_Name}>
         <h4 style={{"margin":"4px"}}> {"\"" + review.Review_Title + "\""} </h4>
         <p style={{"fontSize":"14px", "margin":"4px"}}> {"by: " + review.Author_Name} </p>
@@ -173,6 +173,7 @@ class App extends Component {
             highlightClassName={this.state.queryColorMapping}
           />
         </p>
+      <hr style={{ backgroundColor:"gray"}}/>
       </li>
 	)) : null;
 
@@ -215,33 +216,47 @@ class App extends Component {
 		  contentLabel="Details Modal"
 		  style={modalStyles}
         >
-			<div>
-				<h2 ref={subtitle => this.subtitle = subtitle}> {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model:""} </h2>
-				<button onClick={this.closeModal}>close</button>
-			</div>
+
+      
+			<h2 ref={subtitle => this.subtitle = subtitle}> 
+
+       
+      {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model:""} 
+
+      <button onClick={this.closeModal} style={{"backgroundColor":"Transparent", "border":"none", "float": "right", "transform": "translateY(-10px)"}}>
+      <svg viewBox="0 0 75 75" width="25px">
+        <path d="m5,22 18,-18 28,0 18,18 0,28 -18,18, -28,0 -18,-18z" stroke="red" stroke-width="2" fill="red" />
+          <text x="50%" y="40%" stroke="white" stroke-width="5px" dy=".1em" font-size="60" text-anchor="middle" alignment-baseline="middle"> &times; </text>
+
+      </svg>
+      </button>
+      </h2>
+			
+      
 
 			<center style={{verticalAlign:"middle", whiteSpace:"nowrap", height:"95%", width:"100%", margin:"auto"}}>
-				<div style={{display:"inline-block", whiteSpace:"normal", verticalAlign:"middle", outline:"1px solid black",
-						width:"35%", marginTop: "10px", transform: "translate(-4%, 0)"}}>
-					<center><h3>Vehicle Details</h3></center>
+				<div style={{display:"inline-block", whiteSpace:"normal", verticalAlign:"middle", border:"1px solid black",
+						width:"35%", marginTop: "10px", transform: "translate(-4%, 0)", paddingTop:"10px", paddingBottom:"10px",
+            borderRadius:"5px"}}>
+			<center><h3>Vehicle Details</h3></center>
 
-			<div style={{paddingBottom:"0px", display:"inline-block"}}>
+			<p style={{ borderBottom:"0.05em", display:"inline-block"}}>
 				Average Rating: {this.state.selectedCar ? this.generateStarRatings(this.state.selectedCar.avg_rating):""}
-          	</div>
+      </p>
 
 
-			<div style={{paddingBottom:"0px"}}>
-				<Tooltip content="Motor fuel or energy source the manufacturer recommends for the vehicle">
-					<p style={{margin:"1px", borderBottom: "0.05em dotted" }}>
+			<div>
+				<Tooltip content="Motor fuel or energy source the manufacturer recommends for the vehicle" style={{"lineHeight": "15px", fontSize:"15px"}}>
+					<div style={{ borderBottom: "0.05em dotted" }}>
           				Engine Fuel Type
-          			</p>
+          			</div>
           		</Tooltip>
           		<p style={{display:"inline-block"}}> : {this.state.selectedCar ? this.state.selectedCar["Engine Fuel Type"]:""} </p>
           	</div>
 
 			<div>
-				<Tooltip content="Vehicle's drivetrain">
-					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+				<Tooltip content="Vehicle's drivetrain" style={{"lineHeight": "15px", fontSize:"15px"}}>
+					<p style={{ borderBottom: "0.05em dotted"}}>
 						Drive Type
 					</p>
 				</Tooltip>
@@ -249,8 +264,8 @@ class App extends Component {
 			</div>
 
 			<div>
-				<Tooltip content="Manufacturer's Suggested Retail Price (adjusted for older cars)">
-					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+				<Tooltip content="Manufacturer's Suggested Retail Price (adjusted for older cars)" style={{"lineHeight": "15px", fontSize:"15px"}}>
+					<p style={{borderBottom: "0.05em dotted"}}>
 						MSRP
 					</p>
 				</Tooltip>
@@ -258,8 +273,8 @@ class App extends Component {
 			</div>
 
 			<div>
-			<Tooltip content="Type of gear shift equipped by the vehicle">
-						<p style={{margin:"1px", borderBottom: "0.05em dotted" }}>
+			<Tooltip content="Type of gear shift equipped by the vehicle" style={{"lineHeight": "15px", fontSize:"15px"}}>
+						<p style={{borderBottom: "0.05em dotted" }}>
 							Transmission Type
 						</p>
 			</Tooltip>
@@ -267,8 +282,8 @@ class App extends Component {
 			</div>
 
 			<div>
-			<Tooltip content="General design style of the vehicle">
-						<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+			<Tooltip content="General design style of the vehicle" style={{"lineHeight": "15px", fontSize:"15px"}}>
+						<p style={{borderBottom: "0.05em dotted"}}>
 							Vehicle Style
 						</p>
 			</Tooltip>
@@ -277,8 +292,8 @@ class App extends Component {
 
 
 			<div>
-			<Tooltip content="Car size category">
-						<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+			<Tooltip content="Car size category" style={{"lineHeight": "15px", fontSize:"15px"}}>
+						<p style={{borderBottom: "0.05em dotted"}}>
 							Vehicle Size
 						</p>
 			</Tooltip>
@@ -286,8 +301,8 @@ class App extends Component {
 			</div>
 
 			<div>
-			<Tooltip content="Miles per gallon a car gets traveling in a city or town (more stop & go)">
-						<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+			<Tooltip content="Miles per gallon a car gets traveling in a city or town (more stop & go)" style={{"lineHeight": "15px", fontSize:"15px"}}>
+						<p style={{borderBottom: "0.05em dotted"}}>
 							City MPG
 						</p>
 			</Tooltip>
@@ -295,8 +310,8 @@ class App extends Component {
 			</div>
 
 			<div>
-				<Tooltip content="Miles per gallon a car gets traveling on a highway (higher speed, fewer stops)">
-					<p style={{margin:"1px", borderBottom: "0.05em dotted"}}>
+				<Tooltip content="Miles per gallon a car gets traveling on a highway (higher speed, fewer stops)" style={{"lineHeight": "15px", fontSize:"15px"}}>
+					<p style={{borderBottom: "0.05em dotted"}}>
 						Highway MPG
 					</p>
 				</Tooltip>
@@ -304,8 +319,8 @@ class App extends Component {
 			</div>
 
 				</div>
-				<div style={{display:"inline-block", verticalAlign:"middle", whiteSpace:"normal", outline:"1px solid black",
-						width:"55%", marginTop: "10px", height:"90%", margin:"auto", transform: "translate(4%, 0)"}}>
+				<div style={{display:"inline-block", verticalAlign:"middle", whiteSpace:"normal", border:"1px solid black",
+						width:"55%", marginTop: "10px", height:"90%", margin:"auto", transform: "translate(4%, 0)", paddingTop:"10px", paddingBottom:"10px", borderRadius:"5px"}}>
 					<center><h3>Reviews</h3></center>
 					<div style={{overflowY:"auto", overflowX:"visible", height:"90%"}}>
 						{modalReviewItems}
