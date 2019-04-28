@@ -6,8 +6,8 @@ import './Form.css';
 import List from './List'
 /** Tutorial: http://react-autosuggest.js.org/ **/
 
-const SERVER_URL = window.location // use for deployment mode
-// const SERVER_URL = "http://localhost:5000/" // use for local development mode
+//const SERVER_URL = window.location // use for deployment mode
+const SERVER_URL = "http://localhost:5000/" // use for local development mode
 
 console.log("server url (form.js): " + SERVER_URL);
 
@@ -110,7 +110,7 @@ class Form extends Component {
       return a.text.length - b.text.length;
     });
     return suggestions
-    
+
   };
 
   onChange = (event, { newValue, method }) => {
@@ -127,7 +127,7 @@ class Form extends Component {
     })
     this.props.updateParentKeywords(new_keywords)
   };
-  
+
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
       suggestions: this.getSuggestions(value)
@@ -160,7 +160,7 @@ class Form extends Component {
     if (suggestions.length == 0 && inputProps.value != '') {
       return (
         <div style={{textAlign:"center"}}>
-        <Autosuggest 
+        <Autosuggest
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionSelected={this.onSuggestionSelected}
@@ -175,13 +175,13 @@ class Form extends Component {
         <List items={this.state.keywords} delete={this.onKeywordDelete} />
         </div>
       );
-    
+
     }
     else {
       return (
         <div>
 
-        <Autosuggest 
+        <Autosuggest
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionSelected={this.onSuggestionSelected}

@@ -48,8 +48,8 @@ class App extends Component {
       queryColorMapping: [],
       soundStatus: Sound.status.STOPPED,
       soundVolume:100,
-      baseUrl: window.location // use for deployment mode
-    //   baseUrl: "http://localhost:5000/" // use for local development mode
+      //baseUrl: window.location // use for deployment mode
+      baseUrl: "http://localhost:5000/" // use for local development mode
 	};
 
 	console.log("baseUrl (app.js): " + this.state.baseUrl);

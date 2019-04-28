@@ -94,7 +94,7 @@ def get_details():
 
 	# get car make-model string
 	make_model = car["Make"] + " " + car["Model"]
-	make_model = make_model.replace("/", "")
+	make_model = make_model.replace("/", ":")
 
 	# get image; fail silently
 	try:
