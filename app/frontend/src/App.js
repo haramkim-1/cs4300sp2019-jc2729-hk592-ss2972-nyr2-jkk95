@@ -194,9 +194,9 @@ class App extends Component {
           volume={this.state.soundVolume}
         />
 
-        <Button id="soundToggle" style={{"position":"absolute", "top":"0px", "right":"0px", 
-            "backgroundColor":"white", "borderColor":"white", width:"50px", height:"50px", "fontSize":"25px"}} 
-          type="button" key='sound' onClick={() => {this.setState({soundVolume: Math.abs(this.state.soundVolume - 100)})}}> 
+        <Button id="soundToggle" style={{"position":"absolute", "top":"0px", "right":"0px",
+            "backgroundColor":"white", "borderColor":"white", width:"50px", height:"50px", "fontSize":"25px"}}
+          type="button" key='sound' onClick={() => {this.setState({soundVolume: Math.abs(this.state.soundVolume - 100)})}}>
             {this.state.soundVolume == 100 ? "\uD83D\uDD0A":"\uD83D\uDD07"}
           </Button>
 
@@ -224,11 +224,11 @@ class App extends Component {
 		  style={modalStyles}
         >
 
-      
-			<h2 ref={subtitle => this.subtitle = subtitle}> 
 
-       
-      {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model:""} 
+			<h2 ref={subtitle => this.subtitle = subtitle}>
+
+
+      {this.state.selectedCar ? this.state.selectedCar.Year_Make_Model:""}
 
       <button onClick={this.closeModal} style={{"backgroundColor":"Transparent", "border":"none", "float": "right", "transform": "translateY(-10px)"}}>
       <svg viewBox="0 0 75 75" width="25px">
@@ -239,7 +239,7 @@ class App extends Component {
       </h2>
 
 		<center style={{verticalAlign:"middle", whiteSpace:"nowrap", height:"95%", width:"100%", margin:"auto"}}>
-			<div style={{display:"inline-block", whiteSpace:"normal", verticalAlign:"middle", border:"1px solid black",
+			<div style={{height:"90%", overflow: "visible auto", display:"inline-block", whiteSpace:"normal", verticalAlign:"middle", border:"1px solid black",
 						width:"35%", marginTop: "5px", transform: "translate(-4%, 0)", paddingTop:"1px", paddingBottom:"1px",
             		borderRadius:"5px"}}>
 			<br></br>
