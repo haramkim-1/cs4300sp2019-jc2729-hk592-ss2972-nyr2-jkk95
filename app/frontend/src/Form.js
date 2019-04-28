@@ -6,8 +6,8 @@ import './Form.css';
 import List from './List'
 /** Tutorial: http://react-autosuggest.js.org/ **/
 
-//const SERVER_URL = window.location // use for deployment mode
-const SERVER_URL = "http://localhost:5000/" // use for local development mode
+const SERVER_URL = window.location // use for deployment mode
+//const SERVER_URL = "http://localhost:5000/" // use for local development mode
 
 console.log("server url (form.js): " + SERVER_URL);
 
