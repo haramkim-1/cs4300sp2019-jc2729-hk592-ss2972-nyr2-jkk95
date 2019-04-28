@@ -99,13 +99,20 @@ class Form extends Component {
     };
 
   }
+  
+  wordInKeywords = function(keywords, text) {
+    for(let i = 0; i < keywords.length; i++)
+        if(keywords[i].word === text)
+            return true;
+    return false;
+  }
 
   /** Returns ranked list of suggested keywords, from shorted to longest */
   getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
+	const inputLength = inputValue.length;
     var suggestions = inputLength === 0 ? [] : sys_keywords.filter(kw =>
-      kw.text.toLowerCase().includes(inputValue) && this.state.keywords.indexOf(kw.text) < 0)
+      kw.text.includes(inputValue) && !this.wordInKeywords(this.state.keywords, kw.text))
     suggestions.sort(function(a,b){
       return a.text.length - b.text.length;
     });
