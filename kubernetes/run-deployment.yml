@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask
-        image: haramkim/vroom-vroom-4300:v1
+        image: haramkim/vroom-vroom-4300:v6
         env:
         - name: APP_SETTINGS
           value: config.DevelopmentConfig
