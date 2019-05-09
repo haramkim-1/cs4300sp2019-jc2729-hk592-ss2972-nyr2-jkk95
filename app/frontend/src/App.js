@@ -160,9 +160,12 @@ class App extends Component {
 			</div>
 		</div>
 		:
-		this.state.results.map((ymm) =>
-        <li style={{color:"black", listStyleType:"none"}} key={ymm}>
-            <Button style={{opacity:"1.0", margin: "3px", fontFamily:"Helvetica Neue"}} type="button" onClick={(evt) => this.displayDetails(evt, ymm)}> {ymm} </Button>
+		this.state.results.map((carObj) =>
+        <li style={{color:"black", listStyleType:"none"}} key={carObj['ymm']}>
+        	{carObj['MSRP'].replace(/\d(?=(\d{3})+\.)/g, '$&,')}
+        	{carObj['avg_rating']}
+        	{carObj['ranking']}
+            <Button style={{opacity:"1.0", margin: "3px", fontFamily:"Helvetica Neue"}} type="button" onClick={(evt) => this.displayDetails(evt, carObj['ymm'])}> {carObj['ymm']} </Button>
         </li>
 	);
 
