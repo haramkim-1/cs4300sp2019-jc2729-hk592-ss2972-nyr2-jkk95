@@ -221,7 +221,7 @@ class App extends Component {
         />
             <Form updateParentKeywords={this.updateKeywords}/>
             <Button id="circle" type="button" key='search' onClick={() => {this.sendReq()}}> GO </Button>
-        <div style={{width:"770px",  overflow:'scroll', margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
+        <div style={{width:"55%",  overflow:'scroll', margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
         </div>
         </div>
 
@@ -284,7 +284,7 @@ class App extends Component {
 						MSRP
 					</p>
 				</Tooltip>
-			<p style={{display:"inline-block"}}> : ${this.state.selectedCar ? this.state.selectedCar["MSRP"]:""}</p>
+			<p style={{display:"inline-block"}}> : ${this.state.selectedCar ? this.state.selectedCar["MSRP"].toLocaleString():""}</p>
 			</div>
 
 			<div>
