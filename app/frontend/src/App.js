@@ -161,12 +161,13 @@ class App extends Component {
 		</div>
 		:
 		this.state.results.map((carObj) =>
-        <li style={{color:"black", listStyleType:"none"}} key={carObj['ymm']}>
-        	{carObj['MSRP'].replace(/\d(?=(\d{3})+\.)/g, '$&,')}
-        	{carObj['avg_rating']}
-        	{carObj['ranking']}
-            <Button style={{opacity:"1.0", margin: "3px", fontFamily:"Helvetica Neue"}} type="button" onClick={(evt) => this.displayDetails(evt, carObj['ymm'])}> {carObj['ymm']} </Button>
-        </li>
+		<li style={{color:"black", listStyleType:"none"}} key={carObj['ymm']}>
+			{carObj['MSRP']} <br/>
+			{carObj['ranking'] + 1} <br/>
+			{this.generateStarRatings(carObj['avg_rating'])}
+			{this.generateImage(carObj['img'])}
+			<Button style={{opacity:"1.0", margin: "3px", fontFamily:"Helvetica Neue"}} type="button" onClick={(evt) => this.displayDetails(evt, carObj['ymm'])}> {carObj['ymm']} </Button>
+		</li>
 	);
 
 	// display reviews
