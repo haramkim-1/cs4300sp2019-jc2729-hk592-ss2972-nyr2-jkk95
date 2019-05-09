@@ -48,8 +48,8 @@ class App extends Component {
       queryColorMapping: [],
       soundStatus: Sound.status.STOPPED,
       soundVolume:100,
-      baseUrl: window.location // use for deployment mode
-      //baseUrl: "http://localhost:5000/" // use for local development mode
+    //   baseUrl: window.location // use for deployment mode
+      baseUrl: "http://localhost:5000/" // use for local development mode
 	};
 
 	console.log("baseUrl (app.js): " + this.state.baseUrl);
@@ -86,6 +86,8 @@ class App extends Component {
 
         // create regex
         let regex = new RegExp(words.join("|"));
+		
+		console.log(response.data.results);
 
         // set all state components at once
         self.setState({soundStatus: Sound.status.PLAYING, results:response.data.results, expandedQuery:response.data.query, queryRegex: regex, queryColorMapping: mapping})

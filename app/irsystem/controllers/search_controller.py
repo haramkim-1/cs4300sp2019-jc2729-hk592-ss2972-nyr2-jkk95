@@ -78,8 +78,29 @@ def do_search():
     search_results = searcher.search(min_size=min_size, max_size=max_size, min_price=min_price,
         max_price=max_price, min_fuel=min_fuel, max_fuel=max_fuel, query=keywords_and_priorities)
 
+	# generate object to send to frontend
+    to_send = []
+    for idx, ymm in enumerate(search_results["results"]):
+        car = searcher.all_data.get(ymm)
+        print(ymm)
+        ratings = [float(review["Rating"]) for review in car["reviews"] if review["Rating"].replace('.','',1).isnumeric()]
+        
+        # extract only the fields we care about to save
+        car_to_send = {"MSRP": car["MSRP"], "avg_rating": mean(ratings), "ranking": idx, "ymm": ymm}
+
+        # get car make-model string to find image
+        make_model = car["Make"] + " " + car["Model"]
+        make_model = make_model.replace("/", ":")
+        try:
+            car_to_send["img"] = image_searcher.image_search(make_model).decode('utf-8')
+        except:
+            pass
+
+        # add to list to send
+        to_send.append(car_to_send)
+
     # send back json of results from Searcher
-    return dumps(search_results)
+    return dumps({"results": to_send, "query": search_results["query"]})
 
 @irsystem.route('/cardetails', methods=['GET'])
 def get_details():
