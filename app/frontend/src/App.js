@@ -221,7 +221,7 @@ class App extends Component {
         />
             <Form updateParentKeywords={this.updateKeywords}/>
             <Button id="circle" type="button" key='search' onClick={() => {this.sendReq()}}> GO </Button>
-        <div style={{width:"760px",  overflow:'scroll', margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
+        <div style={{width:"50%",  overflow:'scroll', margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
         </div>
         </div>
 
