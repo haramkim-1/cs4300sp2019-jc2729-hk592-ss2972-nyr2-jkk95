@@ -161,7 +161,7 @@ class App extends Component {
 		</div>
 		:
 		this.state.results.map((carObj) =>
-		<li style={{backgroundColor:'rgba(255, 255, 255, 0.35)', color:"black", height: '400px', overflow:'hidden', width: '380px', listStyleType:"none", display: 'inline', float: 'left', border:'5px solid black'}} key={carObj['ymm']}>
+		<li style={{backgroundColor:'rgba(255, 255, 255, 0.35)', color:"black", height: '400px', overflow:'hidden', width: '380px', listStyleType:"none", display: 'inline', float: 'left', border:'5px solid black', margin:"2px", }} key={carObj['ymm']}>
 			<div style={{padding:"5px"}}>
 				{'Ranking: ' + (carObj['ranking'] + 1)} <br/>
 				{carObj['ymm']} <br/>
@@ -221,7 +221,7 @@ class App extends Component {
         />
             <Form updateParentKeywords={this.updateKeywords}/>
             <Button id="circle" type="button" key='search' onClick={() => {this.sendReq()}}> GO </Button>
-        <div style={{width:"760px",  overflow:'scroll', margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
+        <div style={{width:"770px",  overflow:'scroll', margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
         </div>
         </div>
 
