@@ -161,12 +161,12 @@ class App extends Component {
 		</div>
 		:
 		this.state.results.map((carObj) =>
-		<li style={{color:"black", width: '380px', listStyleType:"none", display: 'inline', float: 'left', border:'1px'}} key={carObj['ymm']}>
-			<div style={{backgroundColor:'rgba(255, 255, 255, 0.35)'}}>
-				{carObj['ranking'] + 1} <br/>
+		<li style={{backgroundColor:'rgba(255, 255, 255, 0.35)', color:"black", height: '400px', overflow:'hidden', width: '380px', listStyleType:"none", display: 'inline', float: 'left', border:'5px solid black'}} key={carObj['ymm']}>
+			<div style={{padding:"5px"}}>
+				{'Ranking: ' + (carObj['ranking'] + 1)} <br/>
 				{carObj['ymm']} <br/>
 				{this.generateImage(carObj['img'])} <br/>
-				{'$' + carObj['MSRP']} <br/>
+				{'$' + carObj['MSRP'].toLocaleString()} <br/>
 				{this.generateStarRatings(carObj['avg_rating'])} <br/>
 				<Button style={{opacity:"1.0", margin: "3px", fontFamily:"Helvetica Neue"}} type="button" onClick={(evt) => this.displayDetails(evt, carObj['ymm'])}> {'See Details'} </Button>
 			</div>
