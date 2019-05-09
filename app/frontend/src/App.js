@@ -284,7 +284,7 @@ class App extends Component {
 						MSRP
 					</p>
 				</Tooltip>
-			<p style={{display:"inline-block"}}> : ${this.state.selectedCar ? this.state.selectedCar["MSRP"]:""}</p>
+			<p style={{display:"inline-block"}}> : ${this.state.selectedCar ? this.state.selectedCar["MSRP"].toLocaleString():""}</p>
 			</div>
 
 			<div>
