@@ -86,7 +86,7 @@ class App extends Component {
 
         // create regex
         let regex = new RegExp(words.join("|"));
-		
+
 		console.log(response.data.results);
 
         // set all state components at once
@@ -161,12 +161,15 @@ class App extends Component {
 		</div>
 		:
 		this.state.results.map((carObj) =>
-		<li style={{color:"black", listStyleType:"none"}} key={carObj['ymm']}>
-			{carObj['MSRP']} <br/>
-			{carObj['ranking'] + 1} <br/>
-			{this.generateStarRatings(carObj['avg_rating'])}
-			{this.generateImage(carObj['img'])}
-			<Button style={{opacity:"1.0", margin: "3px", fontFamily:"Helvetica Neue"}} type="button" onClick={(evt) => this.displayDetails(evt, carObj['ymm'])}> {carObj['ymm']} </Button>
+		<li style={{color:"black", width: '380px', listStyleType:"none", display: 'inline', float: 'left', border:'1px'}} key={carObj['ymm']}>
+			<div style={{backgroundColor:'rgba(255, 255, 255, 0.35)'}}>
+				{carObj['ranking'] + 1} <br/>
+				{carObj['ymm']} <br/>
+				{this.generateImage(carObj['img'])} <br/>
+				{'$' + carObj['MSRP']} <br/>
+				{this.generateStarRatings(carObj['avg_rating'])} <br/>
+				<Button style={{opacity:"1.0", margin: "3px", fontFamily:"Helvetica Neue"}} type="button" onClick={(evt) => this.displayDetails(evt, carObj['ymm'])}> {'See Details'} </Button>
+			</div>
 		</li>
 	);
 
@@ -218,7 +221,7 @@ class App extends Component {
         />
             <Form updateParentKeywords={this.updateKeywords}/>
             <Button id="circle" type="button" key='search' onClick={() => {this.sendReq()}}> GO </Button>
-        <div style={{width:"380px", margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
+        <div style={{width:"760px",  overflow:'scroll', margin: "auto", marginTop: "10px", marginBottom: "30px"} }>{listItems}</div>
         </div>
         </div>
 
